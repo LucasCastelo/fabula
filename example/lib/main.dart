@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
                 ExhibitBuilder(
                   builder: (e) => Column(
                     children: List.generate(
-                      e.typedInt(
+                      e.inputInt(
                         'Count',
                         initialValue: 0,
                       ),

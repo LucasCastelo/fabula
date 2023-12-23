@@ -29,7 +29,7 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
         isNullable: false,
       )!;
 
-  int typedInt(
+  int inputInt(
     String id, {
     required int initialValue,
   }) =>
@@ -40,7 +40,18 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
         isNullable: false,
       )!;
 
-  double typedDouble(
+  int? nInputInt(
+    String id, {
+    required int initialValue,
+  }) =>
+      nTextKnob(
+        id,
+        initialValue: initialValue,
+        marshal: (e) => int.tryParse(e) ?? 0,
+        isNullable: true,
+      );
+
+  double inputDouble(
     String id, {
     required double initialValue,
   }) =>
@@ -50,6 +61,17 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
         marshal: (e) => double.tryParse(e) ?? 0,
         isNullable: false,
       )!;
+
+  double? nInputDouble(
+    String id, {
+    required double initialValue,
+  }) =>
+      nTextKnob(
+        id,
+        initialValue: initialValue,
+        marshal: (e) => double.tryParse(e) ?? 0,
+        isNullable: true,
+      );
 
   T? nTextKnob<T>(
     String id, {
