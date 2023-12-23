@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/storyto/storyto.dart';
-import 'package:storyto/src/storyto/storyto_provider.dart';
 
 typedef ExhibitBuilderCallback = Widget Function(Storyto e);
 
@@ -30,9 +29,11 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
   @override
   void dispose() {
     storyto.removeListener(updateFields);
-    storyto.knobs.forEach(
-      (knob) => knob.removeListener(rebuild),
-    );
+
+    for (var knob in storyto.knobs) {
+      knob.removeListener(rebuild);
+    }
+
     super.dispose();
   }
 
