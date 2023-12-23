@@ -10,26 +10,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StorytoProvider(
-      child: MaterialApp(
-        home: Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView(
-                children: [
-                  ExhibitBuilder(
-                    builder: (e) => Square(
-                      text: e.string('Text', initialValue: 'abc'),
+    return MaterialApp(
+      home: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView(
+              children: [
+                ExhibitBuilder(
+                  builder: (e) => Square(
+                    text: e.string('Text', initialValue: 'abc'),
+                  ),
+                ),
+                ExhibitBuilder(
+                  builder: (e) => Text(
+                    e.string('Text 2', initialValue: 'abc'),
+                  ),
+                ),
+                ExhibitBuilder(
+                  builder: (e) => Column(
+                    children: List.generate(
+                      e.integer(
+                        'Count',
+                        initialValue: 0,
+                      ),
+                      (index) => Text('Value: $index'),
                     ),
                   ),
-                  ExhibitBuilder(
-                    builder: (e) => Text(
-                      e.string('Text 2', initialValue: 'abc'),
-                    ),
-                  ),
-                ],
-              ),
+                )
+              ],
             ),
           ),
         ),
