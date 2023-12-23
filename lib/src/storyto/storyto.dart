@@ -1,10 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:storyto/src/storyto/knob.dart';
-import 'package:storyto/src/storyto/knobs/int_knob.dart';
-import 'package:storyto/src/storyto/knobs/string_knob.dart';
+import 'package:storyto/src/storyto/knobs/text_controller_based_knob.dart';
 
-// TODO: This is ugly, refactor
 class Storyto extends ValueNotifier<Map<String, Knob>> {
   Storyto() : super(<String, Knob>{});
 
@@ -13,38 +11,45 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
   String string(
     String id, {
     required String initialValue,
-  }) {
-    final stringKnob = value[id];
-    String _value = '';
-
-    if (stringKnob != null && stringKnob is StringKnob) {
-      _value = stringKnob.value;
-    } else {
-      final newStringKnob = StringKnob(initialValue: initialValue);
-      value[id] = newStringKnob;
-      _value = newStringKnob.value;
-    }
-
-    notifyListeners();
-    return _value;
-  }
+  }) =>
+      _custom(
+        id,
+        initialValue: initialValue,
+        marshal: (e) => e,
+      );
 
   int integer(
     String id, {
     required int initialValue,
+  }) =>
+      _custom(
+        id,
+        initialValue: initialValue,
+        marshal: (e) => int.tryParse(e) ?? 0,
+      );
+
+  T _custom<T>(
+    String id, {
+    required T initialValue,
+    required T Function(String e) marshal,
   }) {
-    final intKnob = value[id];
-    int _value = 0;
+    // Fetch the potential knob
+    final knob = value[id];
 
-    if (intKnob != null && intKnob is IntKnob) {
-      _value = intKnob.value;
+    // Check if exists, and if it is the same
+    if (knob != null && knob is GenericKnob<T>) {
+      notifyListeners();
+      return knob.value;
     } else {
-      final newIntKnob = IntKnob(initialValue: initialValue);
-      value[id] = newIntKnob;
-      _value = newIntKnob.value;
-    }
+      final newIntKnob = GenericKnob<T>(
+        initialValue: initialValue,
+        marshal: marshal,
+      );
 
-    notifyListeners();
-    return _value;
+      value[id] = newIntKnob;
+
+      notifyListeners();
+      return newIntKnob.value;
+    }
   }
 }
