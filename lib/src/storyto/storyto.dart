@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:storyto/src/storyto/knob.dart';
 import 'package:storyto/src/storyto/knobs/nullable_text_knob.dart';
-import 'package:storyto/src/storyto/knobs/text_knob.dart';
 
 class Storyto extends ValueNotifier<Map<String, Knob>> {
   Storyto() : super(<String, Knob>{});
@@ -23,36 +22,40 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
     String id, {
     required String initialValue,
   }) =>
-      textKnob(
+      nTextKnob(
         id,
         initialValue: initialValue,
         marshal: (e) => e,
-      );
+        isNullable: false,
+      )!;
 
   int typedInt(
     String id, {
     required int initialValue,
   }) =>
-      textKnob(
+      nTextKnob(
         id,
         initialValue: initialValue,
         marshal: (e) => int.tryParse(e) ?? 0,
-      );
+        isNullable: false,
+      )!;
 
   double typedDouble(
     String id, {
     required double initialValue,
   }) =>
-      textKnob(
+      nTextKnob(
         id,
         initialValue: initialValue,
         marshal: (e) => double.tryParse(e) ?? 0,
-      );
+        isNullable: false,
+      )!;
 
   T? nTextKnob<T>(
     String id, {
     required T? initialValue,
     required T? Function(String e) marshal,
+    bool isNullable = true,
   }) {
     // Fetch the potential knob
     final knob = value[id];
@@ -65,31 +68,7 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
       final newIntKnob = NullableTextKnob<T>(
         initialValue: initialValue,
         marshal: marshal,
-      );
-
-      value[id] = newIntKnob;
-
-      notifyListeners();
-      return newIntKnob.value;
-    }
-  }
-
-  T textKnob<T>(
-    String id, {
-    required T initialValue,
-    required T Function(String e) marshal,
-  }) {
-    // Fetch the potential knob
-    final knob = value[id];
-
-    // Check if exists, and if it is the same
-    if (knob != null && knob is TextKnob<T>) {
-      notifyListeners();
-      return knob.value;
-    } else {
-      final newIntKnob = TextKnob<T>(
-        initialValue: initialValue,
-        marshal: marshal,
+        isNullable: isNullable,
       );
 
       value[id] = newIntKnob;

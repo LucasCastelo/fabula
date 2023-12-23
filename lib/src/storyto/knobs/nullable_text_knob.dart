@@ -6,6 +6,7 @@ class NullableTextKnob<T> with ChangeNotifier implements Knob {
   NullableTextKnob({
     required this.initialValue,
     required this.marshal,
+    required this.isNullable,
   }) {
     controller = TextEditingController();
     controller.text = initialValue.toString();
@@ -14,6 +15,7 @@ class NullableTextKnob<T> with ChangeNotifier implements Knob {
   late TextEditingController controller;
   final T? initialValue;
   final T? Function(String e) marshal;
+  final bool isNullable;
 
   bool isNull = false;
 
@@ -27,10 +29,11 @@ class NullableTextKnob<T> with ChangeNotifier implements Knob {
             onChanged: setValue,
           ),
         ),
-        GestureDetector(
-          onTap: () => setNull(!isNull),
-          child: const Text('Toggle Null'),
-        )
+        if (isNullable)
+          GestureDetector(
+            onTap: () => setNull(!isNull),
+            child: const Text('Toggle Null'),
+          )
       ],
     );
   }
