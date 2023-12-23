@@ -12,7 +12,7 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
     String id, {
     required String initialValue,
   }) =>
-      nTextKnob(
+      customTextKnob(
         id,
         initialValue: initialValue,
         marshal: (e) => e,
@@ -22,7 +22,7 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
     String id, {
     required String initialValue,
   }) =>
-      nTextKnob(
+      customTextKnob(
         id,
         initialValue: initialValue,
         marshal: (e) => e,
@@ -33,7 +33,7 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
     String id, {
     required int initialValue,
   }) =>
-      nTextKnob(
+      customTextKnob(
         id,
         initialValue: initialValue,
         marshal: (e) => int.tryParse(e) ?? 0,
@@ -44,7 +44,7 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
     String id, {
     required int initialValue,
   }) =>
-      nTextKnob(
+      customTextKnob(
         id,
         initialValue: initialValue,
         marshal: (e) => int.tryParse(e) ?? 0,
@@ -55,7 +55,7 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
     String id, {
     required double initialValue,
   }) =>
-      nTextKnob(
+      customTextKnob(
         id,
         initialValue: initialValue,
         marshal: (e) => double.tryParse(e) ?? 0,
@@ -66,14 +66,14 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
     String id, {
     required double initialValue,
   }) =>
-      nTextKnob(
+      customTextKnob(
         id,
         initialValue: initialValue,
         marshal: (e) => double.tryParse(e) ?? 0,
         isNullable: true,
       );
 
-  T? nTextKnob<T>(
+  T? customTextKnob<T>(
     String id, {
     required T? initialValue,
     required T? Function(String e) marshal,
