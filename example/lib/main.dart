@@ -28,9 +28,17 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 ExhibitBuilder(
+                  builder: (e) => NullTest(
+                    text: e.nString(
+                      'null string',
+                      initialValue: 'initialValuasdae',
+                    ),
+                  ),
+                ),
+                ExhibitBuilder(
                   builder: (e) => Column(
                     children: List.generate(
-                      e.integer(
+                      e.typedInt(
                         'Count',
                         initialValue: 0,
                       ),
@@ -42,6 +50,34 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class NullTest extends StatelessWidget {
+  const NullTest({
+    super.key,
+    required this.text,
+  });
+
+  final String? text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(20),
+      color: Colors.blueAccent,
+      child: Column(
+        children: [
+          text == null
+              ? Container(
+                  color: Colors.amber,
+                  height: 10,
+                  width: 10,
+                )
+              : Text(text!),
+        ],
       ),
     );
   }
