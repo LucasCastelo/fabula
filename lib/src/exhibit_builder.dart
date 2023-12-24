@@ -29,26 +29,15 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
   @override
   void dispose() {
     storyto.removeListener(updateFields);
-
-    for (var knob in storyto.knobs) {
-      knob.removeListener(rebuild);
-    }
-
+    storyto.dispose();
     super.dispose();
   }
 
   void updateFields() {
     setState(() {
-      inputs = storyto.knobs.map(
-        (e) {
-          e.addListener(rebuild);
-          return e.knob();
-        },
-      ).toList();
+      inputs = storyto.knobs.map((e) => e.knob()).toList();
     });
   }
-
-  void rebuild() => setState(() {});
 
   @override
   Widget build(BuildContext context) {
