@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:storyto/src/storyto/knob.dart';
-import 'package:storyto/src/storyto/knobs/nullable_text_knob.dart';
+import 'package:storyto/src/storyto/knobs/text_knob.dart';
 
-class Storyto extends ValueNotifier<Map<String, Knob>> {
-  Storyto() : super(<String, Knob>{});
-
+class KnobsListenable extends ChangeNotifier {
+  Map<String, Knob> value = {};
   List<Knob> get knobs => value.values.toList();
 
   T? createKnob<T>({
@@ -18,6 +17,8 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
     return knob.value;
   }
 
+  void deleteKnob(String id) {}
+
   T? customTextKnob<T>(
     String id, {
     required T? initialValue,
@@ -26,10 +27,10 @@ class Storyto extends ValueNotifier<Map<String, Knob>> {
   }) {
     final knob = value[id];
 
-    if (knob != null && knob is NullableTextKnob<T>) {
+    if (knob != null && knob is TextKnob<T>) {
       return knob.value;
     } else {
-      final customTextKnob = NullableTextKnob<T>(
+      final customTextKnob = TextKnob<T>(
         initialValue: initialValue,
         marshal: marshal,
         isNullable: isNullable,

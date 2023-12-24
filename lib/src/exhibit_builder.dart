@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/storyto/storyto.dart';
+import 'package:storyto/src/storyto/knobs_listenable.dart';
 
-typedef ExhibitBuilderCallback = Widget Function(Storyto e);
+typedef ExhibitBuilderCallback = Widget Function(KnobsListenable e);
 
 class ExhibitBuilder extends StatefulWidget {
   const ExhibitBuilder({
@@ -16,7 +16,7 @@ class ExhibitBuilder extends StatefulWidget {
 }
 
 class _ExhibitBuilderState extends State<ExhibitBuilder> {
-  final storyto = Storyto();
+  final storyto = KnobsListenable();
   List<Widget> inputs = [];
 
   @override

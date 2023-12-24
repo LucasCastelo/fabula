@@ -1,6 +1,6 @@
-import 'package:storyto/src/storyto/storyto.dart';
+import 'package:storyto/src/storyto/knobs_listenable.dart';
 
-extension StorytoIntBuilder on Storyto {
+extension StorytoIntBuilder on KnobsListenable {
   int inputInt(
     String id, {
     required int initialValue,

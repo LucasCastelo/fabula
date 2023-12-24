@@ -1,6 +1,7 @@
 import 'package:example/bool_test.dart';
 import 'package:example/double_test.dart';
 import 'package:example/int_test.dart';
+import 'package:example/list_test.dart';
 import 'package:example/strings_test.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
                     BoolTest(),
                     IntTest(),
                     DoubleTest(),
+                    ListTest(),
                   ],
                 );
               },

@@ -1,6 +1,6 @@
-import 'package:storyto/src/storyto/storyto.dart';
+import 'package:storyto/src/storyto/knobs_listenable.dart';
 
-extension StorytoStringBuilder on Storyto {
+extension StorytoStringBuilder on KnobsListenable {
   String? nString(
     String id, {
     required String initialValue,

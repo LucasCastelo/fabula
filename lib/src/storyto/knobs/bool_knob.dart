@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:storyto/src/fields/bool_field.dart';
 import 'package:storyto/src/storyto/knob.dart';
 
-class NullableBoolKnob with ChangeNotifier implements Knob<bool> {
-  NullableBoolKnob({
+class BoolKnob with ChangeNotifier implements Knob<bool> {
+  BoolKnob({
     required this.initialValue,
     required this.isNullable,
   });

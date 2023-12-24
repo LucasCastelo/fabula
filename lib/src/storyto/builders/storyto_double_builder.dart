@@ -1,6 +1,6 @@
-import 'package:storyto/src/storyto/storyto.dart';
+import 'package:storyto/src/storyto/knobs_listenable.dart';
 
-extension StorytoDoubleBuilder on Storyto {
+extension StorytoDoubleBuilder on KnobsListenable {
   double inputDouble(
     String id, {
     required double initialValue,

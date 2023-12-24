@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:storyto/src/fields/custom_text_field.dart';
 import 'package:storyto/src/storyto/knob.dart';
 
-class NullableTextKnob<T> with ChangeNotifier implements Knob {
-  NullableTextKnob({
+class TextKnob<T> with ChangeNotifier implements Knob {
+  TextKnob({
     required this.initialValue,
     required this.marshal,
     required this.isNullable,
