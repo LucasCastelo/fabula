@@ -1,5 +1,8 @@
+import 'package:example/bool_test.dart';
+import 'package:example/double_test.dart';
+import 'package:example/int_test.dart';
+import 'package:example/strings_test.dart';
 import 'package:flutter/material.dart';
-import 'package:storyto/storyto.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,42 +15,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              children: [
-                ExhibitBuilder(
-                  builder: (e) => BoolTest(
-                    value: e.inputBool(
-                      'abc',
-                      initialValue: false,
-                    ),
-                  ),
-                )
-              ],
+            child: Builder(
+              builder: (context) {
+                return ListView(
+                  children: const [
+                    StringsTest(),
+                    BoolTest(),
+                    IntTest(),
+                    DoubleTest(),
+                  ],
+                );
+              },
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class BoolTest extends StatelessWidget {
-  const BoolTest({
-    super.key,
-    required this.value,
-  });
-
-  final bool value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 50,
-      height: 50,
-      color: value ? Colors.black : Colors.blueGrey,
     );
   }
 }
