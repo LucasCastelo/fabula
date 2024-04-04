@@ -6,10 +6,17 @@ class KnobManager extends ChangeNotifier {
   KnobManager();
 
   final Map<String, Knob> knobs = {};
+  final ChangeNotifier rebuildKnobs = ChangeNotifier();
+  final ChangeNotifier rebuildExhibit = ChangeNotifier();
 
   String? nString(String id) {
     if (knobs.keys.contains(id)) {
-      return knobs[id]?.value as String;
+      final selectedKnob = knobs[id];
+      if (selectedKnob?.value == null) {
+        return null;
+      } else {
+        return knobs[id]?.value as String;
+      }
     } else {
       final newKnob = NullableKnob(
         defaultValue: 'asdaa',
@@ -18,7 +25,6 @@ class KnobManager extends ChangeNotifier {
           children: [
             Expanded(
               child: CustomTextField(
-                controller: TextEditingController(),
                 onChanged: (v) => setValue(v as String),
               ),
             ),
@@ -38,11 +44,12 @@ class KnobManager extends ChangeNotifier {
         ),
       );
 
+      newKnob.addListener(rebuildExhibit.notifyListeners);
+
       knobs[id] = newKnob;
 
+      rebuildKnobs.notifyListeners();
       return newKnob.value;
     }
   }
 }
-
-// final k = const KnobManager();

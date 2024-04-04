@@ -27,9 +27,20 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        widget.builder(km),
-        ...km.knobs.values.map(
-          (e) => e.knob(),
+        ListenableBuilder(
+          listenable: km.rebuildExhibit,
+          builder: (_, __) {
+            print('REBUILD');
+            return widget.builder(km);
+          },
+        ),
+        ListenableBuilder(
+          listenable: km.rebuildKnobs,
+          builder: (_, __) {
+            return Column(
+              children: km.knobs.values.map((e) => e.knob()).toList(),
+            );
+          },
         )
       ],
     );
