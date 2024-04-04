@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/storyto/knobs_listenable.dart';
+import 'package:storyto/src/knob_manager.dart';
 
-typedef ExhibitBuilderCallback = Widget Function(KnobsListenable e);
+typedef CustomBuilder = Widget Function(KnobManager);
 
 class ExhibitBuilder extends StatefulWidget {
   const ExhibitBuilder({
@@ -9,42 +9,28 @@ class ExhibitBuilder extends StatefulWidget {
     required this.builder,
   });
 
-  final ExhibitBuilderCallback builder;
+  final CustomBuilder builder;
 
   @override
   State<ExhibitBuilder> createState() => _ExhibitBuilderState();
 }
 
 class _ExhibitBuilderState extends State<ExhibitBuilder> {
-  final storyto = KnobsListenable();
-  List<Widget> inputs = [];
+  final km = KnobManager();
 
   @override
   void initState() {
-    storyto.addListener(updateFields);
-    updateFields();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    storyto.removeListener(updateFields);
-    storyto.dispose();
-    super.dispose();
-  }
-
-  void updateFields() {
-    setState(() {
-      inputs = storyto.knobs.map((e) => e.knob()).toList();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        widget.builder(storyto),
-        ...inputs,
+        widget.builder(km),
+        ...km.knobs.values.map(
+          (e) => e.knob(),
+        )
       ],
     );
   }
