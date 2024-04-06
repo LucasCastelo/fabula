@@ -3,6 +3,7 @@ import 'package:storyto/src/knobs/bool_knob.dart';
 import 'package:storyto/src/knobs/integer_knob.dart';
 import 'package:storyto/src/knobs/knob.dart';
 import 'package:storyto/src/knobs/n_integer_knob.dart';
+import 'package:storyto/src/knobs/n_selector_knob.dart';
 import 'package:storyto/src/knobs/n_string_knob.dart';
 import 'package:storyto/src/knobs/string_knob.dart';
 
@@ -116,6 +117,35 @@ class KnobManager extends ChangeNotifier {
     } else {
       final newKnob = IntegerKnob(
         initialValue: initialValue,
+      );
+
+      newKnob.addListener(rebuildExhibit.notifyListeners);
+
+      knobs[id] = newKnob;
+
+      rebuildKnobs.notifyListeners();
+      return newKnob.value;
+    }
+  }
+
+  T? selectable<T>(
+    String id, {
+    required List<T> values,
+    required bool startAsNull,
+    required SelectorNameMarshal nameMarshal,
+  }) {
+    if (knobs.keys.contains(id)) {
+      final selectedKnob = knobs[id];
+      if (selectedKnob?.value == null) {
+        return null;
+      } else {
+        return knobs[id]?.value as T;
+      }
+    } else {
+      final newKnob = NSelectorKnob<T>(
+        values: values,
+        startAsNull: startAsNull,
+        nameMarshal: nameMarshal,
       );
 
       newKnob.addListener(rebuildExhibit.notifyListeners);

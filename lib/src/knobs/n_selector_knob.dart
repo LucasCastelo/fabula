@@ -12,20 +12,28 @@ class NSelectorKnob<T> extends NullableKnob<T> {
     required SelectorNameMarshal<T> nameMarshal,
   }) : super(
           defaultValue: values[0],
-          inputBuilder: (knob, toggleNull) => Row(
-            children: [
-              Expanded(
-                child: SelectorField(
-                  options: values,
-                  setValue: knob.setValue,
-                  nameMarshal: nameMarshal,
+          inputBuilder: (knob, toggleNull) => ValueListenableBuilder(
+            valueListenable: knob,
+            builder: (context, value, _) => Row(
+              children: [
+                Expanded(
+                  child: knob.value == null
+                      ? const Text(
+                          'Value set to NULL',
+                          textAlign: TextAlign.center,
+                        )
+                      : SelectorField<T>(
+                          knob: knob as NSelectorKnob<T>,
+                          options: values,
+                          nameMarshal: nameMarshal,
+                        ),
                 ),
-              ),
-              GestureDetector(
-                onTap: toggleNull,
-                child: const Text('NULL'),
-              )
-            ],
+                GestureDetector(
+                  onTap: toggleNull,
+                  child: const Text('NULL'),
+                )
+              ],
+            ),
           ),
         );
 }

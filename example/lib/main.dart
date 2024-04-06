@@ -1,6 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/storyto.dart';
 
+enum ColorEnum {
+  green,
+  red,
+  blue,
+  yellow,
+  black;
+
+  T map<T>({
+    required T Function() green,
+    required T Function() red,
+    required T Function() blue,
+    required T Function() yellow,
+    required T Function() black,
+  }) {
+    switch (this) {
+      case ColorEnum.black:
+        return black();
+      case ColorEnum.green:
+        return green();
+      case ColorEnum.red:
+        return red();
+      case ColorEnum.blue:
+        return blue();
+      case ColorEnum.yellow:
+        return yellow();
+    }
+  }
+}
+
 void main() {
   runApp(const MyApp());
 }
@@ -59,6 +88,17 @@ class MyApp extends StatelessWidget {
                         bNumber: k.integer('id-2', initialValue: 12),
                       ),
                     ),
+                    ExhibitBuilder(
+                      builder: (k) => SelectableTester(
+                        colorEnum: k.selectable(
+                          'id',
+                          values: ColorEnum.values,
+                          startAsNull: false,
+                          nameMarshal: (colorEnum) =>
+                              'Name is: ${colorEnum.toString()}',
+                        ),
+                      ),
+                    )
                   ],
                 );
               },
@@ -66,6 +106,38 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class SelectableTester extends StatelessWidget {
+  const SelectableTester({
+    super.key,
+    required this.colorEnum,
+  });
+
+  final ColorEnum? colorEnum;
+
+  @override
+  Widget build(BuildContext context) {
+    if (colorEnum == null) {
+      return const SizedBox(
+        height: 40,
+        width: 40,
+        child: Text('NULL'),
+      );
+    }
+
+    return Container(
+      color: colorEnum!.map(
+        green: () => Colors.green,
+        red: () => Colors.red,
+        blue: () => Colors.blue,
+        yellow: () => Colors.yellow,
+        black: () => Colors.black,
+      ),
+      height: 40,
+      width: 40,
     );
   }
 }
