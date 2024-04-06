@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:storyto/src/fields/custom_text_field.dart';
 import 'package:storyto/src/knobs/knob.dart';
 
-class NStringKnob extends NullableKnob<String?> {
-  NStringKnob({
+class NIntegerKnob extends NullableKnob<int> {
+  NIntegerKnob({
     required super.defaultValue,
     required super.startAsNull,
   }) : super(
@@ -12,6 +12,8 @@ class NStringKnob extends NullableKnob<String?> {
               Expanded(
                 child: KnobTextField(
                   knob: knob,
+                  keyboardType: TextInputType.number,
+                  marshal: (v) => int.parse(v),
                 ),
               ),
               Builder(

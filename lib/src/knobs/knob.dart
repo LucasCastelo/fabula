@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-typedef NullableInputBuilder = Widget Function<T>(
+typedef NullableInputBuilder = Widget Function(
   Knob knob,
   VoidCallback toggleNull,
 );
 
-typedef InputBuilder = Widget Function<T>(Knob knob);
+typedef InputBuilder = Widget Function(Knob knob);
 
 abstract class Knob<T> extends ValueNotifier<T> {
   Knob(super.value);

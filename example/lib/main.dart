@@ -28,6 +28,37 @@ class MyApp extends StatelessWidget {
                           ) ??
                           'NULL'),
                     ),
+                    Container(width: 40, height: 2, color: Colors.black),
+                    ExhibitBuilder(
+                      builder: (k) => Container(
+                        color: k.nBool('id', initialValue: false)
+                            ? Colors.red
+                            : Colors.black,
+                        height: 20,
+                        width: 20,
+                      ),
+                    ),
+                    Container(width: 40, height: 2, color: Colors.black),
+                    ExhibitBuilder(
+                      builder: (k) => Text(
+                        k.string(
+                          'id',
+                          initialValue: 'Testing',
+                        ),
+                      ),
+                    ),
+                    Container(width: 40, height: 2, color: Colors.black),
+                    ExhibitBuilder(
+                      builder: (k) => Cool(
+                        aNumber: k.nInteger(
+                          'id',
+                          defaultValue: 1,
+                          startAsNull: false,
+                        ),
+                        // bNumber: 1,
+                        bNumber: k.integer('id-2', initialValue: 12),
+                      ),
+                    ),
                   ],
                 );
               },
@@ -36,5 +67,24 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class Cool extends StatelessWidget {
+  const Cool({
+    super.key,
+    required this.aNumber,
+    required this.bNumber,
+  });
+
+  final int? aNumber;
+  final int bNumber;
+  @override
+  Widget build(BuildContext context) {
+    if (aNumber == null) {
+      return const Text('aNumber null');
+    } else {
+      return Text((aNumber! + bNumber).toString());
+    }
   }
 }
