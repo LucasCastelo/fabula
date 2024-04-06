@@ -21,24 +21,31 @@ class KnobManager extends ChangeNotifier {
       final newKnob = NullableKnob(
         defaultValue: 'asdaa',
         startAsNull: false,
-        inputBuilder: <String>(setValue, toggleNull) => Row(
+        inputBuilder: <String>(knob, toggleNull) => Row(
           children: [
             Expanded(
-              child: CustomTextField(
-                onChanged: (v) => setValue(v as String),
+              child: KnobTextField(
+                knob: knob,
               ),
             ),
-            Container(
-              color: Colors.red,
-              child: GestureDetector(
-                onTap: toggleNull,
-                child: const Text(
-                  "NULL",
-                  style: TextStyle(
-                    color: Colors.black,
+            Builder(
+              builder: (context) {
+                return Container(
+                  color: Colors.red,
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                      toggleNull();
+                    },
+                    child: const Text(
+                      "NULL",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             )
           ],
         ),

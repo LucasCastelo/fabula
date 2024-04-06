@@ -1,21 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:storyto/src/knob.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+class KnobTextField extends StatelessWidget {
+  KnobTextField({
     super.key,
-    required this.onChanged,
+    required this.knob,
     this.keyboardType,
   });
 
-  final ValueSetter<String> onChanged;
+  final Knob knob;
   final TextInputType? keyboardType;
+
+  final controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      onChanged: onChanged,
-      style: const TextStyle(),
-      keyboardType: keyboardType,
+    return ValueListenableBuilder(
+      valueListenable: knob,
+      builder: (BuildContext context, value, Widget? child) {
+        if (value != controller.value.text) {
+          controller.text = knob.getValue() ?? '';
+        }
+
+        return TextField(
+          enabled: value != null,
+          controller: controller,
+          onChanged: knob.setValue,
+          style: const TextStyle(),
+          keyboardType: keyboardType,
+        );
+      },
     );
   }
 }

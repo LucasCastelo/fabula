@@ -16,7 +16,7 @@ class ExhibitBuilder extends StatefulWidget {
 }
 
 class _ExhibitBuilderState extends State<ExhibitBuilder> {
-  final km = KnobManager();
+  final knobManager = KnobManager();
 
   @override
   void initState() {
@@ -28,19 +28,14 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
     return Column(
       children: [
         ListenableBuilder(
-          listenable: km.rebuildExhibit,
-          builder: (_, __) {
-            print('REBUILD');
-            return widget.builder(km);
-          },
+          listenable: knobManager.rebuildExhibit,
+          builder: (_, __) => widget.builder(knobManager),
         ),
         ListenableBuilder(
-          listenable: km.rebuildKnobs,
-          builder: (_, __) {
-            return Column(
-              children: km.knobs.values.map((e) => e.knob()).toList(),
-            );
-          },
+          listenable: knobManager.rebuildKnobs,
+          builder: (_, __) => Column(
+            children: knobManager.knobs.values.map((e) => e.knob()).toList(),
+          ),
         )
       ],
     );
