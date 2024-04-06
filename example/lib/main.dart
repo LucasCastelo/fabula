@@ -21,7 +21,12 @@ class MyApp extends StatelessWidget {
                 return ListView(
                   children: [
                     ExhibitBuilder(
-                      builder: (k) => Text(k.nString('id') ?? 'NULL'),
+                      builder: (k) => Text(k.nString(
+                            'id',
+                            defaultValue: 'a',
+                            startAsNull: false,
+                          ) ??
+                          'NULL'),
                     ),
                   ],
                 );

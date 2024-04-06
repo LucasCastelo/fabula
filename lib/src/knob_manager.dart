@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/fields/custom_text_field.dart';
-import 'package:storyto/src/knob.dart';
+import 'package:storyto/src/knobs/knob.dart';
+import 'package:storyto/src/knobs/n_string_knob.dart';
 
 class KnobManager extends ChangeNotifier {
   KnobManager();
@@ -9,7 +9,11 @@ class KnobManager extends ChangeNotifier {
   final ChangeNotifier rebuildKnobs = ChangeNotifier();
   final ChangeNotifier rebuildExhibit = ChangeNotifier();
 
-  String? nString(String id) {
+  String? nString(
+    String id, {
+    required String defaultValue,
+    required bool startAsNull,
+  }) {
     if (knobs.keys.contains(id)) {
       final selectedKnob = knobs[id];
       if (selectedKnob?.value == null) {
@@ -18,37 +22,9 @@ class KnobManager extends ChangeNotifier {
         return knobs[id]?.value as String;
       }
     } else {
-      final newKnob = NullableKnob(
-        defaultValue: 'asdaa',
-        startAsNull: false,
-        inputBuilder: <String>(knob, toggleNull) => Row(
-          children: [
-            Expanded(
-              child: KnobTextField(
-                knob: knob,
-              ),
-            ),
-            Builder(
-              builder: (context) {
-                return Container(
-                  color: Colors.red,
-                  child: GestureDetector(
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-                      toggleNull();
-                    },
-                    child: const Text(
-                      "NULL",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            )
-          ],
-        ),
+      final newKnob = NStringKnob(
+        defaultValue: defaultValue,
+        startAsNull: startAsNull,
       );
 
       newKnob.addListener(rebuildExhibit.notifyListeners);

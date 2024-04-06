@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/knob.dart';
+import 'package:storyto/src/knobs/knob.dart';
 
 class KnobTextField extends StatelessWidget {
   KnobTextField({
