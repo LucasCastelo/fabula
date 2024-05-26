@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:storyto/src/knobs/knob.dart';
 import 'package:storyto/src/knobs/n_selector_knob.dart';
 
 class SelectorField<T> extends StatelessWidget {
@@ -9,7 +10,7 @@ class SelectorField<T> extends StatelessWidget {
     required this.nameMarshal,
   });
 
-  final NSelectorKnob<T> knob;
+  final Knob<T?> knob;
   final List<T> options;
   final SelectorNameMarshal<T> nameMarshal;
 

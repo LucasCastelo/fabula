@@ -23,7 +23,7 @@ class NSelectorKnob<T> extends NullableKnob<T> {
                           textAlign: TextAlign.center,
                         )
                       : SelectorField<T>(
-                          knob: knob as NSelectorKnob<T>,
+                          knob: knob,
                           options: values,
                           nameMarshal: nameMarshal,
                         ),

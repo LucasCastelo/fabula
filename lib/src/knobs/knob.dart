@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-typedef NullableInputBuilder = Widget Function(
-  Knob knob,
+typedef NullableInputBuilder<T> = Widget Function(
+  Knob<T> knob,
   VoidCallback toggleNull,
 );
 
@@ -21,13 +21,13 @@ class NullableKnob<T> extends Knob<T?> {
   NullableKnob({
     required T defaultValue,
     required bool startAsNull,
-    required NullableInputBuilder inputBuilder,
+    required NullableInputBuilder<T?> inputBuilder,
   })  : _defaultValue = defaultValue,
         _inputBuilder = inputBuilder,
         super(startAsNull ? null : defaultValue);
 
   final T _defaultValue;
-  final NullableInputBuilder _inputBuilder;
+  final NullableInputBuilder<T?> _inputBuilder;
 
   @override
   T? getValue() => value;
