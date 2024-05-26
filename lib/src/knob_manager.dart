@@ -5,6 +5,7 @@ import 'package:storyto/src/knobs/knob.dart';
 import 'package:storyto/src/knobs/n_integer_knob.dart';
 import 'package:storyto/src/knobs/n_selector_knob.dart';
 import 'package:storyto/src/knobs/n_string_knob.dart';
+import 'package:storyto/src/knobs/selector_knob.dart';
 import 'package:storyto/src/knobs/string_knob.dart';
 
 class KnobManager extends ChangeNotifier {
@@ -128,7 +129,7 @@ class KnobManager extends ChangeNotifier {
     }
   }
 
-  T? selectable<T>(
+  T? nSelectable<T>(
     String id, {
     required List<T> values,
     required bool startAsNull,
@@ -154,6 +155,30 @@ class KnobManager extends ChangeNotifier {
 
       rebuildKnobs.notifyListeners();
       return newKnob.value;
+    }
+  }
+
+  T selectable<T>(
+    String id, {
+    required List<T> values,
+    required T initialValue,
+    required SelectorNameMarshal nameMarshal,
+  }) {
+    if (knobs.keys.contains(id)) {
+      return knobs[id]?.value as T;
+    } else {
+      final newKnob = SelectorKnob<T>(
+        values: values,
+        nameMarshal: nameMarshal,
+        initialValue: initialValue,
+      );
+
+      newKnob.addListener(rebuildExhibit.notifyListeners);
+
+      knobs[id] = newKnob;
+
+      rebuildKnobs.notifyListeners();
+      return newKnob.value!;
     }
   }
 }

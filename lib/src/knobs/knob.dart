@@ -5,7 +5,7 @@ typedef NullableInputBuilder<T> = Widget Function(
   VoidCallback toggleNull,
 );
 
-typedef InputBuilder = Widget Function(Knob knob);
+typedef InputBuilder<T> = Widget Function(Knob<T> knob);
 
 abstract class Knob<T> extends ValueNotifier<T> {
   Knob(super.value);
@@ -44,11 +44,11 @@ class NullableKnob<T> extends Knob<T?> {
 class DefaultKnob<T> extends Knob<T> {
   DefaultKnob({
     required T initialValue,
-    required InputBuilder inputBuilder,
+    required InputBuilder<T> inputBuilder,
   })  : _inputBuilder = inputBuilder,
         super(initialValue);
 
-  final InputBuilder _inputBuilder;
+  final InputBuilder<T> _inputBuilder;
 
   @override
   T getValue() => value;

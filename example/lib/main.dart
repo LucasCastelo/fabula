@@ -89,8 +89,8 @@ class MyApp extends StatelessWidget {
                       ),
                     ),
                     ExhibitBuilder(
-                      builder: (k) => SelectableTester(
-                        colorEnum: k.selectable(
+                      builder: (k) => NSelectableTester(
+                        colorEnum: k.nSelectable(
                           'id',
                           values: ColorEnum.values,
                           startAsNull: false,
@@ -98,7 +98,18 @@ class MyApp extends StatelessWidget {
                               'Name is: ${colorEnum.toString()}',
                         ),
                       ),
-                    )
+                    ),
+                    ExhibitBuilder(
+                      builder: (k) => SelectableTester(
+                        colorEnum: k.selectable(
+                          'id',
+                          values: ColorEnum.values,
+                          initialValue: ColorEnum.black,
+                          nameMarshal: (colorEnum) =>
+                              'Name is: ${colorEnum.toString()}',
+                        ),
+                      ),
+                    ),
                   ],
                 );
               },
@@ -110,8 +121,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class SelectableTester extends StatelessWidget {
-  const SelectableTester({
+class NSelectableTester extends StatelessWidget {
+  const NSelectableTester({
     super.key,
     required this.colorEnum,
   });
@@ -130,6 +141,30 @@ class SelectableTester extends StatelessWidget {
 
     return Container(
       color: colorEnum!.map(
+        green: () => Colors.green,
+        red: () => Colors.red,
+        blue: () => Colors.blue,
+        yellow: () => Colors.yellow,
+        black: () => Colors.black,
+      ),
+      height: 40,
+      width: 40,
+    );
+  }
+}
+
+class SelectableTester extends StatelessWidget {
+  const SelectableTester({
+    super.key,
+    required this.colorEnum,
+  });
+
+  final ColorEnum colorEnum;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: colorEnum.map(
         green: () => Colors.green,
         red: () => Colors.red,
         blue: () => Colors.blue,
