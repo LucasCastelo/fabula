@@ -110,6 +110,11 @@ class MyApp extends StatelessWidget {
                         ),
                       ),
                     ),
+                    ExhibitBuilder(
+                      builder: (k) => ColorTester(
+                        color: k.color('id', initialValue: Colors.red),
+                      ),
+                    ),
                   ],
                 );
               },
@@ -117,6 +122,24 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ColorTester extends StatelessWidget {
+  const ColorTester({
+    super.key,
+    required this.color,
+  });
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 20,
+      width: 20,
+      color: color,
     );
   }
 }

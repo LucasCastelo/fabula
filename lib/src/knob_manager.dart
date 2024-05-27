@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/knobs/bool_knob.dart';
+import 'package:storyto/src/knobs/color_knob.dart';
 import 'package:storyto/src/knobs/integer_knob.dart';
 import 'package:storyto/src/knobs/knob.dart';
 import 'package:storyto/src/knobs/n_integer_knob.dart';
@@ -117,6 +118,26 @@ class KnobManager extends ChangeNotifier {
       return knobs[id]!.value as int;
     } else {
       final newKnob = IntegerKnob(
+        initialValue: initialValue,
+      );
+
+      newKnob.addListener(rebuildExhibit.notifyListeners);
+
+      knobs[id] = newKnob;
+
+      rebuildKnobs.notifyListeners();
+      return newKnob.value;
+    }
+  }
+
+  Color color(
+    String id, {
+    required Color initialValue,
+  }) {
+    if (knobs.keys.contains(id)) {
+      return knobs[id]!.value as Color;
+    } else {
+      final newKnob = ColorKnob(
         initialValue: initialValue,
       );
 
