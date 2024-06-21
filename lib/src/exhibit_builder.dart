@@ -24,6 +24,12 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
   }
 
   @override
+  void dispose() {
+    knobManager.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [

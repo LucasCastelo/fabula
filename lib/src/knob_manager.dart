@@ -16,6 +16,12 @@ class KnobManager extends ChangeNotifier {
   final ChangeNotifier rebuildKnobs = ChangeNotifier();
   final ChangeNotifier rebuildExhibit = ChangeNotifier();
 
+  @override
+  void dispose() {
+    knobs.values.map((e) => e.dispose());
+    super.dispose();
+  }
+
   String? nString(
     String id, {
     required String defaultValue,
@@ -34,11 +40,10 @@ class KnobManager extends ChangeNotifier {
         startAsNull: startAsNull,
       );
 
-      newKnob.addListener(rebuildExhibit.notifyListeners);
-
-      knobs[id] = newKnob;
-
-      rebuildKnobs.notifyListeners();
+      _registerNewKnobById(
+        id: id,
+        newKnob: newKnob,
+      );
       return newKnob.value;
     }
   }
@@ -54,11 +59,10 @@ class KnobManager extends ChangeNotifier {
         initialValue: initialValue,
       );
 
-      newKnob.addListener(rebuildExhibit.notifyListeners);
-
-      knobs[id] = newKnob;
-
-      rebuildKnobs.notifyListeners();
+      _registerNewKnobById(
+        id: id,
+        newKnob: newKnob,
+      );
       return newKnob.value;
     }
   }
@@ -74,11 +78,10 @@ class KnobManager extends ChangeNotifier {
         initialValue: initialValue,
       );
 
-      newKnob.addListener(rebuildExhibit.notifyListeners);
-
-      knobs[id] = newKnob;
-
-      rebuildKnobs.notifyListeners();
+      _registerNewKnobById(
+        id: id,
+        newKnob: newKnob,
+      );
       return newKnob.value;
     }
   }
@@ -101,11 +104,11 @@ class KnobManager extends ChangeNotifier {
         startAsNull: startAsNull,
       );
 
-      newKnob.addListener(rebuildExhibit.notifyListeners);
+      _registerNewKnobById(
+        id: id,
+        newKnob: newKnob,
+      );
 
-      knobs[id] = newKnob;
-
-      rebuildKnobs.notifyListeners();
       return newKnob.value;
     }
   }
@@ -121,11 +124,10 @@ class KnobManager extends ChangeNotifier {
         initialValue: initialValue,
       );
 
-      newKnob.addListener(rebuildExhibit.notifyListeners);
-
-      knobs[id] = newKnob;
-
-      rebuildKnobs.notifyListeners();
+      _registerNewKnobById(
+        id: id,
+        newKnob: newKnob,
+      );
       return newKnob.value;
     }
   }
@@ -141,11 +143,10 @@ class KnobManager extends ChangeNotifier {
         initialValue: initialValue,
       );
 
-      newKnob.addListener(rebuildExhibit.notifyListeners);
-
-      knobs[id] = newKnob;
-
-      rebuildKnobs.notifyListeners();
+      _registerNewKnobById(
+        id: id,
+        newKnob: newKnob,
+      );
       return newKnob.value;
     }
   }
@@ -170,11 +171,10 @@ class KnobManager extends ChangeNotifier {
         nameMarshal: nameMarshal,
       );
 
-      newKnob.addListener(rebuildExhibit.notifyListeners);
-
-      knobs[id] = newKnob;
-
-      rebuildKnobs.notifyListeners();
+      _registerNewKnobById(
+        id: id,
+        newKnob: newKnob,
+      );
       return newKnob.value;
     }
   }
@@ -194,12 +194,22 @@ class KnobManager extends ChangeNotifier {
         initialValue: initialValue,
       );
 
-      newKnob.addListener(rebuildExhibit.notifyListeners);
-
-      knobs[id] = newKnob;
-
-      rebuildKnobs.notifyListeners();
+      _registerNewKnobById(
+        id: id,
+        newKnob: newKnob,
+      );
       return newKnob.value!;
     }
+  }
+
+  void _registerNewKnobById({
+    required String id,
+    required Knob newKnob,
+  }) {
+    newKnob.addListener(rebuildExhibit.notifyListeners);
+
+    knobs[id] = newKnob;
+
+    rebuildKnobs.notifyListeners();
   }
 }
