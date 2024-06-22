@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:storyto/src/entities/knob_text_field_decoration.dart';
 import 'package:storyto/src/knobs/bool_knob.dart';
 import 'package:storyto/src/knobs/color_knob.dart';
 import 'package:storyto/src/knobs/integer_knob.dart';
@@ -8,6 +9,7 @@ import 'package:storyto/src/knobs/n_selector_knob.dart';
 import 'package:storyto/src/knobs/n_string_knob.dart';
 import 'package:storyto/src/knobs/selector_knob.dart';
 import 'package:storyto/src/knobs/string_knob.dart';
+import 'package:storyto/storyto.dart';
 
 class KnobManager extends ChangeNotifier {
   KnobManager();
@@ -24,6 +26,7 @@ class KnobManager extends ChangeNotifier {
 
   String? nString(
     String id, {
+    required KnobTextFieldDecoration decoration,
     required String initialValue,
     required bool startAsNull,
   }) {
@@ -36,6 +39,7 @@ class KnobManager extends ChangeNotifier {
       }
     } else {
       final newKnob = NStringKnob(
+        decoration: decoration,
         initialValue: initialValue,
         startAsNull: startAsNull,
       );
@@ -44,6 +48,7 @@ class KnobManager extends ChangeNotifier {
         id: id,
         newKnob: newKnob,
       );
+
       return newKnob.value;
     }
   }
@@ -72,11 +77,13 @@ class KnobManager extends ChangeNotifier {
   String string(
     String id, {
     required String initialValue,
+    required KnobTextFieldDecoration decoration,
   }) {
     if (knobs.keys.contains(id)) {
       return knobs[id]!.value as String;
     } else {
       final newKnob = StringKnob(
+        decoration: decoration,
         initialValue: initialValue,
       );
 
@@ -92,6 +99,7 @@ class KnobManager extends ChangeNotifier {
     String id, {
     required int initialValue,
     required bool startAsNull,
+    required KnobTextFieldDecoration decoration,
   }) {
     if (knobs.keys.contains(id)) {
       final selectedKnob = knobs[id];
@@ -102,6 +110,7 @@ class KnobManager extends ChangeNotifier {
       }
     } else {
       final newKnob = NIntegerKnob(
+        decoration: decoration,
         initialValue: initialValue,
         startAsNull: startAsNull,
       );
@@ -118,11 +127,13 @@ class KnobManager extends ChangeNotifier {
   int integer(
     String id, {
     required int initialValue,
+    required KnobTextFieldDecoration decoration,
   }) {
     if (knobs.keys.contains(id)) {
       return knobs[id]!.value as int;
     } else {
       final newKnob = IntegerKnob(
+        decoration: decoration,
         initialValue: initialValue,
       );
 

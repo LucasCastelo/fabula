@@ -49,18 +49,29 @@ class MyApp extends StatelessWidget {
               builder: (context) {
                 return ListView(
                   children: [
+                    const Text('STRING'),
                     ExhibitBuilder(
-                      builder: (k) => Text(k.nString(
-                            'id',
-                            defaultValue: 'a',
-                            startAsNull: false,
-                          ) ??
-                          'NULL'),
+                      builder: (k) => Text(
+                        k.nString(
+                              'id',
+                              decoration: KnobTextFieldDecoration(
+                                label: 'Cool text field',
+                                placeholder: 'E.g.: Test Value',
+                              ),
+                              initialValue: 'a',
+                              startAsNull: false,
+                            ) ??
+                            'NULL',
+                      ),
                     ),
                     Container(width: 40, height: 2, color: Colors.black),
                     ExhibitBuilder(
                       builder: (k) => Container(
-                        color: k.nBool('id', initialValue: false)
+                        color: k.nBool(
+                          'id',
+                          label: 'Change Color of box above',
+                          initialValue: false,
+                        )
                             ? Colors.red
                             : Colors.black,
                         height: 20,
@@ -73,19 +84,30 @@ class MyApp extends StatelessWidget {
                         k.string(
                           'id',
                           initialValue: 'Testing',
+                          decoration:
+                              KnobTextFieldDecoration(label: 'Text above'),
                         ),
                       ),
                     ),
                     Container(width: 40, height: 2, color: Colors.black),
                     ExhibitBuilder(
-                      builder: (k) => Cool(
+                      builder: (k) => IntTest(
                         aNumber: k.nInteger(
                           'id',
-                          defaultValue: 1,
+                          initialValue: 1,
                           startAsNull: false,
+                          decoration: KnobTextFieldDecoration(
+                            label: 'Will add with the number below',
+                          ),
                         ),
-                        // bNumber: 1,
-                        bNumber: k.integer('id-2', initialValue: 12),
+                        bNumber: k.integer(
+                          'id-2',
+                          decoration: KnobTextFieldDecoration(
+                            label: 'Will add to number above',
+                            placeholder: 'E.g.: 1',
+                          ),
+                          initialValue: 12,
+                        ),
                       ),
                     ),
                     ExhibitBuilder(
@@ -200,8 +222,8 @@ class SelectableTester extends StatelessWidget {
   }
 }
 
-class Cool extends StatelessWidget {
-  const Cool({
+class IntTest extends StatelessWidget {
+  const IntTest({
     super.key,
     required this.aNumber,
     required this.bNumber,
