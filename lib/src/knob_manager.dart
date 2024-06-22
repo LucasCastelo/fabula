@@ -30,30 +30,17 @@ class KnobManager extends ChangeNotifier {
     required String initialValue,
     required bool startAsNull,
   }) {
-    if (knobs.keys.contains(id)) {
-      final selectedKnob = knobs[id];
-      if (selectedKnob?.value == null) {
-        return null;
-      } else {
-        return knobs[id]?.value as String;
-      }
-    } else {
-      final newKnob = NStringKnob(
+    return _evaluateNullableKnob(
+      id: id,
+      knob: NStringKnob(
         decoration: decoration,
         initialValue: initialValue,
         startAsNull: startAsNull,
-      );
-
-      _registerNewKnobById(
-        id: id,
-        newKnob: newKnob,
-      );
-
-      return newKnob.value;
-    }
+      ),
+    );
   }
 
-  bool nBool(
+  bool boolean(
     String id, {
     required String label,
     required bool initialValue,
@@ -101,27 +88,14 @@ class KnobManager extends ChangeNotifier {
     required bool startAsNull,
     required KnobTextFieldDecoration decoration,
   }) {
-    if (knobs.keys.contains(id)) {
-      final selectedKnob = knobs[id];
-      if (selectedKnob?.value == null) {
-        return null;
-      } else {
-        return knobs[id]?.value as int;
-      }
-    } else {
-      final newKnob = NIntegerKnob(
+    return _evaluateNullableKnob(
+      id: id,
+      knob: NIntegerKnob(
         decoration: decoration,
         initialValue: initialValue,
         startAsNull: startAsNull,
-      );
-
-      _registerNewKnobById(
-        id: id,
-        newKnob: newKnob,
-      );
-
-      return newKnob.value;
-    }
+      ),
+    );
   }
 
   int integer(
@@ -170,26 +144,14 @@ class KnobManager extends ChangeNotifier {
     required bool startAsNull,
     required SelectorNameMarshal nameMarshal,
   }) {
-    if (knobs.keys.contains(id)) {
-      final selectedKnob = knobs[id];
-      if (selectedKnob?.value == null) {
-        return null;
-      } else {
-        return knobs[id]?.value as T;
-      }
-    } else {
-      final newKnob = NSelectorKnob<T>(
+    return _evaluateNullableKnob(
+      id: id,
+      knob: NSelectorKnob<T>(
         values: values,
         startAsNull: startAsNull,
         nameMarshal: nameMarshal,
-      );
-
-      _registerNewKnobById(
-        id: id,
-        newKnob: newKnob,
-      );
-      return newKnob.value;
-    }
+      ),
+    );
   }
 
   T selectable<T>(
@@ -215,6 +177,22 @@ class KnobManager extends ChangeNotifier {
     }
   }
 
+  T? _evaluateNullableKnob<T>({
+    required String id,
+    required Knob knob,
+  }) {
+    if (knobs.keys.contains(id)) {
+      return _fetchNullableKnobValueById(id);
+    } else {
+      _registerNewKnobById(
+        id: id,
+        newKnob: knob,
+      );
+
+      return knob.value;
+    }
+  }
+
   void _registerNewKnobById({
     required String id,
     required Knob newKnob,
@@ -224,5 +202,15 @@ class KnobManager extends ChangeNotifier {
     knobs[id] = newKnob;
 
     rebuildKnobs.notifyListeners();
+  }
+
+  T? _fetchNullableKnobValueById<T>(String id) {
+    final selectedKnobValue = knobs[id]?.value;
+
+    if (selectedKnobValue == null) {
+      return null;
+    } else {
+      return selectedKnobValue as T;
+    }
   }
 }

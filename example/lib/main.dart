@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
                     Container(width: 40, height: 2, color: Colors.black),
                     ExhibitBuilder(
                       builder: (k) => Container(
-                        color: k.nBool(
+                        color: k.boolean(
                           'id',
                           label: 'Change Color of box above',
                           initialValue: false,
@@ -233,6 +233,7 @@ class IntTest extends StatelessWidget {
   final int bNumber;
   @override
   Widget build(BuildContext context) {
+    print('object');
     if (aNumber == null) {
       return const Text('aNumber null');
     } else {

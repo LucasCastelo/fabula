@@ -14,7 +14,7 @@ class NIntegerKnob extends NullableKnob<int> {
               Expanded(
                 child: CustomTextField(
                   isEnabled: knob.getValue() != null,
-                  onChanged: (v) => int.parse(v),
+                  onChanged: (v) => knob.setValue(int.parse(v)),
                   initialValue: initialValue.toString(),
                   decoration: decoration,
                   keyboardType: TextInputType.number,
