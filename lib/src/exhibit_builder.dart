@@ -40,7 +40,14 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
         ListenableBuilder(
           listenable: knobManager.rebuildKnobs,
           builder: (_, __) => Column(
-            children: knobManager.knobs.values.map((e) => e.knob()).toList(),
+            children: knobManager.knobs.values
+                .map(
+                  (e) => ListenableBuilder(
+                    listenable: e,
+                    builder: (_, __) => e.knob(),
+                  ),
+                )
+                .toList(),
           ),
         )
       ],

@@ -24,7 +24,7 @@ class KnobManager extends ChangeNotifier {
 
   String? nString(
     String id, {
-    required String defaultValue,
+    required String initialValue,
     required bool startAsNull,
   }) {
     if (knobs.keys.contains(id)) {
@@ -36,7 +36,7 @@ class KnobManager extends ChangeNotifier {
       }
     } else {
       final newKnob = NStringKnob(
-        defaultValue: defaultValue,
+        initialValue: initialValue,
         startAsNull: startAsNull,
       );
 
@@ -90,7 +90,7 @@ class KnobManager extends ChangeNotifier {
 
   int? nInteger(
     String id, {
-    required int defaultValue,
+    required int initialValue,
     required bool startAsNull,
   }) {
     if (knobs.keys.contains(id)) {
@@ -102,7 +102,7 @@ class KnobManager extends ChangeNotifier {
       }
     } else {
       final newKnob = NIntegerKnob(
-        defaultValue: defaultValue,
+        initialValue: initialValue,
         startAsNull: startAsNull,
       );
 

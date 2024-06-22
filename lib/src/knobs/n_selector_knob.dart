@@ -11,7 +11,7 @@ class NSelectorKnob<T> extends NullableKnob<T> {
     required super.startAsNull,
     required SelectorNameMarshal<T> nameMarshal,
   }) : super(
-          defaultValue: values[0],
+          initialValue: values[0],
           inputBuilder: (knob, toggleNull) => ValueListenableBuilder(
             valueListenable: knob,
             builder: (context, value, _) => Row(

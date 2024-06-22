@@ -19,14 +19,14 @@ abstract class Knob<T> extends ValueNotifier<T> {
 
 class NullableKnob<T> extends Knob<T?> {
   NullableKnob({
-    required T defaultValue,
+    required T initialValue,
     required bool startAsNull,
     required NullableInputBuilder<T?> inputBuilder,
-  })  : _defaultValue = defaultValue,
+  })  : lastKnowValue = initialValue,
         _inputBuilder = inputBuilder,
-        super(startAsNull ? null : defaultValue);
+        super(startAsNull ? null : initialValue);
 
-  final T _defaultValue;
+  T lastKnowValue;
   final NullableInputBuilder<T?> _inputBuilder;
 
   @override
@@ -35,7 +35,16 @@ class NullableKnob<T> extends Knob<T?> {
   @override
   void setValue(T? newValue) => value = newValue;
 
-  void toggleNull() => value == null ? value = _defaultValue : value = null;
+  void toggleNull() {
+    final currentValue = value;
+
+    if (currentValue == null) {
+      value = lastKnowValue;
+    } else {
+      lastKnowValue = currentValue;
+      value = null;
+    }
+  }
 
   @override
   Widget knob() => _inputBuilder(this, toggleNull);

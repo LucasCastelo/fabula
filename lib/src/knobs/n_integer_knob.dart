@@ -4,7 +4,7 @@ import 'package:storyto/src/knobs/knob.dart';
 
 class NIntegerKnob extends NullableKnob<int> {
   NIntegerKnob({
-    required super.defaultValue,
+    required super.initialValue,
     required super.startAsNull,
   }) : super(
           inputBuilder: (knob, toggleNull) => Row(
