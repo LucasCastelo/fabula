@@ -50,12 +50,14 @@ class KnobManager extends ChangeNotifier {
 
   bool nBool(
     String id, {
+    required String label,
     required bool initialValue,
   }) {
     if (knobs.keys.contains(id)) {
       return knobs[id]!.value as bool;
     } else {
       final newKnob = BoolKnob(
+        label: label,
         initialValue: initialValue,
       );
 

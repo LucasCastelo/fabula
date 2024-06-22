@@ -1,25 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:storyto/src/widgets/custom_checkbox.dart';
 
-// Ugly make it pretty
 class BoolField extends StatelessWidget {
   const BoolField({
     super.key,
+    required this.label,
     required this.value,
     required this.onChanged,
   });
 
-  final bool? value;
+  final String label;
+  final bool value;
   final ValueSetter<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: value == null ? null : () => onChanged(!value!),
-      child: value == null
-          ? const Text('NULL')
-          : Text(
-              value! ? 'True' : "False",
+    return Material(
+      color: Colors.white,
+      child: InkWell(
+        onTap: () => onChanged(!value),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(label),
+            CustomCheckbox(
+              value: value,
+              onChanged: onChanged,
             ),
+          ],
+        ),
+      ),
     );
   }
 }
