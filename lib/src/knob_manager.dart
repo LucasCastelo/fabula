@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:storyto/src/entities/knob_text_field_decoration.dart';
 import 'package:storyto/src/fields/bool_field.dart';
 import 'package:storyto/src/fields/color_field.dart';
+import 'package:storyto/src/fields/nullable_color_field.dart';
 import 'package:storyto/src/fields/nullable_selector_field.dart';
 import 'package:storyto/src/fields/nullable_string_field.dart';
 import 'package:storyto/src/entities/knob.dart';
@@ -130,6 +131,25 @@ class KnobManager extends ChangeNotifier {
           inputBuilder: (knob) => ColorField(
             label: label,
             knob: knob,
+          ),
+        ),
+      );
+
+  Color? nColor(
+    String id, {
+    required Color initialValue,
+    required String label,
+    required bool startAsNull,
+  }) =>
+      _evaluateKnob(
+        id: id,
+        knob: NullableKnob<Color>(
+          startAsNull: startAsNull,
+          initialValue: initialValue,
+          inputBuilder: (knob, toggleNull) => NullableColorField(
+            label: label,
+            knob: knob,
+            toggleNull: toggleNull,
           ),
         ),
       );

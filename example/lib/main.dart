@@ -138,6 +138,16 @@ class MyApp extends StatelessWidget {
                         ),
                       ),
                     ),
+                    ExhibitBuilder(
+                      builder: (k) => NullableColorTester(
+                        color: k.nColor(
+                          'id',
+                          label: 'Above color',
+                          initialValue: Colors.red,
+                          startAsNull: false,
+                        ),
+                      ),
+                    ),
                   ],
                 );
               },
@@ -146,6 +156,26 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class NullableColorTester extends StatelessWidget {
+  const NullableColorTester({
+    super.key,
+    required this.color,
+  });
+
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return color == null
+        ? const Text('Color is null')
+        : Container(
+            height: 20,
+            width: 20,
+            color: color,
+          );
   }
 }
 
