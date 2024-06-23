@@ -233,7 +233,6 @@ class IntTest extends StatelessWidget {
   final int bNumber;
   @override
   Widget build(BuildContext context) {
-    print('object');
     if (aNumber == null) {
       return const Text('aNumber null');
     } else {
