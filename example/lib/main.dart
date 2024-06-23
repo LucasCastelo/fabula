@@ -64,7 +64,6 @@ class MyApp extends StatelessWidget {
                             'NULL',
                       ),
                     ),
-                    Container(width: 40, height: 2, color: Colors.black),
                     ExhibitBuilder(
                       builder: (k) => Container(
                         color: k.boolean(
@@ -78,7 +77,6 @@ class MyApp extends StatelessWidget {
                         width: 20,
                       ),
                     ),
-                    Container(width: 40, height: 2, color: Colors.black),
                     ExhibitBuilder(
                       builder: (k) => Text(
                         k.string(
@@ -89,7 +87,6 @@ class MyApp extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(width: 40, height: 2, color: Colors.black),
                     ExhibitBuilder(
                       builder: (k) => IntTest(
                         aNumber: k.nInteger(
