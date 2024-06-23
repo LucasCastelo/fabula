@@ -121,12 +121,14 @@ class KnobManager extends ChangeNotifier {
   Color color(
     String id, {
     required Color initialValue,
+    required String label,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<Color>(
           initialValue: initialValue,
           inputBuilder: (knob) => ColorField(
+            label: label,
             knob: knob,
           ),
         ),

@@ -131,7 +131,11 @@ class MyApp extends StatelessWidget {
                     ),
                     ExhibitBuilder(
                       builder: (k) => ColorTester(
-                        color: k.color('id', initialValue: Colors.red),
+                        color: k.color(
+                          'id',
+                          label: 'Above color',
+                          initialValue: Colors.red,
+                        ),
                       ),
                     ),
                   ],
