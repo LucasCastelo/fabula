@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/entities/knob.dart';
+import 'package:storyto/src/entities/knob_text_field_decoration.dart';
+import 'package:storyto/src/widgets/custom_text_field.dart';
 
 class ColorField extends StatelessWidget {
   ColorField({
@@ -15,28 +17,20 @@ class ColorField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: knob,
-      builder: (BuildContext context, value, Widget? child) {
-        final currentHexColor =
-            value.value.toRadixString(16).replaceRange(0, 2, '');
-        final hexRegEx = RegExp(r'^[0-9a-fA-F]{6}$');
+    final currentHexColor =
+        knob.getValue().value.toRadixString(16).replaceRange(0, 2, '');
+    final hexRegEx = RegExp(r'^[0-9a-fA-F]{6}$');
 
-        if (currentHexColor != controller.value.text) {
-          controller.text = currentHexColor;
+    return CustomTextField(
+      onChanged: (v) {
+        if (hexRegEx.hasMatch(v)) {
+          knob.setValue(hexToColor(v));
         }
-
-        return TextField(
-          controller: controller,
-          onChanged: (v) {
-            if (hexRegEx.hasMatch(v)) {
-              knob.setValue(hexToColor('#$v'));
-            }
-          },
-          style: const TextStyle(),
-          keyboardType: keyboardType,
-        );
       },
+      keyboardType: keyboardType,
+      isEnabled: true,
+      initialValue: currentHexColor,
+      decoration: KnobTextFieldDecoration(label: 'label'),
     );
   }
 }
@@ -44,7 +38,7 @@ class ColorField extends StatelessWidget {
 Color hexToColor(String hexString) {
   return Color(
     int.parse(
-      hexString.replaceFirst('#', '0xFF'),
+      "0xff$hexString",
     ),
   );
 }
