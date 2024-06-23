@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/entities/knob_text_field_decoration.dart';
-import 'package:storyto/src/knobs/bool_knob.dart';
-import 'package:storyto/src/knobs/color_knob.dart';
-import 'package:storyto/src/knobs/integer_knob.dart';
-import 'package:storyto/src/knobs/knob.dart';
-import 'package:storyto/src/knobs/n_integer_knob.dart';
-import 'package:storyto/src/knobs/n_selector_knob.dart';
-import 'package:storyto/src/knobs/n_string_knob.dart';
-import 'package:storyto/src/knobs/selector_knob.dart';
-import 'package:storyto/src/knobs/string_knob.dart';
-import 'package:storyto/storyto.dart';
+import 'package:storyto/src/fields/bool_field.dart';
+import 'package:storyto/src/fields/color_field.dart';
+import 'package:storyto/src/fields/nullable_selector_field.dart';
+import 'package:storyto/src/fields/nullable_string_field.dart';
+import 'package:storyto/src/entities/knob.dart';
+import 'package:storyto/src/fields/selector_field.dart';
+import 'package:storyto/src/widgets/custom_text_field.dart';
 
 class KnobManager extends ChangeNotifier {
   KnobManager();
@@ -32,10 +29,16 @@ class KnobManager extends ChangeNotifier {
   }) =>
       _evaluateKnob(
         id: id,
-        knob: NStringKnob(
-          decoration: decoration,
+        knob: NullableKnob<String?>(
           initialValue: initialValue,
           startAsNull: startAsNull,
+          inputBuilder: (knob, toggleNull) => NullableTextField(
+            decoration: decoration,
+            initialValue: initialValue,
+            toggleNull: toggleNull,
+            valueGetter: knob.getValue,
+            onChanged: knob.setValue,
+          ),
         ),
       );
 
@@ -46,9 +49,13 @@ class KnobManager extends ChangeNotifier {
   }) =>
       _evaluateKnob(
         id: id,
-        knob: BoolKnob(
-          label: label,
+        knob: DefaultKnob<bool>(
           initialValue: initialValue,
+          inputBuilder: (knob) => BoolField(
+            label: label,
+            value: knob.getValue(),
+            onChanged: knob.setValue,
+          ),
         ),
       );
 
@@ -59,9 +66,15 @@ class KnobManager extends ChangeNotifier {
   }) =>
       _evaluateKnob(
         id: id,
-        knob: StringKnob(
-          decoration: decoration,
+        knob: DefaultKnob<String>(
           initialValue: initialValue,
+          inputBuilder: (knob) => CustomTextField(
+            onChanged: knob.setValue,
+            isEnabled: true,
+            initialValue: initialValue,
+            decoration: decoration,
+            keyboardType: TextInputType.text,
+          ),
         ),
       );
 
@@ -73,10 +86,16 @@ class KnobManager extends ChangeNotifier {
   }) =>
       _evaluateKnob(
         id: id,
-        knob: NIntegerKnob(
-          decoration: decoration,
+        knob: NullableKnob<int>(
           initialValue: initialValue,
           startAsNull: startAsNull,
+          inputBuilder: (knob, toggleNull) => NullableTextField<int?>(
+            decoration: decoration,
+            initialValue: initialValue.toString(),
+            toggleNull: toggleNull,
+            valueGetter: knob.getValue,
+            onChanged: (v) => knob.setValue(int.parse(v)),
+          ),
         ),
       );
 
@@ -87,9 +106,15 @@ class KnobManager extends ChangeNotifier {
   }) =>
       _evaluateKnob(
         id: id,
-        knob: IntegerKnob(
-          decoration: decoration,
+        knob: DefaultKnob<int>(
           initialValue: initialValue,
+          inputBuilder: (knob) => CustomTextField(
+            decoration: decoration,
+            isEnabled: true,
+            onChanged: (v) => knob.setValue(int.parse(v)),
+            initialValue: initialValue.toString(),
+            keyboardType: TextInputType.number,
+          ),
         ),
       );
 
@@ -99,8 +124,11 @@ class KnobManager extends ChangeNotifier {
   }) =>
       _evaluateKnob(
         id: id,
-        knob: ColorKnob(
+        knob: DefaultKnob<Color>(
           initialValue: initialValue,
+          inputBuilder: (knob) => ColorField(
+            knob: knob,
+          ),
         ),
       );
 
@@ -112,10 +140,15 @@ class KnobManager extends ChangeNotifier {
   }) =>
       _evaluateKnob(
         id: id,
-        knob: NSelectorKnob<T>(
-          values: values,
+        knob: NullableKnob<T>(
           startAsNull: startAsNull,
-          nameMarshal: nameMarshal,
+          initialValue: values[0],
+          inputBuilder: (knob, toggleNull) => NullableSelectorField<T?>(
+            knob: knob,
+            values: values,
+            nameMarshal: nameMarshal,
+            toggleNull: toggleNull,
+          ),
         ),
       );
 
@@ -127,10 +160,13 @@ class KnobManager extends ChangeNotifier {
   }) =>
       _evaluateKnob(
         id: id,
-        knob: SelectorKnob<T>(
-          values: values,
-          nameMarshal: nameMarshal,
+        knob: DefaultKnob<T>(
           initialValue: initialValue,
+          inputBuilder: (knob) => SelectorField<T>(
+            knob: knob,
+            options: values,
+            nameMarshal: nameMarshal,
+          ),
         ),
       );
 

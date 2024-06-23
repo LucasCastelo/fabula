@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/knobs/knob.dart';
+import 'package:storyto/src/entities/knob.dart';
 
 class ColorField extends StatelessWidget {
   ColorField({
