@@ -11,6 +11,7 @@ class NStringKnob extends NullableKnob<String?> {
     required super.startAsNull,
   }) : super(
           inputBuilder: (knob, toggleNull) => Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
                 child: CustomTextField(
@@ -21,13 +22,9 @@ class NStringKnob extends NullableKnob<String?> {
                   keyboardType: TextInputType.number,
                 ),
               ),
-              Row(
-                children: [
-                  CustomCheckbox(
-                    value: knob.value != null,
-                    onChanged: (_) => toggleNull(),
-                  )
-                ],
+              CustomCheckbox(
+                value: knob.value != null,
+                onChanged: (_) => toggleNull(),
               )
             ],
           ),

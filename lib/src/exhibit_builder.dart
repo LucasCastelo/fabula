@@ -44,7 +44,10 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
                 .map(
                   (e) => ListenableBuilder(
                     listenable: e,
-                    builder: (_, __) => e.knob(),
+                    builder: (_, __) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: e.knob(),
+                    ),
                   ),
                 )
                 .toList(),

@@ -32,6 +32,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
     super.initState();
   }
 
+  int get textLength => controller.text.length;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -50,7 +52,24 @@ class _CustomTextFieldState extends State<CustomTextField> {
           style: const TextStyle(),
           keyboardType: widget.keyboardType,
           decoration: InputDecoration(
+            suffix: textLength > 0
+                ? Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    margin: const EdgeInsetsDirectional.only(start: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      textLength.toString(),
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                  )
+                : null,
+            contentPadding: const EdgeInsets.all(8),
             hintText: widget.decoration.placeholder,
+            border: const OutlineInputBorder(),
+            focusedBorder: const OutlineInputBorder(),
           ),
         ),
       ],
