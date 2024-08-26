@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:storyto/src/entities/knob_text_field_decoration.dart';
 import 'package:storyto/src/fields/bool_field.dart';
 import 'package:storyto/src/fields/color_field.dart';
@@ -21,6 +24,34 @@ class KnobManager extends ChangeNotifier {
     knobs.values.map((e) => e.dispose());
     super.dispose();
   }
+
+  AnimationController animationController({
+    required String id,
+    required TickerProvider vsync,
+    required Duration duration,
+  }) =>
+      _evaluateKnob(
+        id: id,
+        knob: DefaultKnob<AnimationController>(
+          initialValue: AnimationController(
+            vsync: vsync,
+            duration: duration,
+          ),
+          inputBuilder: (knob) => Column(
+            children: [
+              GestureDetector(
+                onTap: () =>
+                    knob.value.value = Random().nextDouble().clamp(0, 1),
+                child: const Text('CHANGE ANIMATION'),
+              ),
+              GestureDetector(
+                onTap: () => knob.value.forward(from: 0),
+                child: const Text('Play'),
+              )
+            ],
+          ),
+        ),
+      );
 
   String? nString(
     String id, {

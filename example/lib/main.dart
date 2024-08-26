@@ -34,9 +34,14 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -148,6 +153,15 @@ class MyApp extends StatelessWidget {
                         ),
                       ),
                     ),
+                    ExhibitBuilder(
+                      builder: (k) => AnimationTester(
+                        controller: k.animationController(
+                          id: 'animation',
+                          vsync: this,
+                          duration: const Duration(seconds: 5),
+                        ),
+                      ),
+                    )
                   ],
                 );
               },
@@ -155,6 +169,35 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class AnimationTester extends StatefulWidget {
+  const AnimationTester({
+    super.key,
+    required this.controller,
+  });
+
+  final AnimationController controller;
+
+  @override
+  State<AnimationTester> createState() => _AnimationTesterState();
+}
+
+class _AnimationTesterState extends State<AnimationTester>
+    with TickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: widget.controller,
+      builder: (_, __) {
+        return Container(
+          height: 100,
+          width: 100,
+          color: Colors.red.withOpacity(widget.controller.value),
+        );
+      },
     );
   }
 }
