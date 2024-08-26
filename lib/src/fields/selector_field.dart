@@ -16,23 +16,42 @@ class SelectorField<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: knob,
-      builder: (context, value, _) {
-        return DropdownButton<T>(
-          value: value,
-          onChanged: (v) => v != null ? knob.setValue(v) : null,
-          items: List.generate(
-            options.length,
-            (index) => DropdownMenuItem(
-              value: options[index],
+    final isNull = knob.getValue() == null;
+    return Container(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
+      decoration: BoxDecoration(
+          border: Border.all(
+            color: isNull ? Colors.grey : Colors.black,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(4)),
+      child: knob.getValue() == null
+          ? Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 14,
+              ),
               child: Text(
-                nameMarshal(options[index]),
+                'Disabled',
+                style: TextStyle(
+                  color: isNull ? Colors.grey : Colors.black,
+                ),
+              ),
+            )
+          : DropdownButton<T>(
+              value: knob.getValue(),
+              onChanged: (v) => v != null ? knob.setValue(v) : null,
+              underline: const SizedBox.shrink(),
+              items: List.generate(
+                options.length,
+                (index) => DropdownMenuItem(
+                  value: options[index],
+                  child: Text(
+                    nameMarshal(options[index]),
+                  ),
+                ),
               ),
             ),
-          ),
-        );
-      },
     );
   }
 }

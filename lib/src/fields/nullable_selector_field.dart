@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/entities/knob.dart';
 import 'package:storyto/src/fields/selector_field.dart';
+import 'package:storyto/src/widgets/custom_checkbox.dart';
 
 typedef SelectorNameMarshal<T> = String Function(T element);
 
@@ -23,20 +24,15 @@ class NullableSelectorField<T> extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: knob.value == null
-              ? const Text(
-                  'Value set to NULL',
-                  textAlign: TextAlign.center,
-                )
-              : SelectorField<T>(
-                  knob: knob,
-                  options: values,
-                  nameMarshal: nameMarshal,
-                ),
+          child: SelectorField<T>(
+            knob: knob,
+            options: values,
+            nameMarshal: nameMarshal,
+          ),
         ),
-        GestureDetector(
-          onTap: toggleNull,
-          child: const Text('NULL'),
+        CustomCheckbox(
+          value: knob.getValue() != null,
+          onChanged: (_) => toggleNull(),
         )
       ],
     );
