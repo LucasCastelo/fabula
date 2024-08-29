@@ -64,7 +64,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                                 placeholder: 'E.g.: Test Value',
                               ),
                               initialValue: 'a',
-                              startAsNull: false,
                             ) ??
                             'NULL',
                       ),
@@ -97,7 +96,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                         aNumber: k.nInteger(
                           'id',
                           initialValue: 1,
-                          startAsNull: false,
                           decoration: KnobTextFieldDecoration(
                             label: 'Will add with the number below',
                           ),
@@ -117,7 +115,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                         colorEnum: k.nSelectable(
                           'id',
                           values: ColorEnum.values,
-                          startAsNull: false,
                           nameMarshal: (colorEnum) =>
                               'Name is: ${colorEnum.toString()}',
                         ),
@@ -149,7 +146,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                           'id',
                           label: 'Above color',
                           initialValue: Colors.red,
-                          startAsNull: false,
                         ),
                       ),
                     ),

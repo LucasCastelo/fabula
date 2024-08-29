@@ -62,7 +62,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     ),
                     child: Text(
                       textLength.toString(),
-                      style: const TextStyle(fontSize: 12),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                      ),
                     ),
                   )
                 : null,

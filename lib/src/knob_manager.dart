@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:storyto/src/entities/knob_text_field_decoration.dart';
 import 'package:storyto/src/fields/bool_field.dart';
 import 'package:storyto/src/fields/color_field.dart';
@@ -55,18 +54,17 @@ class KnobManager extends ChangeNotifier {
 
   String? nString(
     String id, {
-    required KnobTextFieldDecoration decoration,
-    required String initialValue,
-    required bool startAsNull,
+    KnobTextFieldDecoration? decoration,
+    String? initialValue,
   }) =>
       _evaluateKnob(
         id: id,
         knob: NullableKnob<String?>(
           initialValue: initialValue,
-          startAsNull: startAsNull,
+          startAsNull: initialValue == null,
           inputBuilder: (knob, toggleNull) => NullableTextField(
-            decoration: decoration,
-            initialValue: initialValue,
+            decoration: decoration ?? KnobTextFieldDecoration(label: id),
+            initialValue: initialValue ?? '',
             toggleNull: toggleNull,
             valueGetter: knob.getValue,
             onChanged: knob.setValue,
@@ -77,12 +75,12 @@ class KnobManager extends ChangeNotifier {
   bool boolean(
     String id, {
     required String label,
-    required bool initialValue,
+    bool? initialValue,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<bool>(
-          initialValue: initialValue,
+          initialValue: initialValue ?? true,
           inputBuilder: (knob) => BoolField(
             label: label,
             value: knob.getValue(),
@@ -93,18 +91,18 @@ class KnobManager extends ChangeNotifier {
 
   String string(
     String id, {
-    required String initialValue,
-    required KnobTextFieldDecoration decoration,
+    String? initialValue,
+    KnobTextFieldDecoration? decoration,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<String>(
-          initialValue: initialValue,
+          initialValue: initialValue ?? '',
           inputBuilder: (knob) => CustomTextField(
             onChanged: knob.setValue,
             isEnabled: true,
             initialValue: initialValue,
-            decoration: decoration,
+            decoration: decoration ?? KnobTextFieldDecoration(label: id),
             keyboardType: TextInputType.text,
           ),
         ),
@@ -112,17 +110,16 @@ class KnobManager extends ChangeNotifier {
 
   int? nInteger(
     String id, {
-    required int initialValue,
-    required bool startAsNull,
-    required KnobTextFieldDecoration decoration,
+    int? initialValue,
+    KnobTextFieldDecoration? decoration,
   }) =>
       _evaluateKnob(
         id: id,
         knob: NullableKnob<int>(
-          initialValue: initialValue,
-          startAsNull: startAsNull,
+          initialValue: initialValue ?? 0,
+          startAsNull: initialValue == null,
           inputBuilder: (knob, toggleNull) => NullableTextField<int?>(
-            decoration: decoration,
+            decoration: decoration ?? KnobTextFieldDecoration(label: id),
             initialValue: initialValue.toString(),
             toggleNull: toggleNull,
             valueGetter: knob.getValue,
@@ -133,15 +130,15 @@ class KnobManager extends ChangeNotifier {
 
   int integer(
     String id, {
-    required int initialValue,
-    required KnobTextFieldDecoration decoration,
+    int? initialValue,
+    KnobTextFieldDecoration? decoration,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<int>(
-          initialValue: initialValue,
+          initialValue: initialValue ?? 0,
           inputBuilder: (knob) => CustomTextField(
-            decoration: decoration,
+            decoration: decoration ?? KnobTextFieldDecoration(label: id),
             isEnabled: true,
             onChanged: (v) => knob.setValue(int.parse(v)),
             initialValue: initialValue.toString(),
@@ -152,15 +149,15 @@ class KnobManager extends ChangeNotifier {
 
   Color color(
     String id, {
-    required Color initialValue,
-    required String label,
+    Color? initialValue,
+    String? label,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<Color>(
-          initialValue: initialValue,
+          initialValue: initialValue ?? Colors.black,
           inputBuilder: (knob) => ColorField(
-            label: label,
+            label: label ?? id,
             knob: knob,
           ),
         ),
@@ -168,17 +165,16 @@ class KnobManager extends ChangeNotifier {
 
   Color? nColor(
     String id, {
-    required Color initialValue,
-    required String label,
-    required bool startAsNull,
+    Color? initialValue,
+    String? label,
   }) =>
       _evaluateKnob(
         id: id,
         knob: NullableKnob<Color>(
-          startAsNull: startAsNull,
-          initialValue: initialValue,
+          startAsNull: initialValue == null,
+          initialValue: initialValue ?? Colors.black,
           inputBuilder: (knob, toggleNull) => NullableColorField(
-            label: label,
+            label: label ?? id,
             knob: knob,
             toggleNull: toggleNull,
           ),
@@ -188,18 +184,19 @@ class KnobManager extends ChangeNotifier {
   T? nSelectable<T>(
     String id, {
     required List<T> values,
-    required bool startAsNull,
-    required SelectorNameMarshal nameMarshal,
+    SelectorNameMarshal? nameMarshal,
   }) =>
       _evaluateKnob(
         id: id,
         knob: NullableKnob<T>(
-          startAsNull: startAsNull,
-          initialValue: values[0],
+          startAsNull: false,
+          initialValue: values.isNotEmpty
+              ? values[0]
+              : throw Exception('Selectable of id $id cant have empty values'),
           inputBuilder: (knob, toggleNull) => NullableSelectorField<T?>(
             knob: knob,
             values: values,
-            nameMarshal: nameMarshal,
+            nameMarshal: nameMarshal ?? (v) => v.toString(),
             toggleNull: toggleNull,
           ),
         ),
@@ -208,17 +205,19 @@ class KnobManager extends ChangeNotifier {
   T selectable<T>(
     String id, {
     required List<T> values,
-    required T initialValue,
-    required SelectorNameMarshal nameMarshal,
+    T? initialValue,
+    SelectorNameMarshal? nameMarshal,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<T>(
-          initialValue: initialValue,
+          initialValue: values.isNotEmpty
+              ? values[0]
+              : throw Exception('Selectable of id $id cant have empty values'),
           inputBuilder: (knob) => SelectorField<T>(
             knob: knob,
             options: values,
-            nameMarshal: nameMarshal,
+            nameMarshal: nameMarshal ?? (v) => v.toString(),
           ),
         ),
       );
