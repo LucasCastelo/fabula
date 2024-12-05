@@ -63,7 +63,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                                 label: 'Cool text field',
                                 placeholder: 'E.g.: Test Value',
                               ),
-                              initialValue: 'a',
                             ) ??
                             'NULL',
                       ),
@@ -145,7 +144,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                         color: k.nColor(
                           'id',
                           label: 'Above color',
-                          initialValue: Colors.red,
+                          value: Colors.red,
                         ),
                       ),
                     ),

@@ -55,19 +55,18 @@ class KnobManager extends ChangeNotifier {
   String? nString(
     String id, {
     KnobTextFieldDecoration? decoration,
-    String? initialValue,
+    String? value,
   }) =>
       _evaluateKnob(
         id: id,
         knob: NullableKnob<String?>(
-          initialValue: initialValue,
-          startAsNull: initialValue == null,
+          value: value,
           inputBuilder: (knob, toggleNull) => NullableTextField(
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
-            initialValue: initialValue ?? '',
+            initialValue: value ?? '',
             toggleNull: toggleNull,
-            valueGetter: knob.getValue,
             onChanged: knob.setValue,
+            isEnabled: knob.isFieldEnabled,
           ),
         ),
       );
@@ -116,14 +115,13 @@ class KnobManager extends ChangeNotifier {
       _evaluateKnob(
         id: id,
         knob: NullableKnob<int>(
-          initialValue: initialValue ?? 0,
-          startAsNull: initialValue == null,
+          value: initialValue,
           inputBuilder: (knob, toggleNull) => NullableTextField<int?>(
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
             initialValue: initialValue.toString(),
             toggleNull: toggleNull,
-            valueGetter: knob.getValue,
             onChanged: (v) => knob.setValue(int.parse(v)),
+            isEnabled: knob.isFieldEnabled,
           ),
         ),
       );
@@ -165,14 +163,13 @@ class KnobManager extends ChangeNotifier {
 
   Color? nColor(
     String id, {
-    Color? initialValue,
+    Color? value,
     String? label,
   }) =>
       _evaluateKnob(
         id: id,
         knob: NullableKnob<Color>(
-          startAsNull: initialValue == null,
-          initialValue: initialValue ?? Colors.black,
+          value: value,
           inputBuilder: (knob, toggleNull) => NullableColorField(
             label: label ?? id,
             knob: knob,
@@ -189,8 +186,7 @@ class KnobManager extends ChangeNotifier {
       _evaluateKnob(
         id: id,
         knob: NullableKnob<T>(
-          startAsNull: false,
-          initialValue: values.isNotEmpty
+          value: values.isNotEmpty
               ? values[0]
               : throw Exception('Selectable of id $id cant have empty values'),
           inputBuilder: (knob, toggleNull) => NullableSelectorField<T?>(

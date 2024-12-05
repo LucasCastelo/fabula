@@ -9,19 +9,18 @@ class NullableTextField<T> extends StatelessWidget {
     required this.decoration,
     required this.initialValue,
     required this.toggleNull,
-    required this.valueGetter,
     required this.onChanged,
+    required this.isEnabled,
   });
 
   final KnobTextFieldDecoration decoration;
   final String initialValue;
-  final ValueGetter<T> valueGetter;
   final ValueSetter<String> onChanged;
   final VoidCallback toggleNull;
+  final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
-    final value = valueGetter();
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -29,13 +28,13 @@ class NullableTextField<T> extends StatelessWidget {
           child: CustomTextField(
             decoration: decoration,
             initialValue: initialValue,
-            isEnabled: value != null,
+            isEnabled: isEnabled,
             onChanged: onChanged,
             keyboardType: TextInputType.number,
           ),
         ),
         CustomCheckbox(
-          value: value != null,
+          value: isEnabled,
           onChanged: (_) => toggleNull(),
         )
       ],

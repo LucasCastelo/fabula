@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 typedef NullableInputBuilder<T> = Widget Function(
-  Knob<T> knob,
+  NullableKnob<T> knob,
   VoidCallback toggleNull,
 );
 
@@ -19,15 +19,18 @@ abstract class Knob<T> extends ValueNotifier<T> {
 
 class NullableKnob<T> extends Knob<T?> {
   NullableKnob({
-    required T initialValue,
-    required bool startAsNull,
+    T? value,
     required NullableInputBuilder<T?> inputBuilder,
-  })  : lastKnowValue = initialValue,
+  })  : lastKnowValue = value,
         _inputBuilder = inputBuilder,
-        super(startAsNull ? null : initialValue);
+        _isFieldEnabeld = value != null,
+        super(value);
 
-  T lastKnowValue;
+  T? lastKnowValue;
   final NullableInputBuilder<T?> _inputBuilder;
+
+  bool _isFieldEnabeld;
+  bool get isFieldEnabled => _isFieldEnabeld;
 
   @override
   T? getValue() => value;
@@ -44,6 +47,10 @@ class NullableKnob<T> extends Knob<T?> {
       lastKnowValue = currentValue;
       value = null;
     }
+
+    _isFieldEnabeld = !_isFieldEnabeld;
+
+    notifyListeners();
   }
 
   @override
