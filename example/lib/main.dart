@@ -72,7 +72,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                         color: k.boolean(
                           'id',
                           label: 'Change Color of box above',
-                          initialValue: false,
                         )
                             ? Colors.red
                             : Colors.black,
@@ -84,7 +83,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                       builder: (k) => Text(
                         k.string(
                           'id',
-                          initialValue: 'Testing',
                           decoration:
                               KnobTextFieldDecoration(label: 'Text above'),
                         ),
@@ -94,7 +92,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                       builder: (k) => IntTest(
                         aNumber: k.nInteger(
                           'id',
-                          initialValue: 1,
                           decoration: KnobTextFieldDecoration(
                             label: 'Will add with the number below',
                           ),
@@ -105,7 +102,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                             label: 'Will add to number above',
                             placeholder: 'E.g.: 1',
                           ),
-                          initialValue: 12,
                         ),
                       ),
                     ),
@@ -124,7 +120,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                         colorEnum: k.selectable(
                           'id',
                           values: ColorEnum.values,
-                          initialValue: ColorEnum.black,
                           nameMarshal: (colorEnum) =>
                               'Name is: ${colorEnum.toString()}',
                         ),
@@ -135,7 +130,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                         color: k.color(
                           'id',
                           label: 'Above color',
-                          initialValue: Colors.red,
                         ),
                       ),
                     ),
@@ -144,7 +138,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                         color: k.nColor(
                           'id',
                           label: 'Above color',
-                          value: Colors.red,
                         ),
                       ),
                     ),

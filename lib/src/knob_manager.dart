@@ -27,14 +27,15 @@ class KnobManager extends ChangeNotifier {
   AnimationController animationController({
     required String id,
     required TickerProvider vsync,
-    required Duration duration,
+    Duration? duration,
   }) =>
+      // TODO: Create knob for AnimationController
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<AnimationController>(
           initialValue: AnimationController(
             vsync: vsync,
-            duration: duration,
+            duration: duration ?? const Duration(seconds: 5),
           ),
           inputBuilder: (knob) => Column(
             children: [
@@ -74,12 +75,12 @@ class KnobManager extends ChangeNotifier {
   bool boolean(
     String id, {
     required String label,
-    bool? initialValue,
+    bool? value,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<bool>(
-          initialValue: initialValue ?? true,
+          initialValue: value ?? true,
           inputBuilder: (knob) => BoolField(
             label: label,
             value: knob.getValue(),
@@ -90,17 +91,17 @@ class KnobManager extends ChangeNotifier {
 
   String string(
     String id, {
-    String? initialValue,
+    String? value,
     KnobTextFieldDecoration? decoration,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<String>(
-          initialValue: initialValue ?? '',
+          initialValue: value ?? '',
           inputBuilder: (knob) => CustomTextField(
             onChanged: knob.setValue,
             isEnabled: true,
-            initialValue: initialValue,
+            initialValue: value,
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
             keyboardType: TextInputType.text,
           ),
@@ -128,18 +129,18 @@ class KnobManager extends ChangeNotifier {
 
   int integer(
     String id, {
-    int? initialValue,
+    int? value,
     KnobTextFieldDecoration? decoration,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<int>(
-          initialValue: initialValue ?? 0,
+          initialValue: value ?? 0,
           inputBuilder: (knob) => CustomTextField(
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
             isEnabled: true,
             onChanged: (v) => knob.setValue(int.parse(v)),
-            initialValue: initialValue.toString(),
+            initialValue: value.toString(),
             keyboardType: TextInputType.number,
           ),
         ),
@@ -201,7 +202,6 @@ class KnobManager extends ChangeNotifier {
   T selectable<T>(
     String id, {
     required List<T> values,
-    T? initialValue,
     SelectorNameMarshal? nameMarshal,
   }) =>
       _evaluateKnob(
@@ -242,6 +242,7 @@ class KnobManager extends ChangeNotifier {
 
     knobs[id] = newKnob;
 
+    // TOOD: Debounce this
     rebuildKnobs.notifyListeners();
   }
 
