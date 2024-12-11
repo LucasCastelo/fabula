@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:storyto/src/entities/knob_text_field_decoration.dart';
+import 'package:storyto/src/widgets/toggler_field.dart';
 import 'package:storyto/src/fields/bool_field.dart';
 import 'package:storyto/src/fields/color_field.dart';
 import 'package:storyto/src/fields/nullable_color_field.dart';
@@ -85,6 +86,25 @@ class KnobManager extends ChangeNotifier {
             label: label,
             value: knob.getValue(),
             onChanged: knob.setValue,
+          ),
+        ),
+      );
+
+  T toggler<T>(
+    String id, {
+    required String label,
+    required T onValue,
+    required T offValue,
+  }) =>
+      _evaluateKnob(
+        id: id,
+        knob: DefaultKnob<T>(
+          initialValue: onValue,
+          inputBuilder: (knob) => TogglerField(
+            getValue: knob.getValue,
+            onChange: knob.setValue,
+            offValue: offValue,
+            onValue: onValue,
           ),
         ),
       );
