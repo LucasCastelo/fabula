@@ -1,4 +1,4 @@
-# example
+# fabula_example
 
 A new Flutter project.
 

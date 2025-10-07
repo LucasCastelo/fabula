@@ -1,6 +1,6 @@
 {
-    "name": "example",
-    "short_name": "example",
+    "name": "fabula_example",
+    "short_name": "fabula_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
