@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:storyto/src/entities/knob_text_field_decoration.dart';
+import 'package:storyto/src/fields/animation_player.dart';
 import 'package:storyto/src/widgets/toggler_field.dart';
 import 'package:storyto/src/fields/bool_field.dart';
 import 'package:storyto/src/fields/color_field.dart';
@@ -30,7 +29,6 @@ class KnobManager extends ChangeNotifier {
     required TickerProvider vsync,
     Duration? duration,
   }) =>
-      // TODO: Create knob for AnimationController
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<AnimationController>(
@@ -38,19 +36,7 @@ class KnobManager extends ChangeNotifier {
             vsync: vsync,
             duration: duration ?? const Duration(seconds: 5),
           ),
-          inputBuilder: (knob) => Column(
-            children: [
-              GestureDetector(
-                onTap: () =>
-                    knob.value.value = Random().nextDouble().clamp(0, 1),
-                child: const Text('CHANGE ANIMATION'),
-              ),
-              GestureDetector(
-                onTap: () => knob.value.forward(from: 0),
-                child: const Text('Play'),
-              )
-            ],
-          ),
+          inputBuilder: (knob) => AnimationPlayer(knob: knob),
         ),
       );
 
