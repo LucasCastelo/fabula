@@ -23,14 +23,14 @@ class NullableKnob<T> extends Knob<T?> {
     required NullableInputBuilder<T?> inputBuilder,
   })  : lastKnowValue = value,
         _inputBuilder = inputBuilder,
-        _isFieldEnabeld = value != null,
+        _isFieldEnabled = value != null,
         super(value);
 
   T? lastKnowValue;
   final NullableInputBuilder<T?> _inputBuilder;
 
-  bool _isFieldEnabeld;
-  bool get isFieldEnabled => _isFieldEnabeld;
+  bool _isFieldEnabled;
+  bool get isFieldEnabled => _isFieldEnabled;
 
   @override
   T? getValue() => value;
@@ -48,7 +48,7 @@ class NullableKnob<T> extends Knob<T?> {
       value = null;
     }
 
-    _isFieldEnabeld = !_isFieldEnabeld;
+    _isFieldEnabled = !_isFieldEnabled;
 
     notifyListeners();
   }
