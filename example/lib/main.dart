@@ -177,13 +177,13 @@ class _AnimationTesterState extends State<AnimationTester>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: widget.controller,
-      builder: (_, __) {
+    return ValueListenableBuilder(
+      valueListenable: widget.controller,
+      builder: (_, value, ___) {
         return Container(
           height: 100,
           width: 100,
-          color: Colors.red.withOpacity(widget.controller.value),
+          color: Colors.red.withAlpha((255 * value).toInt()),
         );
       },
     );

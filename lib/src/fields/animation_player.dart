@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/entities/knob.dart';
-import 'package:storyto/src/widget/duration_changer.dart';
+import 'package:storyto/src/widgets/duration_changer.dart';
 
 class AnimationPlayer extends StatefulWidget {
   const AnimationPlayer({super.key, required this.knob});

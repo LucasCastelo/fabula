@@ -24,7 +24,7 @@ class NullableColorField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentHexColor =
-        knob.getValue()?.value.toRadixString(16).replaceRange(0, 2, '');
+        knob.getValue()?.toARGB32().toRadixString(16).replaceRange(0, 2, '');
     final hexRegEx = RegExp(r'^[0-9a-fA-F]{6}$');
 
     return Row(

@@ -13,17 +13,17 @@ class CustomCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-      side: MaterialStateBorderSide.resolveWith(
+      side: WidgetStateBorderSide.resolveWith(
         (states) => BorderSide(
           color: value ? Colors.transparent : Colors.black26,
         ),
       ),
       checkColor: Colors.white,
-      fillColor: MaterialStatePropertyAll(
+      fillColor: WidgetStatePropertyAll(
         value ? Colors.green : Colors.black12,
       ),
       activeColor: Colors.green,
-      overlayColor: const MaterialStatePropertyAll(Colors.green),
+      overlayColor: const WidgetStatePropertyAll(Colors.green),
       value: value,
       onChanged: (v) => onChanged(v!),
     );

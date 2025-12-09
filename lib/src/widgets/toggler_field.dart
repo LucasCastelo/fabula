@@ -16,17 +16,17 @@ class TogglerField<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-      side: MaterialStateBorderSide.resolveWith(
+      side: WidgetStateBorderSide.resolveWith(
         (states) => BorderSide(
           color: getValue() == onValue ? Colors.transparent : Colors.black26,
         ),
       ),
       checkColor: Colors.white,
-      fillColor: MaterialStatePropertyAll(
+      fillColor: WidgetStatePropertyAll(
         getValue() == onValue ? Colors.green : Colors.black12,
       ),
       activeColor: Colors.green,
-      overlayColor: const MaterialStatePropertyAll(Colors.green),
+      overlayColor: const WidgetStatePropertyAll(Colors.green),
       value: getValue() == onValue,
       onChanged: (v) => onChange(
         v ?? true ? onValue : offValue,
