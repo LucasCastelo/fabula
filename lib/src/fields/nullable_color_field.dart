@@ -13,7 +13,7 @@ class NullableColorField extends StatelessWidget {
     this.keyboardType,
   });
   final String label;
-  final Knob<Color?> knob;
+  final NullableKnob<Color?> knob;
   final TextInputType? keyboardType;
   final VoidCallback toggleNull;
 
@@ -38,7 +38,7 @@ class NullableColorField extends StatelessWidget {
               }
             },
             keyboardType: keyboardType,
-            isEnabled: currentHexColor != null,
+            isEnabled: knob.isFieldEnabled,
             initialValue: currentHexColor,
             decoration: KnobTextFieldDecoration(label: label),
           ),
