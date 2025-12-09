@@ -7,7 +7,7 @@ typedef NullableInputBuilder<T> = Widget Function(
 
 typedef InputBuilder<T> = Widget Function(Knob<T> knob);
 
-abstract class Knob<T> extends ValueNotifier<T> {
+sealed class Knob<T> extends ValueNotifier<T> {
   Knob(super.value);
 
   void setValue(T newValue);
