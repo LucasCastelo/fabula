@@ -5,7 +5,7 @@ import 'package:storyto/src/widgets/duration_changer.dart';
 class AnimationPlayer extends StatefulWidget {
   const AnimationPlayer({super.key, required this.knob});
 
-  final Knob<AnimationController> knob;
+  final KnobValue<AnimationController> knob;
 
   @override
   State<AnimationPlayer> createState() => _AnimationPlayerState();

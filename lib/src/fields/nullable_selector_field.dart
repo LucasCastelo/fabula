@@ -14,7 +14,7 @@ class NullableSelectorField<T> extends StatelessWidget {
     required this.toggleNull,
   });
 
-  final Knob<T> knob;
+  final KnobValue<T> knob;
   final List<T> values;
   final SelectorNameMarshal<T> nameMarshal;
   final VoidCallback toggleNull;

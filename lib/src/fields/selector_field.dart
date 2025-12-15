@@ -10,7 +10,7 @@ class SelectorField<T> extends StatelessWidget {
     required this.nameMarshal,
   });
 
-  final Knob<T?> knob;
+  final KnobValue<T?> knob;
   final List<T> options;
   final SelectorNameMarshal<T> nameMarshal;
 

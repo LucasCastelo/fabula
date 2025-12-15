@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/entities/knob_text_field_decoration.dart';
 import 'package:storyto/src/fields/animation_player.dart';
 import 'package:storyto/src/widgets/toggler_field.dart';
 import 'package:storyto/src/fields/bool_field.dart';
@@ -10,11 +9,12 @@ import 'package:storyto/src/fields/nullable_string_field.dart';
 import 'package:storyto/src/entities/knob.dart';
 import 'package:storyto/src/fields/selector_field.dart';
 import 'package:storyto/src/widgets/custom_text_field.dart';
+import 'package:storyto/storyto.dart';
 
 class KnobManager extends ChangeNotifier {
   KnobManager();
 
-  final Map<String, Knob> knobs = {};
+  final Map<String, KnobValue> knobs = {};
   final ChangeNotifier rebuildKnobs = ChangeNotifier();
   final ChangeNotifier rebuildExhibit = ChangeNotifier();
 
@@ -224,9 +224,16 @@ class KnobManager extends ChangeNotifier {
         ),
       );
 
+  List<T> list<T>(
+    String id, {
+    required T Function(KnobManager) builder,
+  }) {
+    return [];
+  }
+
   T? _evaluateKnob<T>({
     required String id,
-    required Knob knob,
+    required KnobValue knob,
   }) {
     if (knobs.keys.contains(id)) {
       return _fetchKnobValueById(id);
@@ -242,7 +249,7 @@ class KnobManager extends ChangeNotifier {
 
   void _registerNewKnobById({
     required String id,
-    required Knob newKnob,
+    required KnobValue newKnob,
   }) {
     newKnob.addListener(rebuildExhibit.notifyListeners);
 

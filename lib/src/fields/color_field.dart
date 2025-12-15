@@ -12,7 +12,7 @@ class ColorField extends StatelessWidget {
     this.keyboardType,
   });
   final String label;
-  final Knob<Color> knob;
+  final KnobValue<Color> knob;
   final TextInputType? keyboardType;
 
   final controller = TextEditingController();
