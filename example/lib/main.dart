@@ -48,112 +48,119 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
       home: Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Builder(
-              builder: (context) {
-                return ListView(
-                  children: [
-                    const Text('STRING'),
-                    ExhibitBuilder(
-                      builder: (k) => Text(
-                        k.nString(
-                              'id',
-                              decoration: KnobTextFieldDecoration(
-                                label: 'Cool text field',
-                                placeholder: 'E.g.: Test Value',
-                              ),
-                            ) ??
-                            'NULL',
-                      ),
-                    ),
-                    ExhibitBuilder(
-                      builder: (k) => Container(
-                        color: k.boolean(
-                          'id',
-                          label: 'Change Color of box above',
-                        )
-                            ? Colors.red
-                            : Colors.black,
-                        height: 20,
-                        width: 20,
-                      ),
-                    ),
-                    ExhibitBuilder(
-                      builder: (k) => Text(
-                        k.string(
-                          'id',
-                          decoration:
-                              KnobTextFieldDecoration(label: 'Text above'),
+          child: ListView(
+            children: [
+              ExhibitBuilder2(
+                label: 'String Basic Example',
+                tags: const [
+                  KnobTag(label: 'String', color: Colors.blue),
+                ],
+                builder: (k) => Text(
+                  k.string(
+                    'id',
+                    decoration: KnobTextFieldDecoration(label: 'Text above'),
+                  ),
+                ),
+              ),
+              ExhibitBuilder2(
+                label: 'String Nullable Example',
+                tags: const [
+                  KnobTag(label: 'String', color: Colors.blue),
+                  KnobTag(label: 'Nullable', color: Colors.red),
+                ],
+                builder: (k) => Text(
+                  k.nString(
+                        'id',
+                        decoration: KnobTextFieldDecoration(
+                          label: 'Cool text field',
+                          placeholder: 'E.g.: Test Value',
                         ),
-                      ),
+                      ) ??
+                      'NULL',
+                ),
+              ),
+              ExhibitBuilder2(
+                label: 'Boolean Example',
+                builder: (k) => Container(
+                  color: k.boolean(
+                    'id',
+                    label: 'Change Color of box above',
+                  )
+                      ? Colors.red
+                      : Colors.black,
+                  height: 20,
+                  width: 20,
+                ),
+              ),
+              ExhibitBuilder2(
+                label: 'Integer Example (Nullable and non-nullable)',
+                builder: (k) => IntTest(
+                  aNumber: k.nInteger(
+                    'id',
+                    decoration: KnobTextFieldDecoration(
+                      label: 'Will add with the number below',
                     ),
-                    ExhibitBuilder(
-                      builder: (k) => IntTest(
-                        aNumber: k.nInteger(
-                          'id',
-                          decoration: KnobTextFieldDecoration(
-                            label: 'Will add with the number below',
-                          ),
-                        ),
-                        bNumber: k.integer(
-                          'id-2',
-                          decoration: KnobTextFieldDecoration(
-                            label: 'Will add to number above',
-                            placeholder: 'E.g.: 1',
-                          ),
-                        ),
-                      ),
+                  ),
+                  bNumber: k.integer(
+                    'id-2',
+                    decoration: KnobTextFieldDecoration(
+                      label: 'Will add to number above',
+                      placeholder: 'E.g.: 1',
                     ),
-                    ExhibitBuilder(
-                      builder: (k) => NSelectableTester(
-                        colorEnum: k.nSelectable(
-                          'id',
-                          values: ColorEnum.values,
-                          nameMarshal: (colorEnum) =>
-                              'Name is: ${colorEnum.toString()}',
-                        ),
-                      ),
-                    ),
-                    ExhibitBuilder(
-                      builder: (k) => SelectableTester(
-                        colorEnum: k.selectable(
-                          'id',
-                          values: ColorEnum.values,
-                          nameMarshal: (colorEnum) =>
-                              'Name is: ${colorEnum.toString()}',
-                        ),
-                      ),
-                    ),
-                    ExhibitBuilder(
-                      builder: (k) => ColorTester(
-                        color: k.color(
-                          'id',
-                          label: 'Above color',
-                        ),
-                      ),
-                    ),
-                    ExhibitBuilder(
-                      builder: (k) => NullableColorTester(
-                        color: k.nColor(
-                          'id',
-                          label: 'Above color',
-                        ),
-                      ),
-                    ),
-                    ExhibitBuilder(
-                      builder: (k) => AnimationTester(
-                        controller: k.animationController(
-                          id: 'animation',
-                          vsync: this,
-                          duration: const Duration(seconds: 5),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                ),
+              ),
+              ExhibitBuilder2(
+                label: 'Selectable Example',
+                builder: (k) => SelectableTester(
+                  colorEnum: k.selectable(
+                    'id',
+                    values: ColorEnum.values,
+                    nameMarshal: (colorEnum) =>
+                        'Name is: ${colorEnum.toString()}',
+                  ),
+                ),
+              ),
+              ExhibitBuilder2(
+                label: 'Selectable Nullable Example',
+                builder: (k) => NSelectableTester(
+                  colorEnum: k.nSelectable(
+                    'id',
+                    values: ColorEnum.values,
+                    nameMarshal: (colorEnum) =>
+                        'Name is: ${colorEnum.toString()}',
+                  ),
+                ),
+              ),
+              ExhibitBuilder2(
+                label: 'Color Example',
+                builder: (k) => ColorTester(
+                  color: k.color(
+                    'id',
+                    label: 'Above color',
+                  ),
+                ),
+              ),
+              ExhibitBuilder2(
+                label: 'Color Nullable Example',
+                builder: (k) => NullableColorTester(
+                  color: k.nColor(
+                    'id',
+                    label: 'Above color',
+                  ),
+                ),
+              ),
+              ExhibitBuilder2(
+                label: 'Animation Example',
+                builder: (k) => AnimationTester(
+                  controller: k.animationController(
+                    id: 'animation',
+                    vsync: this,
+                    duration: const Duration(seconds: 5),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

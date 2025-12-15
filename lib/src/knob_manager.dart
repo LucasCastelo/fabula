@@ -249,7 +249,7 @@ class KnobManager extends ChangeNotifier {
 
     knobs[id] = newKnob;
 
-    // TOOD: Debounce this
+    // TODO: Debounce this
     rebuildKnobs.notifyListeners();
   }
 
