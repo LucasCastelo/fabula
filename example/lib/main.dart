@@ -46,6 +46,9 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: ExhibitGallery(
+        appBar: AppBar(
+          title: const Text('Exhibit Gallery'),
+        ),
         children: [
           ExhibitBuilder(
             label: 'String Basic Example',
