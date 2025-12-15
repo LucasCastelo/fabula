@@ -150,24 +150,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
-                    ExhibitBuilder(
-                      builder: (k) => Column(
-                        children: k.list(
-                          'id',
-                          builder: (k) => Text(
-                            k.toString(),
-                          ),
-                        ),
-                      ),
-                    ),
-                    ExhibitBuilder(
-                      builder: (k) => ListStringTester(
-                        children: k.list(
-                          'id',
-                          builder: (k) => k.string('id'),
-                        ),
-                      ),
-                    ),
                   ],
                 );
               },
@@ -175,38 +157,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
         ),
       ),
-    );
-  }
-}
-
-class ListWidgetTester extends StatelessWidget {
-  const ListWidgetTester({
-    super.key,
-    required this.children,
-  });
-
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: children,
-    );
-  }
-}
-
-class ListStringTester extends StatelessWidget {
-  const ListStringTester({
-    super.key,
-    required this.children,
-  });
-
-  final List<String> children;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: children.map((e) => Text(e)).toList(),
     );
   }
 }

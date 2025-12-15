@@ -20,6 +20,7 @@ class KnobManager extends ChangeNotifier {
 
   @override
   void dispose() {
+    // TODO: check disposal lifecycle
     knobs.values.map((e) => e.dispose());
     super.dispose();
   }
@@ -223,13 +224,6 @@ class KnobManager extends ChangeNotifier {
           ),
         ),
       );
-
-  List<T> list<T>(
-    String id, {
-    required T Function(KnobManager) builder,
-  }) {
-    return [];
-  }
 
   T? _evaluateKnob<T>({
     required String id,
