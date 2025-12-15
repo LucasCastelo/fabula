@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/knob_manager.dart';
+import 'package:storyto/src/widgets/exhibit_tag_pill.dart';
 import 'package:storyto/storyto.dart';
 
 typedef KnobBuilder = Widget Function(KnobManager);
 typedef CustomButtonBuilder = Widget Function(String label, List<Widget> tags);
 
-class KnobTag {
-  const KnobTag({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-}
-
-class ExhibitBuilder2 extends StatelessWidget {
-  const ExhibitBuilder2({
+class ExhibitBuilder extends StatelessWidget {
+  const ExhibitBuilder({
     super.key,
     required this.builder,
     required this.label,
@@ -23,14 +17,22 @@ class ExhibitBuilder2 extends StatelessWidget {
 
   final String label;
   final KnobBuilder builder;
-  final List<KnobTag> tags;
+  final List<ExhibitTag> tags;
   final CustomButtonBuilder? buttonBuilder;
 
   @override
   Widget build(BuildContext context) {
+    final galleryState = ExhibitGalleryState.of(context);
+    galleryState?.addTagToHolster(this.tags);
     final tags = this
         .tags
-        .map((e) => _ExhibitTag(label: e.label.toLowerCase(), color: e.color))
+        .map(
+          (e) => ExhibitTagPill(
+            tag: e,
+            colored: galleryState?.shouldTagGreyOut(e) ?? false,
+            onTap: () => galleryState?.toggleTag(e),
+          ),
+        )
         .toList();
 
     return buttonBuilder?.call(label, tags) ??
@@ -46,14 +48,13 @@ class ExhibitBuilder2 extends StatelessWidget {
             );
           },
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
             decoration: const BoxDecoration(
               border: Border(bottom: BorderSide(color: Colors.black12)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(width: 8),
+                const SizedBox(height: 12),
                 Text(
                   label,
                   style: const TextStyle(
@@ -73,30 +74,5 @@ class ExhibitBuilder2 extends StatelessWidget {
             ),
           ),
         );
-  }
-}
-
-class _ExhibitTag extends StatelessWidget {
-  const _ExhibitTag({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: color.withAlpha((255 * 0.2).toInt()),
-        borderRadius: BorderRadius.circular(800),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          fontSize: 12,
-          color: color,
-        ),
-      ),
-    );
   }
 }
