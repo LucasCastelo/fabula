@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
 class ExhibitTag {
-  const ExhibitTag({required this.label, required this.color});
+  ExhibitTag({required String label, required this.color}) {
+    _label = label.toLowerCase();
+  }
 
-  final String label;
+  late final String _label;
   final Color color;
+
+  String get label => _label;
 
   @override
   bool operator ==(Object other) {
-    return other is ExhibitTag && other.label == label;
+    return other is ExhibitTag && other._label == _label;
   }
 
   @override
-  int get hashCode => label.hashCode ^ color.hashCode;
+  int get hashCode => _label.hashCode;
 }

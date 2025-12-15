@@ -16,7 +16,7 @@ class ExhibitGallery extends StatefulWidget {
   State<ExhibitGallery> createState() => ExhibitGalleryState();
 }
 
-class ExhibitGalleryState extends State<ExhibitGallery> {
+class ExhibitGalleryState extends State<ExhibitGallery> with ChangeNotifier {
   final Set<ExhibitTag> availableTags = {};
   final Set<ExhibitTag> filterByTags = {};
 
@@ -31,6 +31,7 @@ class ExhibitGalleryState extends State<ExhibitGallery> {
       filterByTags.add(tag);
     }
     setState(() {});
+    notifyListeners();
   }
 
   void addTagToHolster(List<ExhibitTag> tags) {
@@ -40,8 +41,9 @@ class ExhibitGalleryState extends State<ExhibitGallery> {
     });
   }
 
-  bool shouldTagGreyOut(ExhibitTag tag) {
-    return filterByTags.isEmpty || filterByTags.contains(tag);
+  bool shouldShow(List<ExhibitTag> tag) {
+    if (filterByTags.isEmpty) return true;
+    return tag.any((e) => filterByTags.contains(e));
   }
 
   @override
@@ -73,7 +75,7 @@ class ExhibitGalleryState extends State<ExhibitGallery> {
                         .map(
                           (e) => ExhibitTagPill(
                             tag: e,
-                            colored: shouldTagGreyOut(e),
+                            colored: shouldShow([e]),
                             onTap: () => toggleTag(e),
                           ),
                         )

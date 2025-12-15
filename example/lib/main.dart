@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         children: [
           ExhibitBuilder(
             label: 'String Basic Example',
-            tags: const [
+            tags: [
               ExhibitTag(label: 'String', color: Colors.blue),
             ],
             builder: (k) => Text(
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
           ExhibitBuilder(
             label: 'String Nullable Example',
-            tags: const [
+            tags: [
               ExhibitTag(label: 'String', color: Colors.blue),
               ExhibitTag(label: 'Nullable', color: Colors.red),
             ],
@@ -78,6 +78,9 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
           ExhibitBuilder(
             label: 'Boolean Example',
+            tags: [
+              ExhibitTag(label: 'Boolean', color: Colors.green),
+            ],
             builder: (k) => Container(
               color: k.boolean(
                 'id',
@@ -91,6 +94,10 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
           ExhibitBuilder(
             label: 'Integer Example (Nullable and non-nullable)',
+            tags: [
+              ExhibitTag(label: 'Integer', color: Colors.purple),
+              ExhibitTag(label: 'nullable', color: Colors.red),
+            ],
             builder: (k) => IntTest(
               aNumber: k.nInteger(
                 'id',
@@ -109,6 +116,9 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
           ExhibitBuilder(
             label: 'Selectable Example',
+            tags: [
+              ExhibitTag(label: 'Selectable', color: Colors.orange),
+            ],
             builder: (k) => SelectableTester(
               colorEnum: k.selectable(
                 'id',
@@ -119,6 +129,10 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
           ExhibitBuilder(
             label: 'Selectable Nullable Example',
+            tags: [
+              ExhibitTag(label: 'Selectable', color: Colors.orange),
+              ExhibitTag(label: 'Nullable', color: Colors.red),
+            ],
             builder: (k) => NSelectableTester(
               colorEnum: k.nSelectable(
                 'id',
@@ -129,6 +143,9 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
           ExhibitBuilder(
             label: 'Color Example',
+            tags: [
+              ExhibitTag(label: 'Color', color: Colors.pink),
+            ],
             builder: (k) => ColorTester(
               color: k.color(
                 'id',
@@ -138,6 +155,10 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
           ExhibitBuilder(
             label: 'Color Nullable Example',
+            tags: [
+              ExhibitTag(label: 'Color', color: Colors.pink),
+              ExhibitTag(label: 'Nullable', color: Colors.red),
+            ],
             builder: (k) => NullableColorTester(
               color: k.nColor(
                 'id',
@@ -147,6 +168,9 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
           ExhibitBuilder(
             label: 'Animation Example',
+            tags: [
+              ExhibitTag(label: 'Animation', color: Colors.teal),
+            ],
             builder: (k) => AnimationTester(
               controller: k.animationController(
                 id: 'animation',
