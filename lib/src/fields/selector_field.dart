@@ -18,6 +18,7 @@ class SelectorField<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final isNull = knob.getValue() == null;
     return Container(
+      width: double.infinity,
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
       decoration: BoxDecoration(
           border: Border.all(
@@ -42,6 +43,7 @@ class SelectorField<T> extends StatelessWidget {
               value: knob.getValue(),
               onChanged: (v) => v != null ? knob.setValue(v) : null,
               underline: const SizedBox.shrink(),
+              isExpanded: true,
               items: List.generate(
                 options.length,
                 (index) => DropdownMenuItem(
