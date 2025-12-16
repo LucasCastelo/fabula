@@ -67,9 +67,13 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
       ExhibitEntryType.bottomSheet => await showModalBottomSheet(
           // ignore: use_build_context_synchronously
           context: context,
-          builder: (context) => ExhibitPage(
-            builder: widget.builder,
-            knobManager: knobManager!,
+          backgroundColor: Colors.white,
+          builder: (context) => Padding(
+            padding: const EdgeInsets.all(16),
+            child: ExhibitPage(
+              builder: widget.builder,
+              knobManager: knobManager!,
+            ),
           ),
         ),
       ExhibitEntryType.popupMenu => await Navigator.push(

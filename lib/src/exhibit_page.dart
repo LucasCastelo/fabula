@@ -33,6 +33,7 @@ class _ExhibitPageState extends State<ExhibitPage> {
     return Scaffold(
       key: _key,
       drawerEdgeDragWidth: 100,
+      backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         onPressed: () => _key.currentState!.openDrawer(),
         mini: true,

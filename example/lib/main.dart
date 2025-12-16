@@ -182,23 +182,11 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             ),
           ),
           ExhibitBuilder(
-            label: 'Animation Example',
+            label: 'Animation Example Bottom Sheet',
+            entryType: ExhibitEntryType.bottomSheet,
             tags: [
               ExhibitTag(label: 'Animation', color: Colors.teal),
-            ],
-            builder: (k) => AnimationTester(
-              controller: k.animationController(
-                id: 'animation',
-                vsync: this,
-                duration: const Duration(seconds: 5),
-              ),
-            ),
-          ),
-          ExhibitBuilder(
-            label: 'Animation Example',
-            entryType: ExhibitEntryType.popupMenu,
-            tags: [
-              ExhibitTag(label: 'Snackbar', color: Colors.orange),
+              ExhibitTag(label: 'Bottom Sheet Entry', color: Colors.blue),
             ],
             builder: (k) => AnimationTester(
               controller: k.animationController(
