@@ -6,11 +6,18 @@ import 'package:storyto/storyto.dart';
 typedef KnobBuilder = Widget Function(KnobManager);
 typedef CustomButtonBuilder = Widget Function(String label, List<Widget> tags);
 
+enum ExhibitEntryType {
+  page,
+  bottomSheet,
+  popupMenu,
+}
+
 class ExhibitBuilder extends StatefulWidget {
   const ExhibitBuilder({
     super.key,
     required this.builder,
     required this.label,
+    this.entryType = ExhibitEntryType.page,
     this.tags = const [],
     this.buttonBuilder,
   });
@@ -19,6 +26,7 @@ class ExhibitBuilder extends StatefulWidget {
   final KnobBuilder builder;
   final List<ExhibitTag> tags;
   final CustomButtonBuilder? buttonBuilder;
+  final ExhibitEntryType entryType;
 
   @override
   State<ExhibitBuilder> createState() => _ExhibitBuilderState();
@@ -27,6 +35,7 @@ class ExhibitBuilder extends StatefulWidget {
 class _ExhibitBuilderState extends State<ExhibitBuilder> {
   late final galleryState = ExhibitGalleryState.of(context);
   bool shouldShow = true;
+  KnobManager? knobManager;
 
   @override
   void initState() {
@@ -40,7 +49,43 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
   @override
   void dispose() {
     galleryState?.removeListener(() => setState(() {}));
+    knobManager?.dispose();
     super.dispose();
+  }
+
+  Future<void> onTap() async {
+    knobManager ??= KnobManager();
+
+    await switch (widget.entryType) {
+      ExhibitEntryType.page => await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ExhibitPage(builder: widget.builder, knobManager: knobManager!),
+          ),
+        ),
+      ExhibitEntryType.bottomSheet => await showModalBottomSheet(
+          // ignore: use_build_context_synchronously
+          context: context,
+          builder: (context) => ExhibitPage(
+            builder: widget.builder,
+            knobManager: knobManager!,
+          ),
+        ),
+      ExhibitEntryType.popupMenu => await Navigator.push(
+          // ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(
+            builder: (context) => ExhibitPage(
+              builder: widget.builder,
+              knobManager: knobManager!,
+              knobPosition: ExhibitPageKnobPosition.inDrawer,
+            ),
+          ),
+        ),
+    };
+
+    knobManager?.dispose();
   }
 
   @override
@@ -63,16 +108,7 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
       firstChild: Container(
         child: widget.buttonBuilder?.call(widget.label, pillTags) ??
             GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ExhibitPage(
-                      builder: widget.builder,
-                    ),
-                  ),
-                );
-              },
+              onTap: onTap,
               child: Container(
                 decoration: const BoxDecoration(
                   border: Border(bottom: BorderSide(color: Colors.black12)),

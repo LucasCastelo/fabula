@@ -194,6 +194,20 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
+          ExhibitBuilder(
+            label: 'Animation Example',
+            entryType: ExhibitEntryType.popupMenu,
+            tags: [
+              ExhibitTag(label: 'Snackbar', color: Colors.orange),
+            ],
+            builder: (k) => AnimationTester(
+              controller: k.animationController(
+                id: 'animation',
+                vsync: this,
+                duration: const Duration(seconds: 5),
+              ),
+            ),
+          ),
         ],
       ),
     );
