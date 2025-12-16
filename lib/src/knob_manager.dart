@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/fields/animation_player.dart';
+import 'package:storyto/src/fields/list_field.dart';
 import 'package:storyto/src/widgets/toggler_field.dart';
 import 'package:storyto/src/fields/bool_field.dart';
 import 'package:storyto/src/fields/color_field.dart';
@@ -208,7 +209,7 @@ class KnobManager extends ChangeNotifier {
   T selectable<T>(
     String id, {
     required List<T> values,
-    SelectorNameMarshal? nameMarshal,
+    SelectorNameMarshal<T>? nameMarshal,
   }) =>
       _evaluateKnob(
         id: id,
@@ -221,6 +222,39 @@ class KnobManager extends ChangeNotifier {
             options: values,
             nameMarshal: nameMarshal ?? (v) => v.toString(),
           ),
+        ),
+      );
+
+  List<T> listDefunct<T>(
+    String id, {
+    required ListItemBuilder<T> itemBuilder,
+    int initialLength = 0,
+  }) =>
+      _evaluateKnob(
+        id: id,
+        knob: DefaultKnob<List<T>>(
+          initialValue: List.generate(
+            initialLength,
+            (index) => itemBuilder('prefix'),
+          ),
+          inputBuilder: (knob) => ListField<T>(
+              listId: id,
+              knob: knob,
+              itemBuilder: itemBuilder,
+              onFieldCreated: (prefix) {
+                knobs.keys
+                    .where((key) => key.startsWith(prefix))
+                    .forEach((key) {
+                  knobs[key]?.addListener(rebuildExhibit.notifyListeners);
+                });
+              },
+              onFieldDisposed: (prefix) {
+                knobs.keys
+                    .where((key) => key.startsWith(prefix))
+                    .forEach((key) {
+                  knobs[key]?.removeListener(rebuildExhibit.notifyListeners);
+                });
+              }),
         ),
       );
 

@@ -1,30 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/entities/knob.dart';
-import 'package:storyto/src/knob_manager.dart';
+
+typedef ListItemBuilder<T> = T Function(String prefixId);
 
 class ListField<T> extends StatelessWidget {
   const ListField({
     super.key,
+    required this.listId,
     required this.knob,
     required this.itemBuilder,
-    required this.knobManager,
+    required this.onFieldCreated,
+    required this.onFieldDisposed,
   });
+
+  final String listId;
   final KnobValue<List<T>> knob;
-  final T Function(KnobManager) itemBuilder;
-  final KnobManager knobManager;
+  final ListItemBuilder itemBuilder;
+  final Function(String prefix) onFieldCreated;
+  final Function(String prefix) onFieldDisposed;
 
   List<T> get items => knob.getValue();
 
   void _increaseLength() {
     final currentItems = List<T>.from(items);
-    currentItems.add(itemBuilder(knobManager));
+    final prefix = '$listId-${items.length + 1}';
+    currentItems.add(itemBuilder(prefix));
     knob.setValue(currentItems);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      onFieldCreated(prefix);
+    });
   }
 
   void _decreaseLength() {
     final currentItems = List<T>.from(items);
     currentItems.removeLast();
     knob.setValue(currentItems);
+    onFieldDisposed('$listId-${items.length + 1}');
   }
 
   @override

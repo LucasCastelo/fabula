@@ -170,6 +170,18 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             ),
           ),
           ExhibitBuilder(
+            label: 'List Example (Not working yet)',
+            tags: [
+              ExhibitTag(label: 'List', color: Colors.purple),
+            ],
+            builder: (k) => ListTester(
+              list: k.listDefunct(
+                'id',
+                itemBuilder: (prefixId) => k.string('$prefixId-string'),
+              ),
+            ),
+          ),
+          ExhibitBuilder(
             label: 'Animation Example',
             tags: [
               ExhibitTag(label: 'Animation', color: Colors.teal),
@@ -184,6 +196,33 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ListTester extends StatelessWidget {
+  const ListTester({
+    super.key,
+    required this.list,
+  });
+
+  final List<String> list;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: list
+          .map(
+            (e) => Text(
+              e,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }
