@@ -20,7 +20,6 @@ class KnobManager extends ChangeNotifier {
 
   @override
   void dispose() {
-    // TODO: check disposal lifecycle
     knobs.values.map((e) => e.dispose());
     super.dispose();
   }
