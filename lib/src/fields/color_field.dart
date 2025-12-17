@@ -28,6 +28,7 @@ class ColorField extends StatelessWidget {
     final hexRegEx = RegExp(r'^[0-9a-fA-F]{6}$');
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
