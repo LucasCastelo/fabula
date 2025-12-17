@@ -84,6 +84,29 @@ class Exhibit extends StatefulWidget {
         onTap: onTap,
       );
 
+  factory Exhibit.bottomSheet({
+    required String label,
+    required KnobBuilder builder,
+    List<ExhibitTag> tags = const [],
+    CustomEntryDesign? customEntryDesign,
+  }) =>
+      Exhibit(
+        label: label,
+        builder: builder,
+        tags: tags,
+        displayBuilder: customEntryDesign,
+        onTap: (context) => showModalBottomSheet(
+          context: context,
+          backgroundColor: Colors.white,
+          builder: (context) => Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ExhibitRaw(
+              builder: builder,
+            ),
+          ),
+        ),
+      );
+
   final String label;
   final KnobBuilder builder;
   final List<ExhibitTag> tags;

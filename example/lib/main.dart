@@ -191,7 +191,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit(
+          Exhibit.bottomSheet(
             label: 'Animation Example Bottom Sheet',
             tags: [
               ExhibitTag(label: 'Animation', color: Colors.teal),
