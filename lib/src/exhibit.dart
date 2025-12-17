@@ -5,7 +5,7 @@ import 'package:storyto/storyto.dart';
 
 typedef KnobBuilder = Widget Function(KnobManager);
 typedef CustomEntryDesign = Widget Function(String label, List<Widget> tags);
-typedef OnTap = void Function(BuildContext context);
+typedef ContextCallback = void Function(BuildContext context);
 
 enum ExhibitEntryType {
   page,
@@ -69,11 +69,26 @@ class Exhibit extends StatefulWidget {
         ),
       );
 
+  factory Exhibit.tap({
+    required String label,
+    required KnobBuilder builder,
+    List<ExhibitTag> tags = const [],
+    CustomEntryDesign? customEntryDesign,
+    ContextCallback? onTap,
+  }) =>
+      Exhibit(
+        label: label,
+        builder: builder,
+        tags: tags,
+        displayBuilder: customEntryDesign,
+        onTap: onTap,
+      );
+
   final String label;
   final KnobBuilder builder;
   final List<ExhibitTag> tags;
   final CustomEntryDesign? displayBuilder;
-  final OnTap? onTap;
+  final ContextCallback? onTap;
 
   @override
   State<Exhibit> createState() => _ExhibitState();
