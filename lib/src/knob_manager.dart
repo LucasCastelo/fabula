@@ -178,6 +178,7 @@ class KnobManager extends ChangeNotifier {
     String id, {
     Color? value,
     String? label,
+    List<Color>? predefinedColors,
   }) =>
       _evaluateKnob(
         id: id,
@@ -187,6 +188,7 @@ class KnobManager extends ChangeNotifier {
             label: label ?? id,
             knob: knob,
             toggleNull: toggleNull,
+            predefinedColors: predefinedColors,
           ),
         ),
       );
