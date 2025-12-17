@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit(
+          Exhibit.bottomSheet(
             label: 'String Nullable Example',
             tags: [
               ExhibitTag(label: 'String', color: Colors.blue),
@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                   'NULL',
             ),
           ),
-          Exhibit(
+          Exhibit.bottomSheet(
             label: 'Boolean Example',
             tags: [
               ExhibitTag(label: 'Boolean', color: Colors.green),
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               width: 20,
             ),
           ),
-          Exhibit(
+          Exhibit.bottomSheet(
             label: 'Integer Example (Nullable and non-nullable)',
             tags: [
               ExhibitTag(label: 'Integer', color: Colors.purple),
@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit(
+          Exhibit.bottomSheet(
             label: 'Selectable Example',
             tags: [
               ExhibitTag(label: 'Selectable', color: Colors.orange),
@@ -130,7 +130,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit(
+          Exhibit.bottomSheet(
             label: 'Selectable Nullable Example',
             tags: [
               ExhibitTag(label: 'Selectable', color: Colors.orange),
@@ -144,7 +144,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit(
+          Exhibit.bottomSheet(
             label: 'Color Example',
             tags: [
               ExhibitTag(label: 'Color', color: Colors.pink),
@@ -166,7 +166,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit(
+          Exhibit.raw(
             label: 'Color Nullable Example',
             tags: [
               ExhibitTag(label: 'Color', color: Colors.pink),
@@ -179,7 +179,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit(
+          Exhibit.bottomSheet(
             label: 'List Example (Not working yet)',
             tags: [
               ExhibitTag(label: 'List', color: Colors.purple),
@@ -222,6 +222,7 @@ class ListTester extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: list
           .map(
             (e) => Text(
@@ -282,7 +283,7 @@ class NullableColorTester extends StatelessWidget {
           ? const Text('Color is null')
           : Container(
               width: double.maxFinite,
-              color: Colors.red,
+              color: Colors.lightBlue,
             ),
     );
   }
