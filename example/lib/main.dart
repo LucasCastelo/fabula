@@ -176,6 +176,15 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               color: k.nColor(
                 'id',
                 label: 'Above color',
+                predefinedColors: [
+                  Colors.red,
+                  Colors.green,
+                  Colors.blue,
+                  Colors.yellow,
+                  Colors.purple,
+                  Colors.orange,
+                  Colors.brown,
+                ],
               ),
             ),
           ),
@@ -280,10 +289,12 @@ class NullableColorTester extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: color == null
-          ? const Text('Color is null')
+          ? const Center(
+              child: Text('Color is null'),
+            )
           : Container(
               width: double.maxFinite,
-              color: Colors.lightBlue,
+              color: color,
             ),
     );
   }
