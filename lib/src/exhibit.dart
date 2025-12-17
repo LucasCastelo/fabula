@@ -115,35 +115,33 @@ class _ExhibitState extends State<Exhibit> {
           shouldShow ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       duration: const Duration(milliseconds: 200),
       secondChild: const SizedBox.shrink(),
-      firstChild: Container(
+      firstChild: GestureDetector(
+        onTap: onTap,
         child: widget.displayBuilder?.call(widget.label, pillTags) ??
-            GestureDetector(
-              onTap: onTap,
-              child: Container(
-                decoration: const BoxDecoration(
-                  border: Border(bottom: BorderSide(color: Colors.black12)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: 12),
-                    Text(
-                      widget.label,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black87,
-                      ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black12)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 12),
+                  Text(
+                    widget.label,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black87,
                     ),
-                    const SizedBox(height: 4),
-                    Wrap(
-                      spacing: 4,
-                      runSpacing: 4,
-                      alignment: WrapAlignment.start,
-                      children: pillTags,
-                    ),
-                    const SizedBox(height: 18),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 4),
+                  Wrap(
+                    spacing: 4,
+                    runSpacing: 4,
+                    alignment: WrapAlignment.start,
+                    children: pillTags,
+                  ),
+                  const SizedBox(height: 18),
+                ],
               ),
             ),
       ),
