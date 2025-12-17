@@ -193,7 +193,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
           ExhibitBuilder(
             label: 'Animation Example Bottom Sheet',
-            entryType: ExhibitEntryType.bottomSheet,
             tags: [
               ExhibitTag(label: 'Animation', color: Colors.teal),
               ExhibitTag(label: 'Bottom Sheet Entry', color: Colors.blue),
@@ -278,18 +277,14 @@ class NullableColorTester extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      print(constraints.maxWidth);
-      print(constraints.maxHeight);
-      return Scaffold(
-        body: color == null
-            ? const Text('Color is null')
-            : Container(
-                width: double.maxFinite,
-                color: Colors.red,
-              ),
-      );
-    });
+    return Scaffold(
+      body: color == null
+          ? const Text('Color is null')
+          : Container(
+              width: double.maxFinite,
+              color: Colors.red,
+            ),
+    );
   }
 }
 

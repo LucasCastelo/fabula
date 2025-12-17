@@ -11,11 +11,9 @@ class ExhibitRaw extends StatefulWidget {
   const ExhibitRaw({
     super.key,
     required this.builder,
-    this.knobPosition = ExhibitPageKnobPosition.inPage,
   });
 
   final KnobBuilder builder;
-  final ExhibitPageKnobPosition knobPosition;
 
   @override
   State<ExhibitRaw> createState() => _ExhibitRawState();

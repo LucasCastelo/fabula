@@ -4,7 +4,7 @@ import 'package:storyto/src/widgets/exhibit_tag_pill.dart';
 import 'package:storyto/storyto.dart';
 
 typedef KnobBuilder = Widget Function(KnobManager);
-typedef CustomButtonBuilder = Widget Function(String label, List<Widget> tags);
+typedef CustomEntryDesign = Widget Function(String label, List<Widget> tags);
 
 enum ExhibitEntryType {
   page,
@@ -17,16 +17,32 @@ class ExhibitBuilder extends StatefulWidget {
     super.key,
     required this.builder,
     required this.label,
-    this.entryType = ExhibitEntryType.page,
     this.tags = const [],
-    this.buttonBuilder,
+    this.displayBuilder,
+    this.pageBuilder,
   });
+
+  factory ExhibitBuilder.page({
+    required String label,
+    required KnobBuilder builder,
+    required List<ExhibitTag> tags,
+    required CustomEntryDesign customEntryDesign,
+  }) =>
+      ExhibitBuilder(
+        label: label,
+        builder: builder,
+        tags: tags,
+        displayBuilder: customEntryDesign,
+        pageBuilder: () => ExhibitRaw(
+          builder: builder,
+        ),
+      );
 
   final String label;
   final KnobBuilder builder;
   final List<ExhibitTag> tags;
-  final CustomButtonBuilder? buttonBuilder;
-  final ExhibitEntryType entryType;
+  final CustomEntryDesign? displayBuilder;
+  final Widget Function()? pageBuilder;
 
   @override
   State<ExhibitBuilder> createState() => _ExhibitBuilderState();
@@ -35,7 +51,6 @@ class ExhibitBuilder extends StatefulWidget {
 class _ExhibitBuilderState extends State<ExhibitBuilder> {
   late final galleryState = ExhibitGalleryState.of(context);
   bool shouldShow = true;
-  KnobManager? knobManager;
 
   @override
   void initState() {
@@ -46,50 +61,12 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
         }));
   }
 
+  void onTap() {}
+
   @override
   void dispose() {
     galleryState?.removeListener(() => setState(() {}));
-    knobManager?.dispose();
     super.dispose();
-  }
-
-  Future<void> onTap() async {
-    knobManager ??= KnobManager();
-
-    await switch (widget.entryType) {
-      ExhibitEntryType.page => await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                ExhibitPage(builder: widget.builder, knobManager: knobManager!),
-          ),
-        ),
-      ExhibitEntryType.bottomSheet => await showModalBottomSheet(
-          // ignore: use_build_context_synchronously
-          context: context,
-          backgroundColor: Colors.white,
-          builder: (context) => Padding(
-            padding: const EdgeInsets.all(16),
-            child: ExhibitPage(
-              builder: widget.builder,
-              knobManager: knobManager!,
-            ),
-          ),
-        ),
-      ExhibitEntryType.popupMenu => await Navigator.push(
-          // ignore: use_build_context_synchronously
-          context,
-          MaterialPageRoute(
-            builder: (context) => ExhibitPage(
-              builder: widget.builder,
-              knobManager: knobManager!,
-              knobPosition: ExhibitPageKnobPosition.inDrawer,
-            ),
-          ),
-        ),
-    };
-
-    knobManager?.dispose();
   }
 
   @override
@@ -110,7 +87,7 @@ class _ExhibitBuilderState extends State<ExhibitBuilder> {
       duration: const Duration(milliseconds: 200),
       secondChild: const SizedBox.shrink(),
       firstChild: Container(
-        child: widget.buttonBuilder?.call(widget.label, pillTags) ??
+        child: widget.displayBuilder?.call(widget.label, pillTags) ??
             GestureDetector(
               onTap: onTap,
               child: Container(
