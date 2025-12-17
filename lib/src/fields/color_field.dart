@@ -10,10 +10,12 @@ class ColorField extends StatelessWidget {
     required this.knob,
     required this.label,
     this.keyboardType,
+    this.predefinedColors,
   });
   final String label;
   final KnobValue<Color> knob;
   final TextInputType? keyboardType;
+  final List<Color>? predefinedColors;
 
   final controller = TextEditingController();
 
@@ -25,31 +27,60 @@ class ColorField extends StatelessWidget {
         knob.getValue().toARGB32().toRadixString(16).replaceRange(0, 2, '');
     final hexRegEx = RegExp(r'^[0-9a-fA-F]{6}$');
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Column(
       children: [
-        Expanded(
-          child: CustomTextField(
-            onChanged: (v) {
-              if (hexRegEx.hasMatch(v)) {
-                knob.setValue(hexToColor(v));
-              }
-            },
-            keyboardType: keyboardType,
-            isEnabled: true,
-            initialValue: currentHexColor,
-            decoration: KnobTextFieldDecoration(label: label),
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(
+              child: CustomTextField(
+                value: currentHexColor,
+                onChanged: (v) {
+                  if (hexRegEx.hasMatch(v)) {
+                    knob.setValue(hexToColor(v));
+                  }
+                },
+                keyboardType: keyboardType,
+                isEnabled: true,
+                initialValue: currentHexColor,
+                decoration: KnobTextFieldDecoration(label: label),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: knob.getValue(),
+              ),
+              height: 48,
+              width: 48,
+            )
+          ],
         ),
-        const SizedBox(width: 8),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: knob.getValue(),
+        if (predefinedColors != null) ...[
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: predefinedColors!
+                .map(
+                  (color) => GestureDetector(
+                    onTap: () => knob.setValue(color),
+                    child: Container(
+                      height: 24,
+                      width: 24,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: knob.getValue() == color
+                            ? color
+                            : color.withAlpha((255 * 0.4).toInt()),
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
           ),
-          height: 48,
-          width: 48,
-        )
+        ],
       ],
     );
   }

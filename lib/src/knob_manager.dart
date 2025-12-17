@@ -123,10 +123,10 @@ class KnobManager extends ChangeNotifier {
       _evaluateKnob(
         id: id,
         knob: NullableKnob<int>(
-          value: initialValue,
+          value: initialValue ?? 0,
           inputBuilder: (knob, toggleNull) => NullableTextField<int?>(
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
-            initialValue: initialValue.toString(),
+            initialValue: initialValue?.toString() ?? '0',
             toggleNull: toggleNull,
             onChanged: (v) => knob.setValue(int.parse(v)),
             isEnabled: knob.isFieldEnabled,
@@ -147,7 +147,7 @@ class KnobManager extends ChangeNotifier {
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
             isEnabled: true,
             onChanged: (v) => knob.setValue(int.parse(v)),
-            initialValue: value.toString(),
+            initialValue: value?.toString() ?? '0',
             keyboardType: TextInputType.number,
           ),
         ),
@@ -157,6 +157,7 @@ class KnobManager extends ChangeNotifier {
     String id, {
     Color? initialValue,
     String? label,
+    List<Color>? predefinedColors,
   }) =>
       _evaluateKnob(
         id: id,
@@ -165,6 +166,7 @@ class KnobManager extends ChangeNotifier {
           inputBuilder: (knob) => ColorField(
             label: label ?? id,
             knob: knob,
+            predefinedColors: predefinedColors,
           ),
         ),
       );
@@ -177,7 +179,7 @@ class KnobManager extends ChangeNotifier {
       _evaluateKnob(
         id: id,
         knob: NullableKnob<Color>(
-          value: value,
+          value: value ?? Colors.black,
           inputBuilder: (knob, toggleNull) => NullableColorField(
             label: label ?? id,
             knob: knob,

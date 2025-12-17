@@ -148,11 +148,21 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             label: 'Color Example',
             tags: [
               ExhibitTag(label: 'Color', color: Colors.pink),
+              ExhibitTag(label: 'Predefined Colors', color: Colors.yellow),
             ],
             builder: (k) => ColorTester(
               color: k.color(
                 'id',
                 label: 'Above color',
+                predefinedColors: [
+                  Colors.red,
+                  Colors.green,
+                  Colors.blue,
+                  Colors.yellow,
+                  Colors.purple,
+                  Colors.orange,
+                  Colors.brown,
+                ],
               ),
             ),
           ),
@@ -268,13 +278,18 @@ class NullableColorTester extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return color == null
-        ? const Text('Color is null')
-        : Container(
-            height: 20,
-            width: 20,
-            color: color,
-          );
+    return LayoutBuilder(builder: (context, constraints) {
+      print(constraints.maxWidth);
+      print(constraints.maxHeight);
+      return Scaffold(
+        body: color == null
+            ? const Text('Color is null')
+            : Container(
+                width: double.maxFinite,
+                color: Colors.red,
+              ),
+      );
+    });
   }
 }
 
