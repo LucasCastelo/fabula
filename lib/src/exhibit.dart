@@ -5,6 +5,7 @@ import 'package:storyto/storyto.dart';
 
 typedef KnobBuilder = Widget Function(KnobManager);
 typedef CustomEntryDesign = Widget Function(String label, List<Widget> tags);
+typedef OnTap = void Function(BuildContext context);
 
 enum ExhibitEntryType {
   page,
@@ -19,7 +20,7 @@ class Exhibit extends StatefulWidget {
     required this.label,
     this.tags = const [],
     this.displayBuilder,
-    this.pageBuilder,
+    this.onTap,
   });
 
   factory Exhibit.raw({
@@ -33,8 +34,12 @@ class Exhibit extends StatefulWidget {
         builder: builder,
         tags: tags,
         displayBuilder: customEntryDesign,
-        pageBuilder: () => ExhibitRaw(
-          builder: builder,
+        onTap: (context) => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ExhibitRaw(
+              builder: builder,
+            ),
+          ),
         ),
       );
 
@@ -50,11 +55,15 @@ class Exhibit extends StatefulWidget {
         builder: builder,
         tags: tags,
         displayBuilder: customEntryDesign,
-        pageBuilder: () => Scaffold(
-          appBar: appBar,
-          body: SafeArea(
-            child: ExhibitRaw(
-              builder: builder,
+        onTap: (context) => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => Scaffold(
+              appBar: appBar,
+              body: SafeArea(
+                child: ExhibitRaw(
+                  builder: builder,
+                ),
+              ),
             ),
           ),
         ),
@@ -64,7 +73,7 @@ class Exhibit extends StatefulWidget {
   final KnobBuilder builder;
   final List<ExhibitTag> tags;
   final CustomEntryDesign? displayBuilder;
-  final Widget Function()? pageBuilder;
+  final OnTap? onTap;
 
   @override
   State<Exhibit> createState() => _ExhibitState();
@@ -81,15 +90,6 @@ class _ExhibitState extends State<Exhibit> {
     galleryState?.addListener(() => setState(() {
           shouldShow = galleryState?.shouldShow(widget.tags) ?? true;
         }));
-  }
-
-  void onTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) =>
-            widget.pageBuilder?.call() ?? const SizedBox.shrink(),
-      ),
-    );
   }
 
   @override
@@ -116,7 +116,7 @@ class _ExhibitState extends State<Exhibit> {
       duration: const Duration(milliseconds: 200),
       secondChild: const SizedBox.shrink(),
       firstChild: GestureDetector(
-        onTap: onTap,
+        onTap: () => widget.onTap?.call(context),
         child: widget.displayBuilder?.call(widget.label, pillTags) ??
             Container(
               decoration: const BoxDecoration(
