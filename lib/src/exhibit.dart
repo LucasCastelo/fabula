@@ -69,21 +69,6 @@ class Exhibit extends StatefulWidget {
         ),
       );
 
-  factory Exhibit.tap({
-    required String label,
-    required KnobBuilder builder,
-    List<ExhibitTag> tags = const [],
-    CustomEntryDesign? customEntryDesign,
-    ContextCallback? onTap,
-  }) =>
-      Exhibit(
-        label: label,
-        builder: builder,
-        tags: tags,
-        displayBuilder: customEntryDesign,
-        onTap: onTap,
-      );
-
   factory Exhibit.bottomSheet({
     required String label,
     required KnobBuilder builder,
