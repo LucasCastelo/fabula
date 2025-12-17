@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           title: const Text('Exhibit Gallery'),
         ),
         children: [
-          Exhibit(
+          Exhibit.page(
             label: 'String Basic Example',
             tags: [
               ExhibitTag(label: 'String', color: Colors.blue),

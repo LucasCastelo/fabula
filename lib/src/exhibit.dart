@@ -41,8 +41,9 @@ class Exhibit extends StatefulWidget {
   factory Exhibit.page({
     required String label,
     required KnobBuilder builder,
-    required List<ExhibitTag> tags,
-    required CustomEntryDesign customEntryDesign,
+    List<ExhibitTag> tags = const [],
+    CustomEntryDesign? customEntryDesign,
+    PreferredSizeWidget? appBar,
   }) =>
       Exhibit(
         label: label,
@@ -50,8 +51,11 @@ class Exhibit extends StatefulWidget {
         tags: tags,
         displayBuilder: customEntryDesign,
         pageBuilder: () => Scaffold(
-          body: ExhibitRaw(
-            builder: builder,
+          appBar: appBar,
+          body: SafeArea(
+            child: ExhibitRaw(
+              builder: builder,
+            ),
           ),
         ),
       );
@@ -79,7 +83,14 @@ class _ExhibitState extends State<Exhibit> {
         }));
   }
 
-  void onTap() {}
+  void onTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) =>
+            widget.pageBuilder?.call() ?? const SizedBox.shrink(),
+      ),
+    );
+  }
 
   @override
   void dispose() {
