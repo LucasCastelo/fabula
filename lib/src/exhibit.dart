@@ -12,8 +12,8 @@ enum ExhibitEntryType {
   popupMenu,
 }
 
-class ExhibitBuilder extends StatefulWidget {
-  const ExhibitBuilder({
+class Exhibit extends StatefulWidget {
+  const Exhibit({
     super.key,
     required this.builder,
     required this.label,
@@ -22,19 +22,37 @@ class ExhibitBuilder extends StatefulWidget {
     this.pageBuilder,
   });
 
-  factory ExhibitBuilder.page({
+  factory Exhibit.raw({
     required String label,
     required KnobBuilder builder,
     required List<ExhibitTag> tags,
     required CustomEntryDesign customEntryDesign,
   }) =>
-      ExhibitBuilder(
+      Exhibit(
         label: label,
         builder: builder,
         tags: tags,
         displayBuilder: customEntryDesign,
         pageBuilder: () => ExhibitRaw(
           builder: builder,
+        ),
+      );
+
+  factory Exhibit.page({
+    required String label,
+    required KnobBuilder builder,
+    required List<ExhibitTag> tags,
+    required CustomEntryDesign customEntryDesign,
+  }) =>
+      Exhibit(
+        label: label,
+        builder: builder,
+        tags: tags,
+        displayBuilder: customEntryDesign,
+        pageBuilder: () => Scaffold(
+          body: ExhibitRaw(
+            builder: builder,
+          ),
         ),
       );
 
@@ -45,10 +63,10 @@ class ExhibitBuilder extends StatefulWidget {
   final Widget Function()? pageBuilder;
 
   @override
-  State<ExhibitBuilder> createState() => _ExhibitBuilderState();
+  State<Exhibit> createState() => _ExhibitState();
 }
 
-class _ExhibitBuilderState extends State<ExhibitBuilder> {
+class _ExhibitState extends State<Exhibit> {
   late final galleryState = ExhibitGalleryState.of(context);
   bool shouldShow = true;
 

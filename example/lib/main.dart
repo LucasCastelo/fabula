@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           title: const Text('Exhibit Gallery'),
         ),
         children: [
-          ExhibitBuilder(
+          Exhibit(
             label: 'String Basic Example',
             tags: [
               ExhibitTag(label: 'String', color: Colors.blue),
@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          ExhibitBuilder(
+          Exhibit(
             label: 'String Nullable Example',
             tags: [
               ExhibitTag(label: 'String', color: Colors.blue),
@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                   'NULL',
             ),
           ),
-          ExhibitBuilder(
+          Exhibit(
             label: 'Boolean Example',
             tags: [
               ExhibitTag(label: 'Boolean', color: Colors.green),
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               width: 20,
             ),
           ),
-          ExhibitBuilder(
+          Exhibit(
             label: 'Integer Example (Nullable and non-nullable)',
             tags: [
               ExhibitTag(label: 'Integer', color: Colors.purple),
@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          ExhibitBuilder(
+          Exhibit(
             label: 'Selectable Example',
             tags: [
               ExhibitTag(label: 'Selectable', color: Colors.orange),
@@ -130,7 +130,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          ExhibitBuilder(
+          Exhibit(
             label: 'Selectable Nullable Example',
             tags: [
               ExhibitTag(label: 'Selectable', color: Colors.orange),
@@ -144,7 +144,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          ExhibitBuilder(
+          Exhibit(
             label: 'Color Example',
             tags: [
               ExhibitTag(label: 'Color', color: Colors.pink),
@@ -166,7 +166,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          ExhibitBuilder(
+          Exhibit(
             label: 'Color Nullable Example',
             tags: [
               ExhibitTag(label: 'Color', color: Colors.pink),
@@ -179,7 +179,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          ExhibitBuilder(
+          Exhibit(
             label: 'List Example (Not working yet)',
             tags: [
               ExhibitTag(label: 'List', color: Colors.purple),
@@ -191,7 +191,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          ExhibitBuilder(
+          Exhibit(
             label: 'Animation Example Bottom Sheet',
             tags: [
               ExhibitTag(label: 'Animation', color: Colors.teal),

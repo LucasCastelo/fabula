@@ -10,7 +10,7 @@ class ExhibitGallery extends StatefulWidget {
   });
 
   final PreferredSizeWidget? appBar;
-  final List<ExhibitBuilder> children;
+  final List<Exhibit> children;
 
   @override
   State<ExhibitGallery> createState() => ExhibitGalleryState();
