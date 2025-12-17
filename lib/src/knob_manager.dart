@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/fields/animation_player.dart';
 import 'package:storyto/src/fields/list_field.dart';
+import 'package:storyto/src/helpers/debouncer.dart';
 import 'package:storyto/src/widgets/toggler_field.dart';
 import 'package:storyto/src/fields/bool_field.dart';
 import 'package:storyto/src/fields/color_field.dart';
@@ -18,6 +19,8 @@ class KnobManager extends ChangeNotifier {
   final Map<String, KnobValue> knobs = {};
   final ChangeNotifier rebuildKnobs = ChangeNotifier();
   final ChangeNotifier rebuildExhibit = ChangeNotifier();
+  final Debouncer rebuildExhibitDebouncer = Debouncer(milliseconds: 300);
+  final Debouncer rebuildKnobsDebouncer = Debouncer(milliseconds: 300);
 
   @override
   void dispose() {
@@ -247,14 +250,20 @@ class KnobManager extends ChangeNotifier {
                 knobs.keys
                     .where((key) => key.startsWith(prefix))
                     .forEach((key) {
-                  knobs[key]?.addListener(rebuildExhibit.notifyListeners);
+                  knobs[key]?.addListener(
+                    () => rebuildExhibitDebouncer
+                        .call(rebuildExhibit.notifyListeners),
+                  );
                 });
               },
               onFieldDisposed: (prefix) {
                 knobs.keys
                     .where((key) => key.startsWith(prefix))
                     .forEach((key) {
-                  knobs[key]?.removeListener(rebuildExhibit.notifyListeners);
+                  knobs[key]?.removeListener(
+                    () => rebuildExhibitDebouncer
+                        .call(rebuildExhibit.notifyListeners),
+                  );
                 });
               }),
         ),
@@ -284,7 +293,7 @@ class KnobManager extends ChangeNotifier {
 
     knobs[id] = newKnob;
 
-    rebuildKnobs.notifyListeners();
+    rebuildKnobsDebouncer.call(rebuildKnobs.notifyListeners);
   }
 
   T _fetchKnobValueById<T>(String id) {

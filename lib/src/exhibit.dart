@@ -14,8 +14,7 @@ enum ExhibitEntryType {
 }
 
 class Exhibit extends StatefulWidget {
-  const Exhibit({
-    super.key,
+  const Exhibit._({
     required this.builder,
     required this.label,
     this.tags = const [],
@@ -26,10 +25,10 @@ class Exhibit extends StatefulWidget {
   factory Exhibit.raw({
     required String label,
     required KnobBuilder builder,
-    required List<ExhibitTag> tags,
-    required CustomEntryDesign customEntryDesign,
+    List<ExhibitTag> tags = const [],
+    CustomEntryDesign? customEntryDesign,
   }) =>
-      Exhibit(
+      Exhibit._(
         label: label,
         builder: builder,
         tags: tags,
@@ -50,7 +49,7 @@ class Exhibit extends StatefulWidget {
     CustomEntryDesign? customEntryDesign,
     PreferredSizeWidget? appBar,
   }) =>
-      Exhibit(
+      Exhibit._(
         label: label,
         builder: builder,
         tags: tags,
@@ -75,7 +74,7 @@ class Exhibit extends StatefulWidget {
     List<ExhibitTag> tags = const [],
     CustomEntryDesign? customEntryDesign,
   }) =>
-      Exhibit(
+      Exhibit._(
         label: label,
         builder: builder,
         tags: tags,
@@ -83,8 +82,11 @@ class Exhibit extends StatefulWidget {
         onTap: (context) => showModalBottomSheet(
           context: context,
           backgroundColor: Colors.white,
-          builder: (context) => Padding(
+          useSafeArea: true,
+          showDragHandle: true,
+          builder: (context) => Container(
             padding: const EdgeInsets.all(16.0),
+            width: double.infinity,
             child: ExhibitRaw(
               builder: builder,
             ),
