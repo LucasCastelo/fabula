@@ -9,6 +9,7 @@ class CustomTextField extends StatefulWidget {
     required this.initialValue,
     required this.decoration,
     required this.keyboardType,
+    this.value,
   });
 
   final bool isEnabled;
@@ -16,6 +17,7 @@ class CustomTextField extends StatefulWidget {
   final ValueSetter<String> onChanged;
   final KnobTextFieldDecoration decoration;
   final TextInputType? keyboardType;
+  final String? value;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -36,6 +38,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.value != null) {
+      controller.text = widget.value!;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
