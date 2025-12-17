@@ -11,11 +11,13 @@ class NullableColorField extends StatelessWidget {
     required this.label,
     required this.toggleNull,
     this.keyboardType,
+    this.predefinedColors,
   });
   final String label;
   final NullableKnob<Color?> knob;
   final TextInputType? keyboardType;
   final VoidCallback toggleNull;
+  final List<Color>? predefinedColors;
 
   final controller = TextEditingController();
 
@@ -27,35 +29,63 @@ class NullableColorField extends StatelessWidget {
         knob.getValue()?.toARGB32().toRadixString(16).replaceRange(0, 2, '');
     final hexRegEx = RegExp(r'^[0-9a-fA-F]{6}$');
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
-          child: CustomTextField(
-            onChanged: (v) {
-              if (hexRegEx.hasMatch(v)) {
-                knob.setValue(hexToColor(v));
-              }
-            },
-            keyboardType: keyboardType,
-            isEnabled: knob.isFieldEnabled,
-            initialValue: currentHexColor,
-            decoration: KnobTextFieldDecoration(label: label),
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(
+              child: CustomTextField(
+                onChanged: (v) {
+                  if (hexRegEx.hasMatch(v)) {
+                    knob.setValue(hexToColor(v));
+                  }
+                },
+                keyboardType: keyboardType,
+                isEnabled: knob.isFieldEnabled,
+                initialValue: currentHexColor,
+                decoration: KnobTextFieldDecoration(label: label),
+                value: currentHexColor,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: knob.getValue(),
+              ),
+              height: 48,
+              width: 48,
+            ),
+            CustomCheckbox(
+              value: currentHexColor != null,
+              onChanged: (_) => toggleNull(),
+            )
+          ],
         ),
-        const SizedBox(width: 8),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: knob.getValue(),
+        if (predefinedColors != null) ...[
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: predefinedColors!
+                .map(
+                  (color) => GestureDetector(
+                    onTap: () => knob.setValue(color),
+                    child: Container(
+                      height: 24,
+                      width: 24,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: color,
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
           ),
-          height: 48,
-          width: 48,
-        ),
-        CustomCheckbox(
-          value: currentHexColor != null,
-          onChanged: (_) => toggleNull(),
-        )
+        ],
       ],
     );
   }
