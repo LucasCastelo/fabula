@@ -10,7 +10,7 @@ class ExhibitGallery extends StatefulWidget {
   });
 
   final PreferredSizeWidget? appBar;
-  final List<Exhibit> children;
+  final List<Widget> children;
 
   @override
   State<ExhibitGallery> createState() => ExhibitGalleryState();
@@ -48,14 +48,6 @@ class ExhibitGalleryState extends State<ExhibitGallery> with ChangeNotifier {
 
   @override
   Widget build(BuildContext context) {
-    final builders = widget.children;
-    builders.sort((a, b) {
-      if (a.tags.isEmpty && b.tags.isEmpty) return 0;
-      if (a.tags.isEmpty) return 1;
-      if (b.tags.isEmpty) return -1;
-      return a.tags.first.label.compareTo(b.tags.first.label);
-    });
-
     return Material(
       child: Scaffold(
         appBar: widget.appBar,
@@ -100,7 +92,7 @@ class ExhibitGalleryState extends State<ExhibitGallery> with ChangeNotifier {
                 ),
               ),
               const SizedBox(height: 4),
-              ...builders,
+              ...widget.children,
             ],
           ),
         ),
