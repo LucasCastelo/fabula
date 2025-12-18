@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/knob_manager.dart';
+import 'package:storyto/src/widgets/exhibit_overlay.dart';
 import 'package:storyto/src/widgets/exhibit_tag_pill.dart';
 import 'package:storyto/storyto.dart';
 
@@ -37,6 +38,7 @@ class Exhibit extends StatefulWidget {
           MaterialPageRoute(
             builder: (context) => ExhibitRaw(
               builder: builder,
+              overlayBuilder: (context, knobs) => ExhibitOverlay(knobs: knobs),
             ),
           ),
         ),
