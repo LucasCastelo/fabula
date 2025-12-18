@@ -71,7 +71,8 @@ class ExhibitGalleryState extends State<ExhibitGallery> with ChangeNotifier {
                     spacing: 4,
                     runSpacing: 4,
                     alignment: WrapAlignment.start,
-                    children: availableTags
+                    children: (availableTags.toList()
+                          ..sort((a, b) => a.label.compareTo(b.label)))
                         .map(
                           (e) => ExhibitTagPill(
                             tag: e,
