@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           Exhibit.page(
             label: 'String Basic Example',
             tags: [
-              ExhibitTag(label: 'String', color: Colors.blue),
+              ExhibitTag(label: 'String'),
             ],
             builder: (k) => Text(
               k.string(

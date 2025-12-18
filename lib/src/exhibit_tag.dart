@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ExhibitTag {
-  ExhibitTag({required String label, required this.color}) {
+  ExhibitTag({required String label, this.color = Colors.lightBlueAccent}) {
     _label = label.toLowerCase();
   }
 
