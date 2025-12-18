@@ -294,7 +294,25 @@ class NullableColorTester extends StatelessWidget {
             )
           : Container(
               width: double.maxFinite,
-              color: color,
+              color: color?.withAlpha((255 * 0.6).toInt()),
+              child: Center(
+                child: MaterialButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Click Test'),
+                      ),
+                    );
+                  },
+                  color: color,
+                  child: const Text(
+                    'Click Test',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
             ),
     );
   }
