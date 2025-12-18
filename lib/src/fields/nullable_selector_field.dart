@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/entities/knob.dart';
 import 'package:storyto/src/fields/selector_field.dart';
-import 'package:storyto/src/widgets/custom_checkbox.dart';
+import 'package:storyto/src/widgets/general/custom_checkbox.dart';
 
 typedef SelectorNameMarshal<T> = String Function(T element);
 

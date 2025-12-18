@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:storyto/src/fields/animation_player.dart';
 import 'package:storyto/src/fields/list_field.dart';
 import 'package:storyto/src/helpers/debouncer.dart';
-import 'package:storyto/src/widgets/toggler_field.dart';
+import 'package:storyto/src/widgets/general/toggler_field.dart';
 import 'package:storyto/src/fields/bool_field.dart';
 import 'package:storyto/src/fields/color_field.dart';
 import 'package:storyto/src/fields/nullable_color_field.dart';
@@ -10,7 +10,7 @@ import 'package:storyto/src/fields/nullable_selector_field.dart';
 import 'package:storyto/src/fields/nullable_string_field.dart';
 import 'package:storyto/src/entities/knob.dart';
 import 'package:storyto/src/fields/selector_field.dart';
-import 'package:storyto/src/widgets/custom_text_field.dart';
+import 'package:storyto/src/widgets/general/custom_text_field.dart';
 import 'package:storyto/storyto.dart';
 
 class KnobManager extends ChangeNotifier {

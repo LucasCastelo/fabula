@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/widgets/custom_checkbox.dart';
+import 'package:storyto/src/widgets/general/custom_checkbox.dart';
 
 class BoolField extends StatelessWidget {
   const BoolField({
