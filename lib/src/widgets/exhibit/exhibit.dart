@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/knob_manager.dart';
+import 'package:storyto/src/widgets/exhibit/exhibit_list.dart';
 import 'package:storyto/src/widgets/exhibit/exhibit_overlay.dart';
 import 'package:storyto/src/widgets/general/exhibit_tag_pill.dart';
 import 'package:storyto/storyto.dart';
@@ -65,13 +66,7 @@ class Exhibit extends StatefulWidget {
                     backgroundColor: Colors.white,
                   ),
               body: SafeArea(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: ExhibitRaw(builder: builder),
-                    ),
-                  ],
-                ),
+                child: ExhibitList(builder: builder),
               ),
             ),
           ),
