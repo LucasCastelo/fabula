@@ -28,8 +28,8 @@ class KnobManager extends ChangeNotifier {
     super.dispose();
   }
 
-  AnimationController animationController({
-    required String id,
+  AnimationController animationController(
+    String id, {
     required TickerProvider vsync,
     Duration? duration,
   }) =>
@@ -80,6 +80,7 @@ class KnobManager extends ChangeNotifier {
         ),
       );
 
+  // TODO: improve on toggler design
   T toggler<T>(
     String id, {
     required String label,
@@ -91,6 +92,7 @@ class KnobManager extends ChangeNotifier {
         knob: DefaultKnob<T>(
           initialValue: onValue,
           inputBuilder: (knob) => TogglerField(
+            label: label,
             getValue: knob.getValue,
             onChange: knob.setValue,
             offValue: offValue,
@@ -295,7 +297,9 @@ class KnobManager extends ChangeNotifier {
 
     knobs[id] = newKnob;
 
-    rebuildKnobsDebouncer.call(rebuildKnobs.notifyListeners);
+    rebuildKnobsDebouncer.call(() {
+      rebuildKnobs.notifyListeners();
+    });
   }
 
   T _fetchKnobValueById<T>(String id) {

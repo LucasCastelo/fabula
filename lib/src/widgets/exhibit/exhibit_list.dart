@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:storyto/src/helpers/iterator_separate.dart';
 import 'package:storyto/src/helpers/knob_manager_extensions.dart';
 import 'package:storyto/storyto.dart';
 import 'package:storyto/src/widgets/knob_manager_provider.dart';
@@ -25,9 +26,12 @@ class ExhibitList extends StatelessWidget {
             ListenableBuilder(
               listenable: k.rebuildKnobs,
               builder: (context, __) => Column(
-                children: [
-                  ...k.viewKnobs(),
-                ],
+                children: k
+                    .viewKnobs()
+                    .separate(
+                      const SizedBox(height: 16),
+                    )
+                    .toList(),
               ),
             ),
           ],

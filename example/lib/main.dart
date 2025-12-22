@@ -1,3 +1,11 @@
+import 'package:example/examples/animation_example.dart';
+import 'package:example/examples/bool_example.dart';
+import 'package:example/examples/color_examples.dart';
+import 'package:example/examples/full_page_example.dart';
+import 'package:example/examples/integer_example.dart';
+import 'package:example/examples/selectable_example.dart';
+import 'package:example/examples/string_example.dart';
+import 'package:example/examples/toggler_example.dart';
 import 'package:flutter/material.dart';
 import 'package:storyto/storyto.dart';
 
@@ -51,32 +59,14 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         ),
         children: [
           Exhibit.page(
-            label: 'String Basic Example',
-            tags: [
-              ExhibitTag(label: 'String'),
-            ],
-            builder: (k) => Text(
-              k.string(
-                'id',
-                decoration: KnobTextFieldDecoration(label: 'Text above'),
-              ),
-            ),
-          ),
-          Exhibit.page(
-            label: 'String Nullable Example',
+            label: 'String Example',
             tags: [
               ExhibitTag(label: 'String', color: Colors.blue),
               ExhibitTag(label: 'Nullable', color: Colors.red),
             ],
-            builder: (k) => Text(
-              k.nString(
-                    'id',
-                    decoration: KnobTextFieldDecoration(
-                      label: 'Cool text field',
-                      placeholder: 'E.g.: Test Value',
-                    ),
-                  ) ??
-                  'NULL',
+            builder: (k) => StringExample(
+              place: k.string('place'),
+              car: k.nString('car'),
             ),
           ),
           Exhibit.page(
@@ -84,15 +74,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             tags: [
               ExhibitTag(label: 'Boolean', color: Colors.green),
             ],
-            builder: (k) => Container(
-              color: k.boolean(
-                'id',
-                label: 'Change Color of box above',
-              )
-                  ? Colors.red
-                  : Colors.black,
-              height: 20,
-              width: 20,
+            builder: (k) => BoolExample(
+              value: k.boolean('id', label: 'Change Color of box above'),
             ),
           ),
           Exhibit.page(
@@ -101,46 +84,37 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ExhibitTag(label: 'Integer', color: Colors.purple),
               ExhibitTag(label: 'nullable', color: Colors.red),
             ],
-            builder: (k) => IntTest(
-              aNumber: k.nInteger(
-                'id',
-                decoration: KnobTextFieldDecoration(
-                  label: 'Will add with the number below',
-                ),
-              ),
-              bNumber: k.integer(
-                'id-2',
-                decoration: KnobTextFieldDecoration(
-                  label: 'Will add to number above',
-                  placeholder: 'E.g.: 1',
-                ),
-              ),
-            ),
+            builder: (k) =>
+                IntegerExample(foo: k.integer('foo'), bar: k.nInteger('bar')),
           ),
           Exhibit.page(
             label: 'Selectable Example',
             tags: [
               ExhibitTag(label: 'Selectable', color: Colors.orange),
             ],
-            builder: (k) => SelectableTester(
-              colorEnum: k.selectable(
-                'id',
-                values: ColorEnum.values,
-                nameMarshal: (colorEnum) => 'Name is: ${colorEnum.toString()}',
+            builder: (k) => SelectableExample(
+              food: k.selectable(
+                'food',
+                values: [
+                  Food(name: 'Pizza'),
+                  Food(name: 'Burger'),
+                  Food(name: 'Pasta'),
+                  Food(name: 'Salad'),
+                  Food(name: 'Sushi'),
+                  Food(name: 'Taco'),
+                  Food(name: 'Nachos'),
+                  Food(name: 'Enchiladas'),
+                  Food(name: 'Tacos'),
+                  Food(name: 'Nachos'),
+                  Food(name: 'Enchiladas'),
+                  Food(name: 'Tacos'),
+                ],
+                nameMarshal: (v) => v.name,
               ),
-            ),
-          ),
-          Exhibit.page(
-            label: 'Selectable Nullable Example',
-            tags: [
-              ExhibitTag(label: 'Selectable', color: Colors.orange),
-              ExhibitTag(label: 'Nullable', color: Colors.red),
-            ],
-            builder: (k) => NSelectableTester(
-              colorEnum: k.nSelectable(
-                'id',
-                values: ColorEnum.values,
-                nameMarshal: (colorEnum) => 'Name is: ${colorEnum.toString()}',
+              restaurant: k.nSelectable(
+                'Restaurant',
+                values: Restaurant.values,
+                nameMarshal: (v) => v.toString(),
               ),
             ),
           ),
@@ -150,10 +124,9 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ExhibitTag(label: 'Color', color: Colors.pink),
               ExhibitTag(label: 'Predefined Colors', color: Colors.yellow),
             ],
-            builder: (k) => ColorTester(
-              color: k.color(
-                'id',
-                label: 'Above color',
+            builder: (k) => ColorExamples(
+              aColor: k.color(
+                'Starting color of the gradient',
                 predefinedColors: [
                   Colors.red,
                   Colors.green,
@@ -161,327 +134,65 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                   Colors.yellow,
                   Colors.purple,
                   Colors.orange,
-                  Colors.brown,
+                  Colors.brown
                 ],
               ),
+              bColor: k.nColor('Middle color of the gradient (nullable)'),
+              cColor: k.color('Ending color of the gradient'),
             ),
           ),
           Exhibit.raw(
-            label: 'Color Nullable Example',
+            label: 'Full Page Example',
             tags: [
-              ExhibitTag(label: 'Color', color: Colors.pink),
-              ExhibitTag(label: 'Nullable', color: Colors.red),
+              ExhibitTag(label: 'Full Page', color: Colors.pink),
+              ExhibitTag(label: 'Animation', color: Colors.blue),
+              ExhibitTag(label: 'Gradient', color: Colors.green),
+              ExhibitTag(label: 'String', color: Colors.orange),
+              ExhibitTag(label: 'Color', color: Colors.purple),
             ],
-            builder: (k) => NullableColorTester(
-              color: k.nColor(
-                'id',
-                label: 'Above color',
-                predefinedColors: [
-                  Colors.red,
-                  Colors.green,
-                  Colors.blue,
-                  Colors.yellow,
-                  Colors.purple,
-                  Colors.orange,
-                  Colors.brown,
-                ],
-              ),
-            ),
-          ),
-          Exhibit.page(
-            label: 'List Example (Not working yet)',
-            tags: [
-              ExhibitTag(label: 'List', color: Colors.purple),
-            ],
-            builder: (k) => ListTester(
-              list: k.listDefunct(
-                'id',
-                itemBuilder: (prefixId) => k.string('$prefixId-string'),
-              ),
-            ),
-          ),
-          Exhibit.page(
-            label: 'Animation Example Bottom Sheet',
-            tags: [
-              ExhibitTag(label: 'Animation', color: Colors.teal),
-              ExhibitTag(label: 'Bottom Sheet Entry', color: Colors.blue),
-            ],
-            builder: (k) => AnimationTester(
-              controller: k.animationController(
-                id: 'animation',
+            builder: (k) => FullPageExample(
+              title: k.string('title'),
+              description: k.string('description'),
+              color: k.color('color', initialValue: Colors.blueGrey),
+              gradientColors: [
+                k.color('gradientColor 1', initialValue: Colors.red),
+                k.color('gradientColor 2', initialValue: Colors.green),
+                k.color('gradientColor 3', initialValue: Colors.blue),
+              ],
+              animationController: k.animationController(
+                'animationController',
                 vsync: this,
                 duration: const Duration(seconds: 5),
               ),
             ),
           ),
-          Exhibit.raw(
-            label: 'Wishlist Page',
+          Exhibit.page(
+            label: 'Animation Example',
             tags: [
-              ExhibitTag(label: 'Wishlist', color: Colors.purple),
-              ExhibitTag(label: 'Page Entry', color: Colors.blue),
+              ExhibitTag(label: 'Animation', color: Colors.teal),
+              ExhibitTag(label: 'Color', color: Colors.pink),
             ],
-            builder: (k) => WishlistTester(
-              color: k.color(
-                'color',
-                label: 'Tile Color',
-                predefinedColors: [
-                  Colors.red,
-                  Colors.green,
-                  Colors.blue,
-                  Colors.yellow,
-                  Colors.purple,
-                  Colors.orange,
-                  Colors.brown,
-                ],
-              ),
-              title: k.string(
-                'title',
-                decoration: KnobTextFieldDecoration(
-                  label: 'Title',
-                  placeholder: 'E.g.: My Wishlist',
-                ),
-              ),
-              items: k.nInteger(
-                'items',
-                initialValue: 10,
-                decoration: KnobTextFieldDecoration(
-                  label: 'Items',
-                  placeholder: 'E.g.: 10',
-                ),
+            builder: (k) => AnimationExample(
+              controller: k.animationController('animation', vsync: this),
+              color: k.color('color', initialValue: Colors.red),
+            ),
+          ),
+          Exhibit.page(
+            label: 'Toggler Example',
+            tags: [
+              ExhibitTag(label: 'Toggler', color: Colors.purple),
+            ],
+            builder: (k) => TogglerExample(
+              value: k.toggler(
+                'value',
+                label: 'Change the value of the toggler',
+                onValue: 'Car is on',
+                offValue: 'Car is off',
               ),
             ),
-          )
+          ),
         ],
       ),
     );
-  }
-}
-
-class ListTester extends StatelessWidget {
-  const ListTester({
-    super.key,
-    required this.list,
-  });
-
-  final List<String> list;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: list
-          .map(
-            (e) => Text(
-              e,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-}
-
-class WishlistTester extends StatelessWidget {
-  const WishlistTester({
-    super.key,
-    required this.color,
-    required this.title,
-    required this.items,
-  });
-
-  final Color color;
-  final String title;
-  final int? items;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Wrap(
-        spacing: 10,
-        runSpacing: 10,
-        children: items == null
-            ? [
-                const Text('No items'),
-              ]
-            : List.generate(
-                items!,
-                (index) => Container(
-                  height: 10,
-                  width: 10,
-                  color: color,
-                ),
-              ),
-      ),
-    );
-  }
-}
-
-class AnimationTester extends StatefulWidget {
-  const AnimationTester({
-    super.key,
-    required this.controller,
-  });
-
-  final AnimationController controller;
-
-  @override
-  State<AnimationTester> createState() => _AnimationTesterState();
-}
-
-class _AnimationTesterState extends State<AnimationTester>
-    with TickerProviderStateMixin {
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: widget.controller,
-      builder: (_, value, ___) {
-        return Container(
-          height: 100,
-          width: 100,
-          color: Colors.red.withAlpha((255 * value).toInt()),
-        );
-      },
-    );
-  }
-}
-
-class NullableColorTester extends StatelessWidget {
-  const NullableColorTester({
-    super.key,
-    required this.color,
-  });
-
-  final Color? color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: color == null
-          ? const Center(
-              child: Text('Color is null'),
-            )
-          : Container(
-              width: double.maxFinite,
-              color: color?.withAlpha((255 * 0.6).toInt()),
-              child: Center(
-                child: MaterialButton(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Click Test'),
-                      ),
-                    );
-                  },
-                  color: color,
-                  child: const Text(
-                    'Click Test',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-    );
-  }
-}
-
-class ColorTester extends StatelessWidget {
-  const ColorTester({
-    super.key,
-    required this.color,
-  });
-
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 20,
-      width: 20,
-      color: color,
-    );
-  }
-}
-
-class NSelectableTester extends StatelessWidget {
-  const NSelectableTester({
-    super.key,
-    required this.colorEnum,
-  });
-
-  final ColorEnum? colorEnum;
-
-  @override
-  Widget build(BuildContext context) {
-    if (colorEnum == null) {
-      return const SizedBox(
-        height: 40,
-        width: 40,
-        child: Text('NULL'),
-      );
-    }
-
-    return Container(
-      color: colorEnum!.map(
-        green: () => Colors.green,
-        red: () => Colors.red,
-        blue: () => Colors.blue,
-        yellow: () => Colors.yellow,
-        black: () => Colors.black,
-      ),
-      height: 40,
-      width: 40,
-    );
-  }
-}
-
-class SelectableTester extends StatelessWidget {
-  const SelectableTester({
-    super.key,
-    required this.colorEnum,
-  });
-
-  final ColorEnum colorEnum;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: colorEnum.map(
-        green: () => Colors.green,
-        red: () => Colors.red,
-        blue: () => Colors.blue,
-        yellow: () => Colors.yellow,
-        black: () => Colors.black,
-      ),
-      height: 40,
-      width: 40,
-    );
-  }
-}
-
-class IntTest extends StatelessWidget {
-  const IntTest({
-    super.key,
-    required this.aNumber,
-    required this.bNumber,
-  });
-
-  final int? aNumber;
-  final int bNumber;
-  @override
-  Widget build(BuildContext context) {
-    if (aNumber == null) {
-      return const Text('aNumber null');
-    } else {
-      return Text((aNumber! + bNumber).toString());
-    }
   }
 }
