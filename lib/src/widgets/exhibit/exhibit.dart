@@ -16,7 +16,6 @@ enum ExhibitEntryType {
 
 class Exhibit extends StatefulWidget {
   const Exhibit._({
-    required this.builder,
     required this.label,
     this.tags = const [],
     this.displayBuilder,
@@ -31,7 +30,6 @@ class Exhibit extends StatefulWidget {
   }) =>
       Exhibit._(
         label: label,
-        builder: builder,
         tags: tags,
         displayBuilder: customEntryDesign,
         onTap: (context) => Navigator.of(context).push(
@@ -53,16 +51,26 @@ class Exhibit extends StatefulWidget {
   }) =>
       Exhibit._(
         label: label,
-        builder: builder,
         tags: tags,
         displayBuilder: customEntryDesign,
         onTap: (context) => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => Scaffold(
-              appBar: appBar,
+              appBar: appBar ??
+                  AppBar(
+                    title: Text(label),
+                    scrolledUnderElevation: 0,
+                    elevation: 0,
+                    shadowColor: Colors.black,
+                    backgroundColor: Colors.white,
+                  ),
               body: SafeArea(
-                child: ExhibitRaw(
-                  builder: builder,
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: ExhibitRaw(builder: builder),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -70,34 +78,7 @@ class Exhibit extends StatefulWidget {
         ),
       );
 
-  factory Exhibit.bottomSheet({
-    required String label,
-    required KnobBuilder builder,
-    List<ExhibitTag> tags = const [],
-    CustomEntryDesign? customEntryDesign,
-  }) =>
-      Exhibit._(
-        label: label,
-        builder: builder,
-        tags: tags,
-        displayBuilder: customEntryDesign,
-        onTap: (context) => showModalBottomSheet(
-          context: context,
-          backgroundColor: Colors.white,
-          useSafeArea: true,
-          showDragHandle: true,
-          builder: (context) => Container(
-            padding: const EdgeInsets.all(16.0),
-            width: double.infinity,
-            child: ExhibitRaw(
-              builder: builder,
-            ),
-          ),
-        ),
-      );
-
   final String label;
-  final KnobBuilder builder;
   final List<ExhibitTag> tags;
   final CustomEntryDesign? displayBuilder;
   final ContextCallback? onTap;

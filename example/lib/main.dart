@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit.bottomSheet(
+          Exhibit.page(
             label: 'String Nullable Example',
             tags: [
               ExhibitTag(label: 'String', color: Colors.blue),
@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                   'NULL',
             ),
           ),
-          Exhibit.bottomSheet(
+          Exhibit.page(
             label: 'Boolean Example',
             tags: [
               ExhibitTag(label: 'Boolean', color: Colors.green),
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               width: 20,
             ),
           ),
-          Exhibit.bottomSheet(
+          Exhibit.page(
             label: 'Integer Example (Nullable and non-nullable)',
             tags: [
               ExhibitTag(label: 'Integer', color: Colors.purple),
@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit.bottomSheet(
+          Exhibit.page(
             label: 'Selectable Example',
             tags: [
               ExhibitTag(label: 'Selectable', color: Colors.orange),
@@ -130,7 +130,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit.bottomSheet(
+          Exhibit.page(
             label: 'Selectable Nullable Example',
             tags: [
               ExhibitTag(label: 'Selectable', color: Colors.orange),
@@ -144,7 +144,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit.bottomSheet(
+          Exhibit.page(
             label: 'Color Example',
             tags: [
               ExhibitTag(label: 'Color', color: Colors.pink),
@@ -188,7 +188,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit.bottomSheet(
+          Exhibit.page(
             label: 'List Example (Not working yet)',
             tags: [
               ExhibitTag(label: 'List', color: Colors.purple),
@@ -200,7 +200,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Exhibit.bottomSheet(
+          Exhibit.page(
             label: 'Animation Example Bottom Sheet',
             tags: [
               ExhibitTag(label: 'Animation', color: Colors.teal),
@@ -214,6 +214,43 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ),
             ),
           ),
+          Exhibit.raw(
+            label: 'Wishlist Page',
+            tags: [
+              ExhibitTag(label: 'Wishlist', color: Colors.purple),
+              ExhibitTag(label: 'Page Entry', color: Colors.blue),
+            ],
+            builder: (k) => WishlistTester(
+              color: k.color(
+                'color',
+                label: 'Tile Color',
+                predefinedColors: [
+                  Colors.red,
+                  Colors.green,
+                  Colors.blue,
+                  Colors.yellow,
+                  Colors.purple,
+                  Colors.orange,
+                  Colors.brown,
+                ],
+              ),
+              title: k.string(
+                'title',
+                decoration: KnobTextFieldDecoration(
+                  label: 'Title',
+                  placeholder: 'E.g.: My Wishlist',
+                ),
+              ),
+              items: k.nInteger(
+                'items',
+                initialValue: 10,
+                decoration: KnobTextFieldDecoration(
+                  label: 'Items',
+                  placeholder: 'E.g.: 10',
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -244,6 +281,44 @@ class ListTester extends StatelessWidget {
             ),
           )
           .toList(),
+    );
+  }
+}
+
+class WishlistTester extends StatelessWidget {
+  const WishlistTester({
+    super.key,
+    required this.color,
+    required this.title,
+    required this.items,
+  });
+
+  final Color color;
+  final String title;
+  final int? items;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: Wrap(
+        spacing: 10,
+        runSpacing: 10,
+        children: items == null
+            ? [
+                const Text('No items'),
+              ]
+            : List.generate(
+                items!,
+                (index) => Container(
+                  height: 10,
+                  width: 10,
+                  color: color,
+                ),
+              ),
+      ),
     );
   }
 }
