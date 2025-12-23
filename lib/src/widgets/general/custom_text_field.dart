@@ -10,6 +10,7 @@ class CustomTextField extends StatefulWidget {
     required this.decoration,
     required this.keyboardType,
     this.value,
+    this.description,
   });
 
   final bool isEnabled;
@@ -18,6 +19,7 @@ class CustomTextField extends StatefulWidget {
   final KnobTextFieldDecoration decoration;
   final TextInputType? keyboardType;
   final String? value;
+  final String? description;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -38,6 +40,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final description = widget.description;
+    final placeholder =
+        widget.decoration.placeholder ?? widget.decoration.label;
+    const enabledBorder = OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.black38,
+        width: 1.2,
+      ),
+    );
+
     if (widget.value != null) {
       controller.text = widget.value!;
     }
@@ -52,12 +64,23 @@ class _CustomTextFieldState extends State<CustomTextField> {
             color: widget.isEnabled ? Colors.black : Colors.grey,
           ),
         ),
+        if (description != null)
+          Text(
+            description,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Colors.grey,
+            ),
+          ),
+        const SizedBox(height: 4),
         TextField(
           enabled: widget.isEnabled,
           controller: controller,
           onChanged: widget.onChanged,
           style: const TextStyle(),
-          keyboardType: widget.keyboardType,
+          minLines: 1,
+          maxLines: null,
+          keyboardType: widget.keyboardType ?? TextInputType.multiline,
           decoration: InputDecoration(
             suffix: textLength > 0
                 ? Container(
@@ -77,9 +100,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   )
                 : null,
             contentPadding: const EdgeInsets.all(8),
-            hintText: widget.decoration.placeholder,
-            border: const OutlineInputBorder(),
-            focusedBorder: const OutlineInputBorder(),
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              color: widget.isEnabled ? Colors.grey : Colors.black12,
+            ),
+            border: enabledBorder,
+            enabledBorder: enabledBorder,
+            focusedBorder: enabledBorder,
           ),
         ),
       ],

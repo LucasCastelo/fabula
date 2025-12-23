@@ -44,25 +44,6 @@ class KnobManager extends ChangeNotifier {
         ),
       );
 
-  String? nString(
-    String id, {
-    KnobTextFieldDecoration? decoration,
-    String? value,
-  }) =>
-      _evaluateKnob(
-        id: id,
-        knob: NullableKnob<String?>(
-          value: value,
-          inputBuilder: (knob, toggleNull) => NullableTextField(
-            decoration: decoration ?? KnobTextFieldDecoration(label: id),
-            initialValue: value ?? '',
-            toggleNull: toggleNull,
-            onChanged: knob.setValue,
-            isEnabled: knob.isFieldEnabled,
-          ),
-        ),
-      );
-
   bool boolean(
     String id, {
     required String label,
@@ -105,19 +86,50 @@ class KnobManager extends ChangeNotifier {
 
   String string(
     String id, {
-    String? value,
+    String? initialValue,
     KnobTextFieldDecoration? decoration,
+    String? description,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<String>(
-          initialValue: value ?? '',
+          initialValue: initialValue ?? '',
           inputBuilder: (knob) => CustomTextField(
+            description: description,
             onChanged: knob.setValue,
             isEnabled: true,
-            initialValue: value,
-            decoration: decoration ?? KnobTextFieldDecoration(label: id),
+            initialValue: initialValue,
+            decoration: decoration ??
+                KnobTextFieldDecoration(
+                  label: id,
+                  placeholder: id,
+                ),
             keyboardType: TextInputType.text,
+          ),
+        ),
+      );
+
+  String? nString(
+    String id, {
+    KnobTextFieldDecoration? decoration,
+    String? initialValue,
+    String? description,
+  }) =>
+      _evaluateKnob(
+        id: id,
+        knob: NullableKnob<String?>(
+          value: initialValue,
+          inputBuilder: (knob, toggleNull) => NullableTextField(
+            decoration: decoration ??
+                KnobTextFieldDecoration(
+                  label: id,
+                  placeholder: id,
+                ),
+            initialValue: initialValue,
+            description: description,
+            toggleNull: toggleNull,
+            onChanged: knob.setValue,
+            isEnabled: knob.isFieldEnabled,
           ),
         ),
       );

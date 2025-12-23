@@ -65,8 +65,21 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ExhibitTag(label: 'Nullable', color: Colors.red),
             ],
             builder: (k) => StringExample(
-              place: k.string('place'),
-              car: k.nString('car'),
+              place: k.string(
+                'place',
+                description: 'This is a description of the string field.',
+                decoration: KnobTextFieldDecoration(
+                  label: 'Place',
+                ),
+              ),
+              car: k.nString(
+                'car',
+                description:
+                    'This is a description of the nullable string field.',
+                decoration: KnobTextFieldDecoration(
+                  label: 'Insert your vehicle',
+                ),
+              ),
             ),
           ),
           Exhibit.page(
