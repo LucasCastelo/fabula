@@ -75,7 +75,12 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ExhibitTag(label: 'Boolean', color: Colors.green),
             ],
             builder: (k) => BoolExample(
-              value: k.boolean('id', label: 'Change Color of box above'),
+              value: k.boolean(
+                'id',
+                label: 'Change Color of box above.',
+                description: 'This is a description of the boolean field.',
+                initialValue: false,
+              ),
             ),
           ),
           Exhibit.page(

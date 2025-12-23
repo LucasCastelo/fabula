@@ -66,14 +66,16 @@ class KnobManager extends ChangeNotifier {
   bool boolean(
     String id, {
     required String label,
-    bool? value,
+    String? description,
+    bool? initialValue,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<bool>(
-          initialValue: value ?? true,
+          initialValue: initialValue ?? true,
           inputBuilder: (knob) => BoolField(
             label: label,
+            description: description,
             value: knob.getValue(),
             onChanged: knob.setValue,
           ),

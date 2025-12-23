@@ -7,11 +7,13 @@ class BoolField extends StatelessWidget {
     required this.label,
     required this.value,
     required this.onChanged,
+    this.description,
   });
 
   final String label;
   final bool value;
   final ValueSetter<bool> onChanged;
+  final String? description;
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +21,33 @@ class BoolField extends StatelessWidget {
       color: Colors.white,
       child: InkWell(
         onTap: () => onChanged(!value),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(label),
-            CustomCheckbox(
-              value: value,
-              onChanged: onChanged,
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(label),
+                    if (description != null)
+                      Text(
+                        description!,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              CustomCheckbox(
+                value: value,
+                onChanged: onChanged,
+              ),
+            ],
+          ),
         ),
       ),
     );
