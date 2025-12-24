@@ -145,6 +145,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             builder: (k) => ColorExamples(
               aColor: k.color(
                 'Starting color of the gradient',
+                description: 'This is a description of the color field.',
+                initialValue: const Color(0xffff9800),
                 predefinedColors: [
                   Colors.red,
                   Colors.green,

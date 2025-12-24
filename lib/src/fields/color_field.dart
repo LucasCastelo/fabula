@@ -4,15 +4,19 @@ import 'package:storyto/src/entities/knob.dart';
 import 'package:storyto/src/entities/knob_text_field_decoration.dart';
 import 'package:storyto/src/widgets/general/custom_text_field.dart';
 
+// TODO: Allow more ways of selection of colors
+// E.g: Color picker, color wheel, etc.
 class ColorField extends StatelessWidget {
   ColorField({
     super.key,
     required this.knob,
     required this.label,
+    this.description,
     this.keyboardType,
     this.predefinedColors,
   });
   final String label;
+  final String? description;
   final KnobValue<Color> knob;
   final TextInputType? keyboardType;
   final List<Color>? predefinedColors;
@@ -36,6 +40,7 @@ class ColorField extends StatelessWidget {
             Expanded(
               child: CustomTextField(
                 value: currentHexColor,
+                description: description,
                 onChanged: (v) {
                   if (hexRegEx.hasMatch(v)) {
                     knob.setValue(hexToColor(v));
