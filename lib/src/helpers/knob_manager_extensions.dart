@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/knob_manager.dart';
+import 'package:fabula/src/knob_manager.dart';
 
 extension KnobManagerExtensions on KnobManager {
   List<Widget> viewKnobs() {

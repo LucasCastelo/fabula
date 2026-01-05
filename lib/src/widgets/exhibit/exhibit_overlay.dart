@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/entities/knob.dart';
+import 'package:fabula/src/entities/knob.dart';
 
 // Improvements:
 // Make this directional

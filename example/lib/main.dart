@@ -7,7 +7,7 @@ import 'package:example/examples/selectable_example.dart';
 import 'package:example/examples/string_example.dart';
 import 'package:example/examples/toggler_example.dart';
 import 'package:flutter/material.dart';
-import 'package:storyto/storyto.dart';
+import 'package:fabula/fabula.dart';
 
 enum ColorEnum {
   green,

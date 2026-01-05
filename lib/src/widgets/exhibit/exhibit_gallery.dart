@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/widgets/general/exhibit_tag_pill.dart';
-import 'package:storyto/storyto.dart';
+import 'package:fabula/src/widgets/general/exhibit_tag_pill.dart';
+import 'package:fabula/fabula.dart';
 
 class ExhibitGallery extends StatefulWidget {
   const ExhibitGallery({

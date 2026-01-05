@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:storyto/src/knob_manager.dart';
-import 'package:storyto/src/widgets/exhibit/exhibit.dart';
+import 'package:fabula/src/knob_manager.dart';
+import 'package:fabula/src/widgets/exhibit/exhibit.dart';
 
 class KnobManagerProvider extends StatefulWidget {
   const KnobManagerProvider({

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/storyto.dart';
+import 'package:fabula/fabula.dart';
 
 class ExhibitTagPill extends StatelessWidget {
   const ExhibitTagPill({

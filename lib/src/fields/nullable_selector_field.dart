@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/entities/knob.dart';
-import 'package:storyto/src/fields/selector_field.dart';
+import 'package:fabula/src/entities/knob.dart';
+import 'package:fabula/src/fields/selector_field.dart';
 
-import 'package:storyto/src/widgets/nullable_toggler.dart';
+import 'package:fabula/src/widgets/nullable_toggler.dart';
 
 typedef SelectorNameMarshal<T> = String Function(T element);
 

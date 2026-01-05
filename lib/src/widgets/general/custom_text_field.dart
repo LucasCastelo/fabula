@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/entities/knob_text_field_decoration.dart';
+import 'package:fabula/src/entities/knob_text_field_decoration.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({

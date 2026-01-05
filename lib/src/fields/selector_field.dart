@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/entities/knob.dart';
-import 'package:storyto/src/fields/nullable_selector_field.dart';
+import 'package:fabula/src/entities/knob.dart';
+import 'package:fabula/src/fields/nullable_selector_field.dart';
 
 class SelectorField<T> extends StatelessWidget {
   const SelectorField({

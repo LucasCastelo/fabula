@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/entities/knob.dart';
-import 'package:storyto/src/entities/knob_text_field_decoration.dart';
-import 'package:storyto/src/widgets/general/custom_text_field.dart';
-import 'package:storyto/src/widgets/nullable_toggler.dart';
-import 'package:storyto/src/widgets/predefined_colors_entry_point.dart';
+import 'package:fabula/src/entities/knob.dart';
+import 'package:fabula/src/entities/knob_text_field_decoration.dart';
+import 'package:fabula/src/widgets/general/custom_text_field.dart';
+import 'package:fabula/src/widgets/nullable_toggler.dart';
+import 'package:fabula/src/widgets/predefined_colors_entry_point.dart';
 
 class NullableColorField extends StatelessWidget {
   NullableColorField({

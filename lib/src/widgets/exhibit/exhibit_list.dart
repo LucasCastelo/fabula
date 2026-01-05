@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/helpers/iterator_separate.dart';
-import 'package:storyto/src/helpers/knob_manager_extensions.dart';
-import 'package:storyto/storyto.dart';
-import 'package:storyto/src/widgets/knob_manager_provider.dart';
+import 'package:fabula/src/helpers/iterator_separate.dart';
+import 'package:fabula/src/helpers/knob_manager_extensions.dart';
+import 'package:fabula/fabula.dart';
+import 'package:fabula/src/widgets/knob_manager_provider.dart';
 
 class ExhibitList extends StatelessWidget {
   const ExhibitList({super.key, required this.builder});

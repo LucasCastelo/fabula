@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/entities/knob.dart';
-import 'package:storyto/src/widgets/knob_manager_provider.dart';
-import 'package:storyto/storyto.dart';
+import 'package:fabula/src/entities/knob.dart';
+import 'package:fabula/src/widgets/knob_manager_provider.dart';
+import 'package:fabula/fabula.dart';
 
 enum ExhibitPageKnobPosition {
   inPage,

@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "storyto",
+            "name": "fabula",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "storyto (profile mode)",
+            "name": "fabula (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "storyto (release mode)",
+            "name": "fabula (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/fields/animation_player.dart';
-import 'package:storyto/src/fields/list_field.dart';
-import 'package:storyto/src/helpers/debouncer.dart';
-import 'package:storyto/src/widgets/general/toggler_field.dart';
-import 'package:storyto/src/fields/bool_field.dart';
-import 'package:storyto/src/fields/color_field.dart';
-import 'package:storyto/src/fields/nullable_color_field.dart';
-import 'package:storyto/src/fields/nullable_selector_field.dart';
-import 'package:storyto/src/fields/nullable_string_field.dart';
-import 'package:storyto/src/entities/knob.dart';
-import 'package:storyto/src/fields/selector_field.dart';
-import 'package:storyto/src/widgets/general/custom_text_field.dart';
-import 'package:storyto/storyto.dart';
+import 'package:fabula/src/fields/animation_player.dart';
+import 'package:fabula/src/fields/list_field.dart';
+import 'package:fabula/src/helpers/debouncer.dart';
+import 'package:fabula/src/widgets/general/toggler_field.dart';
+import 'package:fabula/src/fields/bool_field.dart';
+import 'package:fabula/src/fields/color_field.dart';
+import 'package:fabula/src/fields/nullable_color_field.dart';
+import 'package:fabula/src/fields/nullable_selector_field.dart';
+import 'package:fabula/src/fields/nullable_string_field.dart';
+import 'package:fabula/src/entities/knob.dart';
+import 'package:fabula/src/fields/selector_field.dart';
+import 'package:fabula/src/widgets/general/custom_text_field.dart';
+import 'package:fabula/fabula.dart';
 
 class KnobManager extends ChangeNotifier {
   KnobManager();

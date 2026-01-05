@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:storyto/src/entities/knob_text_field_decoration.dart';
-import 'package:storyto/src/widgets/general/custom_text_field.dart';
-import 'package:storyto/src/widgets/nullable_toggler.dart';
+import 'package:fabula/src/entities/knob_text_field_decoration.dart';
+import 'package:fabula/src/widgets/general/custom_text_field.dart';
+import 'package:fabula/src/widgets/nullable_toggler.dart';
 
 class NullableTextField<T> extends StatelessWidget {
   const NullableTextField({

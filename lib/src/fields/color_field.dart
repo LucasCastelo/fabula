@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:storyto/src/entities/knob.dart';
-import 'package:storyto/src/entities/knob_text_field_decoration.dart';
-import 'package:storyto/src/widgets/general/custom_text_field.dart';
-import 'package:storyto/src/widgets/predefined_colors_entry_point.dart';
+import 'package:fabula/src/entities/knob.dart';
+import 'package:fabula/src/entities/knob_text_field_decoration.dart';
+import 'package:fabula/src/widgets/general/custom_text_field.dart';
+import 'package:fabula/src/widgets/predefined_colors_entry_point.dart';
 
 // TODO: Allow more ways of selection of colors
 // E.g: Color picker, color wheel, etc.
