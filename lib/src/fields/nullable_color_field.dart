@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/entities/knob.dart';
 import 'package:storyto/src/entities/knob_text_field_decoration.dart';
-import 'package:storyto/src/widgets/general/custom_checkbox.dart';
 import 'package:storyto/src/widgets/general/custom_text_field.dart';
+import 'package:storyto/src/widgets/nullable_toggler.dart';
 
 class NullableColorField extends StatelessWidget {
   NullableColorField({
@@ -12,8 +12,11 @@ class NullableColorField extends StatelessWidget {
     required this.toggleNull,
     this.keyboardType,
     this.predefinedColors,
+    this.description,
   });
+
   final String label;
+  final String? description;
   final NullableKnob<Color?> knob;
   final TextInputType? keyboardType;
   final VoidCallback toggleNull;
@@ -33,35 +36,43 @@ class NullableColorField extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              child: CustomTextField(
-                onChanged: (v) {
-                  if (hexRegEx.hasMatch(v)) {
-                    knob.setValue(hexToColor(v));
-                  }
-                },
-                keyboardType: keyboardType,
-                isEnabled: knob.isFieldEnabled,
-                initialValue: currentHexColor,
-                decoration: KnobTextFieldDecoration(label: label),
-                value: currentHexColor,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomTextField(
+                    maxLength: 6,
+                    suffix: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: (knob.getValue() ?? knob.lastKnowValue)
+                            ?.withAlpha(
+                                (knob.isFieldEnabled ? 255 : 50).toInt()),
+                      ),
+                      height: 18,
+                      width: 18,
+                    ),
+                    onChanged: (v) {
+                      if (hexRegEx.hasMatch(v)) {
+                        knob.setValue(hexToColor(v));
+                      }
+                    },
+                    description: description,
+                    keyboardType: TextInputType.multiline,
+                    isEnabled: knob.isFieldEnabled,
+                    initialValue: currentHexColor,
+                    decoration: KnobTextFieldDecoration(label: label),
+                    value: currentHexColor,
+                  ),
+                  NullableToggler(
+                    onClick: toggleNull,
+                    isEnabled: knob.isFieldEnabled,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(width: 8),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: knob.getValue(),
-              ),
-              height: 48,
-              width: 48,
-            ),
-            CustomCheckbox(
-              value: currentHexColor != null,
-              onChanged: (_) => toggleNull(),
-            )
           ],
         ),
         if (predefinedColors != null) ...[
