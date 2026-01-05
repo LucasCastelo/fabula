@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:storyto/src/entities/knob.dart';
 import 'package:storyto/src/entities/knob_text_field_decoration.dart';
 import 'package:storyto/src/widgets/general/custom_text_field.dart';
+import 'package:storyto/src/widgets/predefined_colors_entry_point.dart';
 
 // TODO: Allow more ways of selection of colors
 // E.g: Color picker, color wheel, etc.
@@ -57,27 +58,12 @@ class ColorField extends StatelessWidget {
           decoration: KnobTextFieldDecoration(label: label),
         ),
         if (predefinedColors != null) ...[
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: predefinedColors!
-                .map(
-                  (color) => GestureDetector(
-                    onTap: () => knob.setValue(color),
-                    child: Container(
-                      height: 24,
-                      width: 24,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: knob.getValue() == color
-                            ? color
-                            : color.withAlpha((255 * 0.4).toInt()),
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
+          const SizedBox(height: 4),
+          PredefinedColorsEntryPoint(
+            colors: predefinedColors!,
+            onColorSelected: (color) {
+              knob.setValue(color);
+            },
           ),
         ],
       ],

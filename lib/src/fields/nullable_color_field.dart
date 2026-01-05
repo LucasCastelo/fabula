@@ -3,6 +3,7 @@ import 'package:storyto/src/entities/knob.dart';
 import 'package:storyto/src/entities/knob_text_field_decoration.dart';
 import 'package:storyto/src/widgets/general/custom_text_field.dart';
 import 'package:storyto/src/widgets/nullable_toggler.dart';
+import 'package:storyto/src/widgets/predefined_colors_entry_point.dart';
 
 class NullableColorField extends StatelessWidget {
   NullableColorField({
@@ -66,37 +67,25 @@ class NullableColorField extends StatelessWidget {
                     decoration: KnobTextFieldDecoration(label: label),
                     value: currentHexColor,
                   ),
-                  NullableToggler(
-                    onClick: toggleNull,
-                    isEnabled: knob.isFieldEnabled,
-                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (predefinedColors != null)
+                        PredefinedColorsEntryPoint(
+                          colors: predefinedColors!,
+                          onColorSelected: (color) => knob.setValue(color),
+                        ),
+                      NullableToggler(
+                        onClick: toggleNull,
+                        isEnabled: knob.isFieldEnabled,
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
           ],
         ),
-        if (predefinedColors != null) ...[
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: predefinedColors!
-                .map(
-                  (color) => GestureDetector(
-                    onTap: () => knob.setValue(color),
-                    child: Container(
-                      height: 24,
-                      width: 24,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: color,
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-        ],
       ],
     );
   }
