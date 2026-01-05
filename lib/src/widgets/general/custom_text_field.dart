@@ -9,17 +9,21 @@ class CustomTextField extends StatefulWidget {
     required this.initialValue,
     required this.decoration,
     required this.keyboardType,
+    this.suffix,
     this.value,
     this.description,
+    this.maxLength,
   });
 
   final bool isEnabled;
   final String? initialValue;
+  final Widget? suffix;
   final ValueSetter<String> onChanged;
   final KnobTextFieldDecoration decoration;
   final TextInputType? keyboardType;
   final String? value;
   final String? description;
+  final int? maxLength;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -82,23 +86,43 @@ class _CustomTextFieldState extends State<CustomTextField> {
           maxLines: null,
           keyboardType: widget.keyboardType ?? TextInputType.multiline,
           decoration: InputDecoration(
-            suffix: textLength > 0
-                ? Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6),
-                    margin: const EdgeInsetsDirectional.only(start: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withAlpha((255 * 0.2).toInt()),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      textLength.toString(),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.black,
+            suffix: ValueListenableBuilder(
+              valueListenable: controller,
+              builder: (context, value, child) {
+                final maxLengthExceeded =
+                    widget.maxLength != null && textLength > widget.maxLength!;
+
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (widget.suffix != null) widget.suffix!,
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
+                      margin: const EdgeInsetsDirectional.only(start: 8),
+                      decoration: BoxDecoration(
+                        color: maxLengthExceeded
+                            ? Colors.red
+                            : Colors.grey.withAlpha((255 * 0.2).toInt()),
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                    ),
-                  )
-                : null,
+                      child: Text(
+                        widget.maxLength != null
+                            ? '$textLength/${widget.maxLength}'
+                            : textLength.toString(),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: widget.isEnabled
+                              ? maxLengthExceeded
+                                  ? Colors.white
+                                  : Colors.black
+                              : Colors.grey,
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
             contentPadding: const EdgeInsets.all(8),
             hintText: placeholder,
             hintStyle: TextStyle(
