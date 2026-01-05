@@ -34,34 +34,27 @@ class ColorField extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-              child: CustomTextField(
-                value: currentHexColor,
-                description: description,
-                onChanged: (v) {
-                  if (hexRegEx.hasMatch(v)) {
-                    knob.setValue(hexToColor(v));
-                  }
-                },
-                keyboardType: keyboardType,
-                isEnabled: true,
-                initialValue: currentHexColor,
-                decoration: KnobTextFieldDecoration(label: label),
-              ),
+        CustomTextField(
+          value: currentHexColor,
+          description: description,
+          maxLength: 6,
+          suffix: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              color: knob.getValue(),
             ),
-            const SizedBox(width: 8),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: knob.getValue(),
-              ),
-              height: 48,
-              width: 48,
-            )
-          ],
+            height: 18,
+            width: 18,
+          ),
+          onChanged: (v) {
+            if (hexRegEx.hasMatch(v)) {
+              knob.setValue(hexToColor(v));
+            }
+          },
+          keyboardType: keyboardType,
+          isEnabled: true,
+          initialValue: currentHexColor,
+          decoration: KnobTextFieldDecoration(label: label),
         ),
         if (predefinedColors != null) ...[
           const SizedBox(height: 8),
