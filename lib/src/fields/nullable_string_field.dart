@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storyto/src/entities/knob_text_field_decoration.dart';
 import 'package:storyto/src/widgets/general/custom_text_field.dart';
+import 'package:storyto/src/widgets/nullable_toggler.dart';
 
 class NullableTextField<T> extends StatelessWidget {
   const NullableTextField({
@@ -32,31 +33,9 @@ class NullableTextField<T> extends StatelessWidget {
           keyboardType: TextInputType.number,
           description: description,
         ),
-        InkWell(
-          onTap: toggleNull,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  isEnabled ? 'Disable/Null' : 'Enable',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: isEnabled ? Colors.redAccent : Colors.green,
-                  ),
-                ),
-                const Text(
-                  'Optional',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-          ),
+        NullableToggler(
+          onClick: toggleNull,
+          isEnabled: isEnabled,
         ),
       ],
     );
