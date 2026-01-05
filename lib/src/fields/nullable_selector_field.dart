@@ -12,25 +12,28 @@ class NullableSelectorField<T> extends StatelessWidget {
     required this.knob,
     required this.values,
     required this.nameMarshal,
-    required this.toggleNull,
   });
 
   final NullableKnob<T> knob;
   final List<T> values;
   final SelectorNameMarshal<T> nameMarshal;
-  final VoidCallback toggleNull;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        SelectorField<T>(
-          knob: knob,
-          options: values,
-          nameMarshal: nameMarshal,
+        ListenableBuilder(
+          listenable: knob,
+          builder: (context, __) => SelectorField<T>(
+            knob: knob,
+            options: values,
+            nameMarshal: nameMarshal,
+            isEnabled: knob.isFieldEnabled,
+          ),
         ),
         NullableToggler(
-          onClick: toggleNull,
+          onClick: knob.toggleNull,
           isEnabled: knob.isFieldEnabled,
         )
       ],

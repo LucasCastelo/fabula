@@ -228,7 +228,6 @@ class KnobManager extends ChangeNotifier {
             knob: knob,
             values: values,
             nameMarshal: nameMarshal ?? (v) => v.toString(),
-            toggleNull: toggleNull,
           ),
         ),
       );

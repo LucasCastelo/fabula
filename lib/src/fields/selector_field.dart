@@ -8,11 +8,13 @@ class SelectorField<T> extends StatelessWidget {
     required this.knob,
     required this.options,
     required this.nameMarshal,
+    this.isEnabled = true,
   });
 
   final KnobValue<T?> knob;
   final List<T> options;
   final SelectorNameMarshal<T> nameMarshal;
+  final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,8 @@ class SelectorField<T> extends StatelessWidget {
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
       decoration: BoxDecoration(
           border: Border.all(
-            color: isNull ? Colors.grey : Colors.black,
-            width: 1,
+            color: isEnabled ? Colors.black38 : Colors.black12,
+            width: 1.2,
           ),
           borderRadius: BorderRadius.circular(4)),
       child: knob.getValue() == null
