@@ -147,7 +147,7 @@ class KnobManager extends ChangeNotifier {
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
             initialValue: initialValue?.toString() ?? '0',
             toggleNull: toggleNull,
-            onChanged: (v) => knob.setValue(int.parse(v)),
+            onChanged: (v) => knob.setValue(int.tryParse(v) ?? 0),
             isEnabled: knob.isFieldEnabled,
           ),
         ),
@@ -196,6 +196,7 @@ class KnobManager extends ChangeNotifier {
     String id, {
     Color? value,
     String? label,
+    String? description,
     List<Color>? predefinedColors,
   }) =>
       _evaluateKnob(
@@ -207,6 +208,7 @@ class KnobManager extends ChangeNotifier {
             knob: knob,
             toggleNull: toggleNull,
             predefinedColors: predefinedColors,
+            description: description,
           ),
         ),
       );
