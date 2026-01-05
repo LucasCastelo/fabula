@@ -157,7 +157,18 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                   Colors.brown
                 ],
               ),
-              bColor: k.nColor('Middle color of the gradient (nullable)'),
+              bColor: k.nColor(
+                'Middle color of the gradient (nullable)',
+                predefinedColors: [
+                  Colors.red,
+                  Colors.green,
+                  Colors.blue,
+                  Colors.yellow,
+                  Colors.purple,
+                  Colors.orange,
+                  Colors.brown
+                ],
+              ),
               cColor: k.color('Ending color of the gradient'),
             ),
           ),
