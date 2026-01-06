@@ -10,10 +10,12 @@ typedef InputBuilder<T> = Widget Function(KnobValue<T> knob);
 sealed class Knob<T> extends ChangeNotifier {
   final String? section;
   final int? orderingPriority;
+  final int? sectionOrderingPriority;
 
   Knob({
     this.section,
     this.orderingPriority,
+    this.sectionOrderingPriority,
   });
 
   Widget knob();
@@ -33,6 +35,7 @@ class NullableKnob<T> extends KnobValue<T?> {
     required NullableInputBuilder<T?> inputBuilder,
     this.section,
     this.orderingPriority,
+    this.sectionOrderingPriority,
   })  : lastKnowValue = value,
         _inputBuilder = inputBuilder,
         _isFieldEnabled = value != null,
@@ -43,6 +46,9 @@ class NullableKnob<T> extends KnobValue<T?> {
 
   @override
   final int? orderingPriority;
+
+  @override
+  final int? sectionOrderingPriority;
 
   T? lastKnowValue;
   final NullableInputBuilder<T?> _inputBuilder;
@@ -81,6 +87,7 @@ class DefaultKnob<T> extends KnobValue<T> {
     required InputBuilder<T> inputBuilder,
     this.section,
     this.orderingPriority,
+    this.sectionOrderingPriority,
   })  : _inputBuilder = inputBuilder,
         super(initialValue);
 
@@ -91,6 +98,9 @@ class DefaultKnob<T> extends KnobValue<T> {
 
   @override
   final int? orderingPriority;
+
+  @override
+  final int? sectionOrderingPriority;
 
   @override
   T getValue() => value;
