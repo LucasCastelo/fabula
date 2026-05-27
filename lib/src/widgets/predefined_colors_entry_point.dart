@@ -54,8 +54,7 @@ class PredefinedColorsEntryPoint extends StatelessWidget {
                   .map((color) => _PredefinedColorItem(
                         color: color,
                         onColorSelected: onColorSelected,
-                      ))
-                  .toList()
+                      )),
             ],
           ),
         ),
