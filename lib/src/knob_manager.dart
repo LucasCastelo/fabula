@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fabula/src/fields/animation_player.dart';
-import 'package:fabula/src/fields/list_field.dart';
 import 'package:fabula/src/helpers/debouncer.dart';
 import 'package:fabula/src/widgets/general/toggler_field.dart';
 import 'package:fabula/src/fields/bool_field.dart';
@@ -345,51 +344,6 @@ class KnobManager extends ChangeNotifier {
       ),
     );
   }
-
-  List<T> listDefunct<T>(
-    String id, {
-    required ListItemBuilder<T> itemBuilder,
-    int initialLength = 0,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
-  }) =>
-      _evaluateKnob(
-        id: id,
-        knob: DefaultKnob<List<T>>(
-          initialValue: List.generate(
-            initialLength,
-            (index) => itemBuilder('prefix'),
-          ),
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
-          inputBuilder: (knob) => ListField<T>(
-              listId: id,
-              knob: knob,
-              itemBuilder: itemBuilder,
-              onFieldCreated: (prefix) {
-                knobs.keys
-                    .where((key) => key.startsWith(prefix))
-                    .forEach((key) {
-                  knobs[key]?.addListener(
-                    () => rebuildExhibitDebouncer
-                        .call(rebuildExhibit.notifyListeners),
-                  );
-                });
-              },
-              onFieldDisposed: (prefix) {
-                knobs.keys
-                    .where((key) => key.startsWith(prefix))
-                    .forEach((key) {
-                  knobs[key]?.removeListener(
-                    () => rebuildExhibitDebouncer
-                        .call(rebuildExhibit.notifyListeners),
-                  );
-                });
-              }),
-        ),
-      );
 
   T? _evaluateKnob<T>({
     required String id,
