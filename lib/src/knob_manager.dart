@@ -43,6 +43,8 @@ class KnobManager extends ChangeNotifier {
   void dispose() {
     rebuildExhibitDebouncer.dispose();
     rebuildKnobsDebouncer.dispose();
+    rebuildExhibit.dispose();
+    rebuildKnobs.dispose();
     for (final knob in knobs.values) {
       knob.dispose();
     }
