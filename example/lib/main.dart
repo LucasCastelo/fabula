@@ -3,6 +3,7 @@ import 'package:example/examples/bool_example.dart';
 import 'package:example/examples/color_examples.dart';
 import 'package:example/examples/full_page_example.dart';
 import 'package:example/examples/integer_example.dart';
+import 'package:example/examples/section_ordering_example.dart';
 import 'package:example/examples/selectable_example.dart';
 import 'package:example/examples/string_example.dart';
 import 'package:example/examples/toggler_example.dart';
@@ -219,6 +220,67 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                 label: 'Change the value of the toggler',
                 onValue: 'Car is on',
                 offValue: 'Car is off',
+              ),
+            ),
+          ),
+          Exhibit.page(
+            label: 'Section Ordering Example',
+            tags: [
+              ExhibitTag(label: 'Sections', color: Colors.indigo),
+            ],
+            builder: (k) => SectionOrderingExample(
+              // Knobs are registered in scrambled order on purpose.
+              // Expected render order:
+              //   Content    (sectionOrderingPriority 0)
+              //     title           (orderingPriority 0)
+              //     subtitle        (orderingPriority 1)
+              //   Layout     (sectionOrderingPriority 1)
+              //     padding         (orderingPriority 0)
+              //     borderRadius    (orderingPriority 1)
+              //   Style      (sectionOrderingPriority 2)
+              //     backgroundColor (orderingPriority 0)
+              //     textColor       (orderingPriority 1)
+              textColor: k.color(
+                'textColor',
+                initialValue: Colors.white,
+                section: 'Style',
+                orderingPriority: 1,
+                sectionOrderingPriority: 2,
+              ),
+              subtitle: k.string(
+                'subtitle',
+                initialValue: 'Knobs are registered scrambled on purpose',
+                section: 'Content',
+                orderingPriority: 1,
+                sectionOrderingPriority: 0,
+              ),
+              padding: k.integer(
+                'padding',
+                value: 24,
+                section: 'Layout',
+                orderingPriority: 0,
+                sectionOrderingPriority: 1,
+              ),
+              backgroundColor: k.color(
+                'backgroundColor',
+                initialValue: Colors.indigo,
+                section: 'Style',
+                orderingPriority: 0,
+                sectionOrderingPriority: 2,
+              ),
+              title: k.string(
+                'title',
+                initialValue: 'Section Ordering',
+                section: 'Content',
+                orderingPriority: 0,
+                sectionOrderingPriority: 0,
+              ),
+              borderRadius: k.integer(
+                'borderRadius',
+                value: 12,
+                section: 'Layout',
+                orderingPriority: 1,
+                sectionOrderingPriority: 1,
               ),
             ),
           ),
