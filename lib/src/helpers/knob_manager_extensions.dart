@@ -112,8 +112,7 @@ class _SectionViewState extends State<_SectionView> {
               children: [
                 for (var i = 0; i < widget.children.length; i++) ...[
                   widget.children[i],
-                  if (i < widget.children.length - 1)
-                    const SizedBox(height: 8),
+                  if (i < widget.children.length - 1) const SizedBox(height: 8),
                 ],
               ],
             ),
@@ -123,3 +122,4 @@ class _SectionViewState extends State<_SectionView> {
     );
   }
 }
+

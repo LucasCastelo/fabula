@@ -41,6 +41,7 @@ class KnobManager extends ChangeNotifier {
     String id, {
     required TickerProvider vsync,
     Duration? duration,
+    String? description,
     KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
@@ -51,6 +52,7 @@ class KnobManager extends ChangeNotifier {
             duration: duration ?? const Duration(seconds: 5),
           ),
           location: location,
+          description: description,
           inputBuilder: (knob) => AnimationPlayer(knob: knob),
           onDispose: (controller) => controller.dispose(),
         ),
@@ -68,6 +70,7 @@ class KnobManager extends ChangeNotifier {
         knob: DefaultKnob<bool>(
           initialValue: initialValue ?? true,
           location: location,
+          description: description,
           inputBuilder: (knob) => BoolField(
             label: label,
             description: description,
@@ -83,6 +86,7 @@ class KnobManager extends ChangeNotifier {
     required String label,
     required T onValue,
     required T offValue,
+    String? description,
     KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
@@ -90,8 +94,10 @@ class KnobManager extends ChangeNotifier {
         knob: DefaultKnob<T>(
           initialValue: onValue,
           location: location,
+          description: description,
           inputBuilder: (knob) => TogglerField(
             label: label,
+            description: description,
             getValue: knob.getValue,
             onChange: knob.setValue,
             offValue: offValue,
@@ -103,20 +109,21 @@ class KnobManager extends ChangeNotifier {
   String string(
     String id, {
     String? initialValue,
+    String? description,
     KnobLocation location = const KnobLocation(),
     KnobTextFieldDecoration? decoration,
-    String? description,
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<String>(
           initialValue: initialValue ?? '',
           location: location,
+          description: description,
           inputBuilder: (knob) => CustomTextField(
-            description: description,
             onChanged: knob.setValue,
             isEnabled: true,
             initialValue: initialValue,
+            description: description,
             decoration: decoration ??
                 KnobTextFieldDecoration(
                   label: id,
@@ -139,6 +146,7 @@ class KnobManager extends ChangeNotifier {
         knob: NullableKnob<String?>(
           value: initialValue,
           location: location,
+          description: description,
           inputBuilder: (knob, toggleNull) => NullableTextField(
             decoration: decoration ??
                 KnobTextFieldDecoration(
@@ -157,6 +165,7 @@ class KnobManager extends ChangeNotifier {
   int? nInteger(
     String id, {
     int? initialValue,
+    String? description,
     KnobTextFieldDecoration? decoration,
     KnobLocation location = const KnobLocation(),
   }) =>
@@ -165,9 +174,11 @@ class KnobManager extends ChangeNotifier {
         knob: NullableKnob<int>(
           value: initialValue ?? 0,
           location: location,
+          description: description,
           inputBuilder: (knob, toggleNull) => NullableTextField<int?>(
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
             initialValue: initialValue?.toString() ?? '0',
+            description: description,
             toggleNull: toggleNull,
             onChanged: (v) => knob.setValue(int.tryParse(v) ?? 0),
             isEnabled: knob.isFieldEnabled,
@@ -178,6 +189,7 @@ class KnobManager extends ChangeNotifier {
   int integer(
     String id, {
     int? value,
+    String? description,
     KnobTextFieldDecoration? decoration,
     KnobLocation location = const KnobLocation(),
   }) =>
@@ -186,9 +198,11 @@ class KnobManager extends ChangeNotifier {
         knob: DefaultKnob<int>(
           initialValue: value ?? 0,
           location: location,
+          description: description,
           inputBuilder: (knob) => CustomTextField(
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
             isEnabled: true,
+            description: description,
             onChanged: (v) => knob.setValue(int.tryParse(v) ?? knob.value),
             initialValue: value?.toString() ?? '0',
             keyboardType: TextInputType.number,
@@ -209,11 +223,12 @@ class KnobManager extends ChangeNotifier {
         knob: DefaultKnob<Color>(
           initialValue: initialValue ?? Colors.black,
           location: location,
+          description: description,
           inputBuilder: (knob) => ColorField(
             label: label ?? id,
             knob: knob,
-            predefinedColors: predefinedColors,
             description: description,
+            predefinedColors: predefinedColors,
           ),
         ),
       );
@@ -231,12 +246,13 @@ class KnobManager extends ChangeNotifier {
         knob: NullableKnob<Color>(
           value: value ?? Colors.black,
           location: location,
+          description: description,
           inputBuilder: (knob, toggleNull) => NullableColorField(
             label: label ?? id,
             knob: knob,
+            description: description,
             toggleNull: toggleNull,
             predefinedColors: predefinedColors,
-            description: description,
           ),
         ),
       );
@@ -245,6 +261,7 @@ class KnobManager extends ChangeNotifier {
     String id, {
     required List<T> values,
     SelectorNameMarshal? nameMarshal,
+    String? description,
     KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
@@ -252,6 +269,7 @@ class KnobManager extends ChangeNotifier {
         knob: NullableKnob<T>(
           value: values.isNotEmpty ? values[0] : null,
           location: location,
+          description: description,
           inputBuilder: (knob, toggleNull) => NullableSelectorField<T?>(
             knob: knob,
             values: values,
@@ -264,6 +282,7 @@ class KnobManager extends ChangeNotifier {
     String id, {
     required List<T> values,
     SelectorNameMarshal<T>? nameMarshal,
+    String? description,
     KnobLocation location = const KnobLocation(),
   }) {
     if (values.isEmpty) {
@@ -277,6 +296,7 @@ class KnobManager extends ChangeNotifier {
       knob: DefaultKnob<T>(
         initialValue: values[0],
         location: location,
+        description: description,
         inputBuilder: (knob) => SelectorField<T>(
           knob: knob,
           options: values,

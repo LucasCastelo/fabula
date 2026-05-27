@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fabula/src/widgets/general/custom_checkbox.dart';
+import 'package:fabula/src/widgets/general/knob_label.dart';
 import 'package:fabula/src/widgets/general/touch.dart';
 
 class BoolField extends StatelessWidget {
@@ -27,20 +28,7 @@ class BoolField extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(label),
-                  if (description != null)
-                    Text(
-                      description!,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
-                ],
-              ),
+              child: KnobLabel(label: label, description: description),
             ),
             CustomCheckbox(
               value: value,

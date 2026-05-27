@@ -17,11 +17,11 @@ class NullableColorField extends StatelessWidget {
   });
 
   final String label;
-  final String? description;
   final NullableKnob<Color?> knob;
   final TextInputType? keyboardType;
   final VoidCallback toggleNull;
   final List<Color>? predefinedColors;
+  final String? description;
 
   Color hexToColor(String hexString) => Color(int.parse("0xff$hexString"));
 

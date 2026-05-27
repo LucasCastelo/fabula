@@ -12,15 +12,15 @@ class ColorField extends StatelessWidget {
     super.key,
     required this.knob,
     required this.label,
-    this.description,
     this.keyboardType,
     this.predefinedColors,
+    this.description,
   });
   final String label;
-  final String? description;
   final Knob<Color> knob;
   final TextInputType? keyboardType;
   final List<Color>? predefinedColors;
+  final String? description;
 
   Color hexToColor(String hexString) => Color(int.parse("0xff$hexString"));
 

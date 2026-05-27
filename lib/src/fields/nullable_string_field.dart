@@ -20,6 +20,7 @@ class NullableTextField<T> extends StatelessWidget {
   final VoidCallback toggleNull;
   final bool isEnabled;
   final String? description;
+
   @override
   Widget build(BuildContext context) {
     return Column(

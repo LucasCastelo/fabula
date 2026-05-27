@@ -19,10 +19,12 @@ abstract class Knob<T> extends ValueNotifier<T> {
     super.value, {
     this.location = const KnobLocation(),
     this.onDispose,
+    this.description,
   });
 
   final KnobLocation location;
   final void Function(T value)? onDispose;
+  final String? description;
 
   void setValue(T newValue);
 
@@ -43,6 +45,7 @@ class NullableKnob<T> extends Knob<T?> {
     required NullableInputBuilder<T?> inputBuilder,
     super.location,
     super.onDispose,
+    super.description,
   })  : lastKnowValue = value,
         _inputBuilder = inputBuilder,
         _isFieldEnabled = value != null,
@@ -85,6 +88,7 @@ class DefaultKnob<T> extends Knob<T> {
     required InputBuilder<T> inputBuilder,
     super.location,
     super.onDispose,
+    super.description,
   })  : _inputBuilder = inputBuilder,
         super(initialValue);
 

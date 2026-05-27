@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fabula/src/entities/knob_text_field_decoration.dart';
+import 'package:fabula/src/widgets/general/knob_label.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
@@ -52,7 +53,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final description = widget.description;
     final placeholder =
         widget.decoration.placeholder ?? widget.decoration.label;
     const enabledBorder = OutlineInputBorder(
@@ -66,20 +66,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          widget.decoration.label,
+        KnobLabel(
+          label: widget.decoration.label,
+          description: widget.description,
           style: TextStyle(
             color: widget.isEnabled ? Colors.black : Colors.grey,
           ),
         ),
-        if (description != null)
-          Text(
-            description,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.grey,
-            ),
-          ),
         const SizedBox(height: 4),
         TextField(
           enabled: widget.isEnabled,

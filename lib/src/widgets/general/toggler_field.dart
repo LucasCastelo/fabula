@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fabula/src/widgets/general/knob_label.dart';
 
 class TogglerField<T> extends StatelessWidget {
   const TogglerField({
@@ -8,18 +9,20 @@ class TogglerField<T> extends StatelessWidget {
     required this.onChange,
     required this.onValue,
     required this.offValue,
+    this.description,
   });
   final String label;
   final ValueGetter<T> getValue;
   final ValueSetter<T> onChange;
   final T onValue;
   final T offValue;
+  final String? description;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(label),
+        KnobLabel(label: label, description: description),
         Checkbox(
           side: WidgetStateBorderSide.resolveWith(
             (states) => BorderSide(
