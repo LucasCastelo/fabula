@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fabula/src/entities/knob.dart';
+import 'package:fabula/src/widgets/general/touch.dart';
 
 // Improvements:
 // Make this directional
@@ -30,22 +31,25 @@ class _ExhibitOverlayState extends State<ExhibitOverlay> {
             10,
             MediaQuery.of(context).size.height - 50,
           ),
-          child: GestureDetector(
+          child: Touch(
+            semanticsLabel: _showKnobs ? 'Hide knobs' : 'Show knobs',
             onTap: () => setState(() => _showKnobs = !_showKnobs),
-            onVerticalDragUpdate: (details) =>
-                setState(() => _openButtonTopOffset += details.delta.dy),
-            child: Container(
-              width: 18,
-              height: 40,
-              decoration: const BoxDecoration(
-                color: Colors.lightBlue,
-                borderRadius: BorderRadius.horizontal(
-                  right: Radius.circular(20),
+            child: GestureDetector(
+              onVerticalDragUpdate: (details) =>
+                  setState(() => _openButtonTopOffset += details.delta.dy),
+              child: Container(
+                width: 18,
+                height: 40,
+                decoration: const BoxDecoration(
+                  color: Colors.lightBlue,
+                  borderRadius: BorderRadius.horizontal(
+                    right: Radius.circular(20),
+                  ),
                 ),
-              ),
-              child: Icon(
-                _showKnobs ? Icons.chevron_left : Icons.chevron_right,
-                size: 16,
+                child: Icon(
+                  _showKnobs ? Icons.chevron_left : Icons.chevron_right,
+                  size: 16,
+                ),
               ),
             ),
           ),

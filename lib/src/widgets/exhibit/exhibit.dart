@@ -108,7 +108,8 @@ class _ExhibitState extends State<Exhibit> {
           shouldShow ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       duration: const Duration(milliseconds: 200),
       secondChild: const SizedBox.shrink(),
-      firstChild: GestureDetector(
+      firstChild: Touch(
+        semanticsLabel: widget.label,
         onTap: () => widget.onTap?.call(context),
         child: widget.displayBuilder?.call(widget.label, pillTags) ??
             Container(

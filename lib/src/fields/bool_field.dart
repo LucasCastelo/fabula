@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fabula/src/widgets/general/custom_checkbox.dart';
+import 'package:fabula/src/widgets/general/touch.dart';
 
 class BoolField extends StatelessWidget {
   const BoolField({
@@ -17,37 +18,35 @@ class BoolField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      child: InkWell(
-        onTap: () => onChanged(!value),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(label),
-                    if (description != null)
-                      Text(
-                        description!,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
+    return Touch(
+      semanticsLabel: label,
+      onTap: () => onChanged(!value),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(label),
+                  if (description != null)
+                    Text(
+                      description!,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
-              CustomCheckbox(
-                value: value,
-                onChanged: onChanged,
-              ),
-            ],
-          ),
+            ),
+            CustomCheckbox(
+              value: value,
+              onChanged: onChanged,
+            ),
+          ],
         ),
       ),
     );

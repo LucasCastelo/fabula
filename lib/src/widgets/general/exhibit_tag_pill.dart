@@ -15,7 +15,8 @@ class ExhibitTagPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Touch(
+      semanticsLabel: tag.label,
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fabula/src/widgets/general/touch.dart';
 
 // TODO: Improve on design
 // TODO: Create color library that allows to manage available colors 'globally'
@@ -64,15 +65,17 @@ class PredefinedColorsEntryPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        showOverlay(context);
-      },
-      child: const Text(
-        'Predefined Colors',
-        style: TextStyle(
-          fontSize: 12,
-          color: Colors.grey,
+    return Touch(
+      semanticsLabel: 'Predefined colors',
+      onTap: () => showOverlay(context),
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+        child: Text(
+          'Predefined Colors',
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.grey,
+          ),
         ),
       ),
     );
@@ -90,23 +93,18 @@ class _PredefinedColorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          onColorSelected(color);
-        },
-        child: Row(
-          children: [
-            Container(
-              width: 10,
-              height: 10,
-              color: color,
-            ),
-            const SizedBox(width: 8),
-            Text(color.toARGB32().toRadixString(16).replaceRange(0, 2, '')),
-          ],
-        ),
+    return Touch(
+      onTap: () => onColorSelected(color),
+      child: Row(
+        children: [
+          Container(
+            width: 10,
+            height: 10,
+            color: color,
+          ),
+          const SizedBox(width: 8),
+          Text(color.toARGB32().toRadixString(16).replaceRange(0, 2, '')),
+        ],
       ),
     );
   }

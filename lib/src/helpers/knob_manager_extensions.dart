@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fabula/src/knob_manager.dart';
+import 'package:fabula/src/widgets/general/touch.dart';
 
 extension KnobManagerExtensions on KnobManager {
   List<Widget> viewKnobs() {
@@ -51,7 +52,8 @@ class _SectionViewState extends State<_SectionView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        InkWell(
+        Touch(
+          semanticsLabel: widget.title,
           onTap: () => setState(() => _expanded = !_expanded),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),

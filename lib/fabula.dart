@@ -5,3 +5,4 @@ export 'src/entities/exhibit_tag.dart';
 export 'src/entities/knob.dart';
 export 'src/entities/knob_text_field_decoration.dart';
 export 'src/knob_manager.dart';
+export 'src/widgets/general/touch.dart';

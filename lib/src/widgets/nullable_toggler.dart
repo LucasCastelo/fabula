@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fabula/src/widgets/general/touch.dart';
 
 class NullableToggler extends StatelessWidget {
   const NullableToggler({
@@ -16,7 +17,8 @@ class NullableToggler extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-      child: InkWell(
+      child: Touch(
+        semanticsLabel: 'Optional',
         onTap: onClick,
         child: Row(
           mainAxisSize: MainAxisSize.min,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fabula/src/entities/knob.dart';
 import 'package:fabula/src/widgets/general/duration_field.dart';
+import 'package:fabula/src/widgets/general/touch.dart';
 
 class AnimationPlayer extends StatefulWidget {
   const AnimationPlayer({super.key, required this.knob});
@@ -93,28 +94,23 @@ class _AnimationPlayerState extends State<AnimationPlayer> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GestureDetector(
-                  onTap: () => play(),
-                  child: const Icon(
-                    Icons.play_arrow,
-                    size: buttonSize,
-                  ),
+                Touch(
+                  semanticsLabel: 'Play',
+                  onTap: play,
+                  child: const Icon(Icons.play_arrow, size: buttonSize),
                 ),
-                GestureDetector(
-                  onTap: () => widget.knob.value.stop(),
-                  child: const Icon(
-                    Icons.pause,
-                    size: buttonSize,
-                  ),
+                Touch(
+                  semanticsLabel: 'Pause',
+                  onTap: widget.knob.value.stop,
+                  child: const Icon(Icons.pause, size: buttonSize),
                 ),
-                GestureDetector(
-                  onTap: () => reset(),
-                  child: const Icon(
-                    Icons.stop,
-                    size: buttonSize,
-                  ),
+                Touch(
+                  semanticsLabel: 'Reset',
+                  onTap: reset,
+                  child: const Icon(Icons.stop, size: buttonSize),
                 ),
-                GestureDetector(
+                Touch(
+                  semanticsLabel: 'Loop',
                   onTap: () => setState(() => autoPlay = !autoPlay),
                   child: Icon(
                     Icons.refresh,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fabula/src/widgets/general/touch.dart';
 
 class DurationChanger extends StatefulWidget {
   const DurationChanger({
@@ -41,7 +42,8 @@ class _DurationChangerState extends State<DurationChanger> {
             },
           ),
         ),
-        GestureDetector(
+        Touch(
+          semanticsLabel: 'Reset duration',
           onTap: () {
             if (durationMultiplier == 1) return;
 
