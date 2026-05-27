@@ -6,7 +6,7 @@ import 'package:fabula/src/widgets/nullable_toggler.dart';
 import 'package:fabula/src/widgets/predefined_colors_entry_point.dart';
 
 class NullableColorField extends StatelessWidget {
-  NullableColorField({
+  const NullableColorField({
     super.key,
     required this.knob,
     required this.label,
@@ -22,8 +22,6 @@ class NullableColorField extends StatelessWidget {
   final TextInputType? keyboardType;
   final VoidCallback toggleNull;
   final List<Color>? predefinedColors;
-
-  final controller = TextEditingController();
 
   Color hexToColor(String hexString) => Color(int.parse("0xff$hexString"));
 

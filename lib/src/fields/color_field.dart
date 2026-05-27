@@ -8,7 +8,7 @@ import 'package:fabula/src/widgets/predefined_colors_entry_point.dart';
 // TODO: Allow more ways of selection of colors
 // E.g: Color picker, color wheel, etc.
 class ColorField extends StatelessWidget {
-  ColorField({
+  const ColorField({
     super.key,
     required this.knob,
     required this.label,
@@ -21,8 +21,6 @@ class ColorField extends StatelessWidget {
   final Knob<Color> knob;
   final TextInputType? keyboardType;
   final List<Color>? predefinedColors;
-
-  final controller = TextEditingController();
 
   Color hexToColor(String hexString) => Color(int.parse("0xff$hexString"));
 
