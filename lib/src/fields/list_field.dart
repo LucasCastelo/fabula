@@ -14,7 +14,7 @@ class ListField<T> extends StatelessWidget {
   });
 
   final String listId;
-  final KnobValue<List<T>> knob;
+  final Knob<List<T>> knob;
   final ListItemBuilder itemBuilder;
   final Function(String prefix) onFieldCreated;
   final Function(String prefix) onFieldDisposed;

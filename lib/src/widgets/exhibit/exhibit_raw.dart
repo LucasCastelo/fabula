@@ -16,7 +16,7 @@ class ExhibitRaw extends StatelessWidget {
   });
 
   final KnobBuilder builder;
-  final Widget Function(BuildContext context, List<KnobValue> knobs)?
+  final Widget Function(BuildContext context, List<Knob> knobs)?
       overlayBuilder;
 
   @override

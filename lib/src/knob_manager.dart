@@ -16,14 +16,14 @@ import 'package:fabula/fabula.dart';
 class KnobManager extends ChangeNotifier {
   KnobManager();
 
-  final Map<String, KnobValue> knobs = {};
+  final Map<String, Knob> knobs = {};
   final ChangeNotifier rebuildKnobs = ChangeNotifier();
   final ChangeNotifier rebuildExhibit = ChangeNotifier();
   final Debouncer rebuildExhibitDebouncer = Debouncer(milliseconds: 300);
   final Debouncer rebuildKnobsDebouncer = Debouncer(milliseconds: 300);
 
-  Map<String, List<KnobValue>> get knobsBySection {
-    final knobsBySection = <String, List<KnobValue>>{};
+  Map<String, List<Knob>> get knobsBySection {
+    final knobsBySection = <String, List<Knob>>{};
 
     for (final knob in knobs.values) {
       if (knob.section != null) {
@@ -72,6 +72,7 @@ class KnobManager extends ChangeNotifier {
           orderingPriority: orderingPriority,
           sectionOrderingPriority: sectionOrderingPriority,
           inputBuilder: (knob) => AnimationPlayer(knob: knob),
+          onDispose: (controller) => controller.dispose(),
         ),
       );
 
@@ -389,7 +390,7 @@ class KnobManager extends ChangeNotifier {
 
   T? _evaluateKnob<T>({
     required String id,
-    required KnobValue knob,
+    required Knob knob,
   }) {
     if (knobs.keys.contains(id)) {
       return _fetchKnobValueById(id);
@@ -405,7 +406,7 @@ class KnobManager extends ChangeNotifier {
 
   void _registerNewKnobById({
     required String id,
-    required KnobValue newKnob,
+    required Knob newKnob,
   }) {
     newKnob.addListener(rebuildExhibit.notifyListeners);
 

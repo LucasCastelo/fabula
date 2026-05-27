@@ -5,7 +5,7 @@ import 'package:fabula/src/widgets/general/duration_field.dart';
 class AnimationPlayer extends StatefulWidget {
   const AnimationPlayer({super.key, required this.knob});
 
-  final KnobValue<AnimationController> knob;
+  final Knob<AnimationController> knob;
 
   @override
   State<AnimationPlayer> createState() => _AnimationPlayerState();

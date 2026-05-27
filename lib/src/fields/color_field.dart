@@ -18,7 +18,7 @@ class ColorField extends StatelessWidget {
   });
   final String label;
   final String? description;
-  final KnobValue<Color> knob;
+  final Knob<Color> knob;
   final TextInputType? keyboardType;
   final List<Color>? predefinedColors;
 

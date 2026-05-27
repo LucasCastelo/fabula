@@ -5,50 +5,47 @@ typedef NullableInputBuilder<T> = Widget Function(
   VoidCallback toggleNull,
 );
 
-typedef InputBuilder<T> = Widget Function(KnobValue<T> knob);
+typedef InputBuilder<T> = Widget Function(Knob<T> knob);
 
-sealed class Knob<T> extends ChangeNotifier {
-  final String? section;
-  final int? orderingPriority;
-  final int? sectionOrderingPriority;
-
-  Knob({
+abstract class Knob<T> extends ValueNotifier<T> {
+  Knob(
+    super.value, {
     this.section,
     this.orderingPriority,
     this.sectionOrderingPriority,
+    this.onDispose,
   });
 
-  Widget knob();
-}
-
-abstract class KnobValue<T> extends ValueNotifier<T> implements Knob {
-  KnobValue(super.value);
+  final String? section;
+  final int? orderingPriority;
+  final int? sectionOrderingPriority;
+  final void Function(T value)? onDispose;
 
   void setValue(T newValue);
 
   T getValue();
+
+  Widget knob();
+
+  @override
+  void dispose() {
+    onDispose?.call(value);
+    super.dispose();
+  }
 }
 
-class NullableKnob<T> extends KnobValue<T?> {
+class NullableKnob<T> extends Knob<T?> {
   NullableKnob({
     T? value,
     required NullableInputBuilder<T?> inputBuilder,
-    this.section,
-    this.orderingPriority,
-    this.sectionOrderingPriority,
+    super.section,
+    super.orderingPriority,
+    super.sectionOrderingPriority,
+    super.onDispose,
   })  : lastKnowValue = value,
         _inputBuilder = inputBuilder,
         _isFieldEnabled = value != null,
         super(value);
-
-  @override
-  final String? section;
-
-  @override
-  final int? orderingPriority;
-
-  @override
-  final int? sectionOrderingPriority;
 
   T? lastKnowValue;
   final NullableInputBuilder<T?> _inputBuilder;
@@ -81,26 +78,18 @@ class NullableKnob<T> extends KnobValue<T?> {
   Widget knob() => _inputBuilder(this, toggleNull);
 }
 
-class DefaultKnob<T> extends KnobValue<T> {
+class DefaultKnob<T> extends Knob<T> {
   DefaultKnob({
     required T initialValue,
     required InputBuilder<T> inputBuilder,
-    this.section,
-    this.orderingPriority,
-    this.sectionOrderingPriority,
+    super.section,
+    super.orderingPriority,
+    super.sectionOrderingPriority,
+    super.onDispose,
   })  : _inputBuilder = inputBuilder,
         super(initialValue);
 
   final InputBuilder<T> _inputBuilder;
-
-  @override
-  final String? section;
-
-  @override
-  final int? orderingPriority;
-
-  @override
-  final int? sectionOrderingPriority;
 
   @override
   T getValue() => value;

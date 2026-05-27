@@ -11,7 +11,7 @@ class SelectorField<T> extends StatelessWidget {
     this.isEnabled = true,
   });
 
-  final KnobValue<T?> knob;
+  final Knob<T?> knob;
   final List<T> options;
   final SelectorNameMarshal<T> nameMarshal;
   final bool isEnabled;

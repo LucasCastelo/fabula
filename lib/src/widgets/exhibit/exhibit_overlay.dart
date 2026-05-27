@@ -9,7 +9,7 @@ import 'package:fabula/src/entities/knob.dart';
 class ExhibitOverlay extends StatefulWidget {
   const ExhibitOverlay({super.key, required this.knobs});
 
-  final List<KnobValue> knobs;
+  final List<Knob> knobs;
 
   @override
   State<ExhibitOverlay> createState() => _ExhibitOverlayState();
