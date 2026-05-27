@@ -21,7 +21,7 @@ class ExhibitRaw extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final overlay = overlayBuilder;
-    return KnobManagerProvider(builder: (k) {
+    return KnobManagerProvider(builder: (context, k) {
       return Material(
         child: Stack(
           children: [
@@ -29,7 +29,7 @@ class ExhibitRaw extends StatelessWidget {
               bottom: 0,
               child: ListenableBuilder(
                 listenable: k.rebuildExhibit,
-                builder: (_, __) => builder(k),
+                builder: (context, __) => builder(context, k),
               ),
             ),
             if (overlay != null)

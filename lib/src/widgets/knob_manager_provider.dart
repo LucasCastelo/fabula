@@ -25,6 +25,6 @@ class _KnobManagerProviderState extends State<KnobManagerProvider> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(knobManager);
+    return widget.builder(context, knobManager);
   }
 }

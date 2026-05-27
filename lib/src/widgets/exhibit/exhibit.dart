@@ -4,7 +4,7 @@ import 'package:fabula/src/widgets/exhibit/exhibit_overlay.dart';
 import 'package:fabula/src/widgets/general/exhibit_tag_pill.dart';
 import 'package:fabula/fabula.dart';
 
-typedef KnobBuilder = Widget Function(KnobManager);
+typedef KnobBuilder = Widget Function(BuildContext context, KnobManager knobs);
 typedef CustomEntryDesign = Widget Function(String label, List<Widget> tags);
 typedef ContextCallback = void Function(BuildContext context);
 

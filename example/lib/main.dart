@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ExhibitTag(label: 'String', color: Colors.blue),
               ExhibitTag(label: 'Nullable', color: Colors.red),
             ],
-            builder: (k) => StringExample(
+            builder: (context, k) => StringExample(
               place: k.string(
                 'place',
                 description: 'This is a description of the string field.',
@@ -88,7 +88,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             tags: [
               ExhibitTag(label: 'Boolean', color: Colors.green),
             ],
-            builder: (k) => BoolExample(
+            builder: (context, k) => BoolExample(
               value: k.boolean(
                 'id',
                 label: 'Change Color of box above.',
@@ -103,7 +103,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ExhibitTag(label: 'Integer', color: Colors.purple),
               ExhibitTag(label: 'nullable', color: Colors.red),
             ],
-            builder: (k) =>
+            builder: (context, k) =>
                 IntegerExample(foo: k.integer('foo'), bar: k.nInteger('bar')),
           ),
           Exhibit.page(
@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             tags: [
               ExhibitTag(label: 'Selectable', color: Colors.orange),
             ],
-            builder: (k) => SelectableExample(
+            builder: (context, k) => SelectableExample(
               food: k.selectable(
                 'food',
                 values: [
@@ -143,7 +143,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ExhibitTag(label: 'Color', color: Colors.pink),
               ExhibitTag(label: 'Predefined Colors', color: Colors.yellow),
             ],
-            builder: (k) => ColorExamples(
+            builder: (context, k) => ColorExamples(
               aColor: k.color(
                 'Starting color of the gradient',
                 description: 'This is a description of the color field.',
@@ -182,7 +182,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ExhibitTag(label: 'String', color: Colors.blue),
               ExhibitTag(label: 'Color', color: Colors.pink),
             ],
-            builder: (k) => FullPageExample(
+            builder: (context, k) => FullPageExample(
               title: k.string('title'),
               description: k.string('description'),
               color: k.color('color', initialValue: Colors.blueGrey),
@@ -204,7 +204,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ExhibitTag(label: 'Animation', color: Colors.blue),
               ExhibitTag(label: 'Color', color: Colors.pink),
             ],
-            builder: (k) => AnimationExample(
+            builder: (context, k) => AnimationExample(
               controller: k.animationController('animation', vsync: this),
               color: k.color('color', initialValue: Colors.red),
             ),
@@ -214,7 +214,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             tags: [
               ExhibitTag(label: 'Toggler', color: Colors.purple),
             ],
-            builder: (k) => TogglerExample(
+            builder: (context, k) => TogglerExample(
               value: k.toggler(
                 'value',
                 label: 'Change the value of the toggler',
@@ -228,7 +228,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             tags: [
               ExhibitTag(label: 'Sections', color: Colors.indigo),
             ],
-            builder: (k) => SectionOrderingExample(
+            builder: (context, k) => SectionOrderingExample(
               // Knobs are registered in scrambled order on purpose.
               // Expected render order:
               //   Content    (sectionOrderingPriority 0)

@@ -12,13 +12,13 @@ class ExhibitList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KnobManagerProvider(
-      builder: (k) {
+      builder: (context, k) {
         return ListView(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           children: [
             ListenableBuilder(
               listenable: k.rebuildExhibit,
-              builder: (context, __) => builder(k),
+              builder: (context, __) => builder(context, k),
             ),
             const SizedBox(
               height: 16,
