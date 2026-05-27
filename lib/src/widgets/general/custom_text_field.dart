@@ -40,6 +40,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
     super.initState();
   }
 
+  @override
+  void didUpdateWidget(CustomTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != null && widget.value != controller.text) {
+      controller.text = widget.value!;
+    }
+  }
+
   int get textLength => controller.text.length;
 
   @override
@@ -53,10 +61,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
         width: 1.2,
       ),
     );
-
-    if (widget.value != null) {
-      controller.text = widget.value!;
-    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
