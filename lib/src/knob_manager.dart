@@ -47,7 +47,9 @@ class KnobManager extends ChangeNotifier {
 
   @override
   void dispose() {
-    knobs.values.map((e) => e.dispose());
+    for (final knob in knobs.values) {
+      knob.dispose();
+    }
     super.dispose();
   }
 
