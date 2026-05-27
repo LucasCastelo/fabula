@@ -12,9 +12,11 @@ class ExhibitTag {
 
   @override
   bool operator ==(Object other) {
-    return other is ExhibitTag && other._label == _label;
+    return other is ExhibitTag &&
+        other._label == _label &&
+        other.color == color;
   }
 
   @override
-  int get hashCode => _label.hashCode;
+  int get hashCode => Object.hash(_label, color);
 }

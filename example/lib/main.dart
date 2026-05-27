@@ -178,8 +178,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ExhibitTag(label: 'Full Page', color: Colors.pink),
               ExhibitTag(label: 'Animation', color: Colors.blue),
               ExhibitTag(label: 'Gradient', color: Colors.green),
-              ExhibitTag(label: 'String', color: Colors.orange),
-              ExhibitTag(label: 'Color', color: Colors.purple),
+              ExhibitTag(label: 'String', color: Colors.blue),
+              ExhibitTag(label: 'Color', color: Colors.pink),
             ],
             builder: (k) => FullPageExample(
               title: k.string('title'),
@@ -200,7 +200,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           Exhibit.page(
             label: 'Animation Example',
             tags: [
-              ExhibitTag(label: 'Animation', color: Colors.teal),
+              ExhibitTag(label: 'Animation', color: Colors.blue),
               ExhibitTag(label: 'Color', color: Colors.pink),
             ],
             builder: (k) => AnimationExample(
