@@ -28,17 +28,19 @@ class ExhibitRaw extends StatelessWidget {
             Positioned.fill(
               bottom: 0,
               child: ListenableBuilder(
-                listenable: k.rebuildExhibit,
-                builder: (context, __) => builder(context, k),
+                listenable: k,
+                builder: (context, _) => ListenableBuilder(
+                  listenable: Listenable.merge(k.knobs.values),
+                  builder: (context, __) => builder(context, k),
+                ),
               ),
             ),
             if (overlay != null)
               Positioned.fill(
                 child: ListenableBuilder(
-                  listenable: k.rebuildKnobs,
-                  builder: (context, __) {
-                    return overlay(context, k.knobs.values.toList());
-                  },
+                  listenable: k,
+                  builder: (context, _) =>
+                      overlay(context, k.knobs.values.toList()),
                 ),
               ),
           ],

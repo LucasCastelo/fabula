@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fabula/src/fields/animation_player.dart';
-import 'package:fabula/src/helpers/debouncer.dart';
 import 'package:fabula/src/widgets/general/toggler_field.dart';
 import 'package:fabula/src/fields/bool_field.dart';
 import 'package:fabula/src/fields/color_field.dart';
@@ -15,10 +14,7 @@ class KnobManager extends ChangeNotifier {
   KnobManager();
 
   final Map<String, Knob> knobs = {};
-  final ChangeNotifier rebuildKnobs = ChangeNotifier();
-  final ChangeNotifier rebuildExhibit = ChangeNotifier();
-  final Debouncer rebuildExhibitDebouncer = Debouncer(milliseconds: 300);
-  final Debouncer rebuildKnobsDebouncer = Debouncer(milliseconds: 300);
+  bool _notifyScheduled = false;
 
   Map<String, List<Knob>> get knobsBySection {
     final sorted = knobs.values.toList()
@@ -35,10 +31,6 @@ class KnobManager extends ChangeNotifier {
 
   @override
   void dispose() {
-    rebuildExhibitDebouncer.dispose();
-    rebuildKnobsDebouncer.dispose();
-    rebuildExhibit.dispose();
-    rebuildKnobs.dispose();
     for (final knob in knobs.values) {
       knob.dispose();
     }
@@ -284,7 +276,7 @@ class KnobManager extends ChangeNotifier {
       id: id,
       knob: DefaultKnob<T>(
         initialValue: values[0],
-          location: location,
+        location: location,
         inputBuilder: (knob) => SelectorField<T>(
           knob: knob,
           options: values,
@@ -314,12 +306,13 @@ class KnobManager extends ChangeNotifier {
     required String id,
     required Knob newKnob,
   }) {
-    newKnob.addListener(rebuildExhibit.notifyListeners);
-
     knobs[id] = newKnob;
 
-    rebuildKnobsDebouncer.call(() {
-      rebuildKnobs.notifyListeners();
+    if (_notifyScheduled) return;
+    _notifyScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _notifyScheduled = false;
+      if (hasListeners) notifyListeners();
     });
   }
 

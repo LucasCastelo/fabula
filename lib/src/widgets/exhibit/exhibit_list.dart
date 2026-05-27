@@ -17,20 +17,19 @@ class ExhibitList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           children: [
             ListenableBuilder(
-              listenable: k.rebuildExhibit,
-              builder: (context, __) => builder(context, k),
+              listenable: k,
+              builder: (context, _) => ListenableBuilder(
+                listenable: Listenable.merge(k.knobs.values),
+                builder: (context, __) => builder(context, k),
+              ),
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
             ListenableBuilder(
-              listenable: k.rebuildKnobs,
-              builder: (context, __) => Column(
+              listenable: k,
+              builder: (context, _) => Column(
                 children: k
                     .viewKnobs()
-                    .separate(
-                      const SizedBox(height: 16),
-                    )
+                    .separate(const SizedBox(height: 16))
                     .toList(),
               ),
             ),
