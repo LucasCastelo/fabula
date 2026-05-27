@@ -7,7 +7,6 @@ import 'package:fabula/src/fields/color_field.dart';
 import 'package:fabula/src/fields/nullable_color_field.dart';
 import 'package:fabula/src/fields/nullable_selector_field.dart';
 import 'package:fabula/src/fields/nullable_string_field.dart';
-import 'package:fabula/src/entities/knob.dart';
 import 'package:fabula/src/fields/selector_field.dart';
 import 'package:fabula/src/widgets/general/custom_text_field.dart';
 import 'package:fabula/fabula.dart';

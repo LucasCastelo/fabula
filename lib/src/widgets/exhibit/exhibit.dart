@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fabula/src/knob_manager.dart';
 import 'package:fabula/src/widgets/exhibit/exhibit_list.dart';
 import 'package:fabula/src/widgets/exhibit/exhibit_overlay.dart';
 import 'package:fabula/src/widgets/general/exhibit_tag_pill.dart';
