@@ -90,15 +90,19 @@ class _ExhibitState extends State<Exhibit> {
   void initState() {
     super.initState();
     galleryState?.addTagToHolster(widget.tags);
-    galleryState?.addListener(() => setState(() {
-          shouldShow = galleryState?.shouldShow(widget.tags) ?? true;
-        }));
+    galleryState?.addListener(_onGalleryChanged);
   }
 
   @override
   void dispose() {
-    galleryState?.removeListener(() => setState(() {}));
+    galleryState?.removeListener(_onGalleryChanged);
     super.dispose();
+  }
+
+  void _onGalleryChanged() {
+    setState(() {
+      shouldShow = galleryState?.shouldShow(widget.tags) ?? true;
+    });
   }
 
   @override
