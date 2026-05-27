@@ -229,7 +229,7 @@ class KnobManager extends ChangeNotifier {
           inputBuilder: (knob) => CustomTextField(
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
             isEnabled: true,
-            onChanged: (v) => knob.setValue(int.parse(v)),
+            onChanged: (v) => knob.setValue(int.tryParse(v) ?? knob.value),
             initialValue: value?.toString() ?? '0',
             keyboardType: TextInputType.number,
           ),
