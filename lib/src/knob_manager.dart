@@ -41,8 +41,9 @@ class KnobManager extends ChangeNotifier {
     String id, {
     required TickerProvider vsync,
     Duration? duration,
+    String? label,
     String? description,
-    KnobLocation location = const KnobLocation(),
+    KnobLocation location = const KnobLocation(order: -1000),
   }) =>
       _evaluateKnob(
         id: id,
@@ -53,7 +54,10 @@ class KnobManager extends ChangeNotifier {
           ),
           location: location,
           description: description,
-          inputBuilder: (knob) => AnimationPlayer(knob: knob),
+          inputBuilder: (knob) => AnimationPlayer(
+            knob: knob,
+            label: label ?? id,
+          ),
           onDispose: (controller) => controller.dispose(),
         ),
       );
