@@ -22,23 +22,19 @@ class KnobManager extends ChangeNotifier {
   final Debouncer rebuildKnobsDebouncer = Debouncer(milliseconds: 300);
 
   Map<String, List<Knob>> get knobsBySection {
-    final knobsBySection = <String, List<Knob>>{};
+    final sorted = knobs.values.toList()
+      ..sort((a, b) => (a.sectionOrderingPriority ?? double.maxFinite)
+          .compareTo(b.sectionOrderingPriority ?? double.maxFinite));
 
-    for (final knob in knobs.values) {
-      if (knob.section != null) {
-        knobsBySection[knob.section!] = [
-          ...(knobsBySection[knob.section!] ?? []),
-          knob
-        ];
-      } else {
-        knobsBySection[''] = [...(knobsBySection[''] ?? []), knob];
-      }
+    final knobsBySection = <String, List<Knob>>{};
+    for (final knob in sorted) {
+      final key = knob.section ?? '';
+      knobsBySection.putIfAbsent(key, () => []).add(knob);
     }
 
-    knobsBySection.forEach((key, value) {
-      value.sort(
-        (a, b) => (a.orderingPriority ?? 0).compareTo(b.orderingPriority ?? 0),
-      );
+    knobsBySection.forEach((_, value) {
+      value.sort((a, b) => (a.orderingPriority ?? double.maxFinite)
+          .compareTo(b.orderingPriority ?? double.maxFinite));
     });
 
     return knobsBySection;
