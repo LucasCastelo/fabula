@@ -42,6 +42,8 @@ class KnobManager extends ChangeNotifier {
 
   @override
   void dispose() {
+    rebuildExhibitDebouncer.dispose();
+    rebuildKnobsDebouncer.dispose();
     for (final knob in knobs.values) {
       knob.dispose();
     }
