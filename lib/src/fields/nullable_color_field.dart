@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fabula/src/entities/knob.dart';
 import 'package:fabula/src/entities/knob_text_field_decoration.dart';
+import 'package:fabula/src/helpers/hex_color.dart';
 import 'package:fabula/src/widgets/general/custom_text_field.dart';
 import 'package:fabula/src/widgets/nullable_toggler.dart';
 import 'package:fabula/src/widgets/predefined_colors_entry_point.dart';
@@ -23,13 +24,10 @@ class NullableColorField extends StatelessWidget {
   final List<Color>? predefinedColors;
   final String? description;
 
-  Color hexToColor(String hexString) => Color(int.parse("0xff$hexString"));
-
   @override
   Widget build(BuildContext context) {
-    final currentHexColor =
-        knob.getValue()?.toARGB32().toRadixString(16).replaceRange(0, 2, '');
-    final hexRegEx = RegExp(r'^[0-9a-fA-F]{6}$');
+    final color = knob.getValue();
+    final currentHex = color == null ? null : hexStringFor(color);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -42,7 +40,7 @@ class NullableColorField extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomTextField(
-                    maxLength: 6,
+                    maxLength: 8,
                     suffix: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
@@ -54,16 +52,15 @@ class NullableColorField extends StatelessWidget {
                       width: 18,
                     ),
                     onChanged: (v) {
-                      if (hexRegEx.hasMatch(v)) {
-                        knob.setValue(hexToColor(v));
-                      }
+                      final parsed = tryParseHexColor(v);
+                      if (parsed != null) knob.setValue(parsed);
                     },
                     description: description,
-                    keyboardType: TextInputType.multiline,
+                    keyboardType: TextInputType.text,
                     isEnabled: knob.isFieldEnabled,
-                    initialValue: currentHexColor,
+                    initialValue: currentHex,
                     decoration: KnobTextFieldDecoration(label: label),
-                    value: currentHexColor,
+                    value: currentHex,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

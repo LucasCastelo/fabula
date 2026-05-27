@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fabula/src/entities/knob.dart';
 import 'package:fabula/src/entities/knob_text_field_decoration.dart';
+import 'package:fabula/src/helpers/hex_color.dart';
 import 'package:fabula/src/widgets/general/custom_text_field.dart';
 import 'package:fabula/src/widgets/predefined_colors_entry_point.dart';
 
-// TODO: Allow more ways of selection of colors
-// E.g: Color picker, color wheel, etc.
 class ColorField extends StatelessWidget {
   const ColorField({
     super.key,
@@ -22,21 +20,17 @@ class ColorField extends StatelessWidget {
   final List<Color>? predefinedColors;
   final String? description;
 
-  Color hexToColor(String hexString) => Color(int.parse("0xff$hexString"));
-
   @override
   Widget build(BuildContext context) {
-    final currentHexColor =
-        knob.getValue().toARGB32().toRadixString(16).replaceRange(0, 2, '');
-    final hexRegEx = RegExp(r'^[0-9a-fA-F]{6}$');
+    final currentHex = hexStringFor(knob.getValue());
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         CustomTextField(
-          value: currentHexColor,
+          value: currentHex,
           description: description,
-          maxLength: 6,
+          maxLength: 8,
           suffix: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
@@ -46,13 +40,12 @@ class ColorField extends StatelessWidget {
             width: 18,
           ),
           onChanged: (v) {
-            if (hexRegEx.hasMatch(v)) {
-              knob.setValue(hexToColor(v));
-            }
+            final parsed = tryParseHexColor(v);
+            if (parsed != null) knob.setValue(parsed);
           },
           keyboardType: keyboardType,
           isEnabled: true,
-          initialValue: currentHexColor,
+          initialValue: currentHex,
           decoration: KnobTextFieldDecoration(label: label),
         ),
         if (predefinedColors != null) ...[
