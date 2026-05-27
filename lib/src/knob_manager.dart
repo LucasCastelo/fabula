@@ -304,9 +304,7 @@ class KnobManager extends ChangeNotifier {
       _evaluateKnob(
         id: id,
         knob: NullableKnob<T>(
-          value: values.isNotEmpty
-              ? values[0]
-              : throw Exception('Selectable of id $id cant have empty values'),
+          value: values.isNotEmpty ? values[0] : null,
           section: section,
           orderingPriority: orderingPriority,
           sectionOrderingPriority: sectionOrderingPriority,
@@ -325,23 +323,28 @@ class KnobManager extends ChangeNotifier {
     String? section,
     int? orderingPriority = 0,
     int? sectionOrderingPriority = 0,
-  }) =>
-      _evaluateKnob(
-        id: id,
-        knob: DefaultKnob<T>(
-          initialValue: values.isNotEmpty
-              ? values[0]
-              : throw Exception('Selectable of id $id cant have empty values'),
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
-          inputBuilder: (knob) => SelectorField<T>(
-            knob: knob,
-            options: values,
-            nameMarshal: nameMarshal ?? (v) => v.toString(),
-          ),
-        ),
+  }) {
+    if (values.isEmpty) {
+      throw ArgumentError(
+        "selectable '$id' requires non-empty values. "
+        'Use nSelectable if values can be empty.',
       );
+    }
+    return _evaluateKnob(
+      id: id,
+      knob: DefaultKnob<T>(
+        initialValue: values[0],
+        section: section,
+        orderingPriority: orderingPriority,
+        sectionOrderingPriority: sectionOrderingPriority,
+        inputBuilder: (knob) => SelectorField<T>(
+          knob: knob,
+          options: values,
+          nameMarshal: nameMarshal ?? (v) => v.toString(),
+        ),
+      ),
+    );
+  }
 
   List<T> listDefunct<T>(
     String id, {
