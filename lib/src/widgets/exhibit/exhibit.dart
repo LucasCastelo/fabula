@@ -82,37 +82,23 @@ class Exhibit extends StatefulWidget {
 }
 
 class _ExhibitState extends State<Exhibit> {
-  late final galleryState = ExhibitGalleryState.of(context);
-  bool shouldShow = true;
-
   @override
-  void initState() {
-    super.initState();
-    galleryState?.addTagToHolster(widget.tags);
-    galleryState?.addListener(_onGalleryChanged);
-  }
-
-  @override
-  void dispose() {
-    galleryState?.removeListener(_onGalleryChanged);
-    super.dispose();
-  }
-
-  void _onGalleryChanged() {
-    setState(() {
-      shouldShow = galleryState?.shouldShow(widget.tags) ?? true;
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    ExhibitGallery.of(context).registerTags(widget.tags);
   }
 
   @override
   Widget build(BuildContext context) {
+    final controller = ExhibitGallery.of(context);
+    final shouldShow = controller.shouldShow(widget.tags);
     final pillTags = (List<ExhibitTag>.from(widget.tags)
           ..sort((a, b) => a.label.compareTo(b.label)))
         .map(
           (e) => ExhibitTagPill(
             tag: e,
-            colored: galleryState?.shouldShow([e]) ?? false,
-            onTap: () => galleryState?.toggleTag(e),
+            colored: controller.shouldShow([e]),
+            onTap: () => controller.toggleTag(e),
           ),
         )
         .toList();
