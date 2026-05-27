@@ -91,13 +91,14 @@ class _ExhibitState extends State<Exhibit> {
   @override
   Widget build(BuildContext context) {
     final controller = ExhibitGallery.of(context);
-    final shouldShow = controller.shouldShow(widget.tags);
+    final shouldShow =
+        controller.shouldShow(label: widget.label, tags: widget.tags);
     final pillTags = (List<ExhibitTag>.from(widget.tags)
           ..sort((a, b) => a.label.compareTo(b.label)))
         .map(
           (e) => ExhibitTagPill(
             tag: e,
-            colored: controller.shouldShow([e]),
+            colored: controller.matchesTagFilter([e]),
             onTap: () => controller.toggleTag(e),
           ),
         )
