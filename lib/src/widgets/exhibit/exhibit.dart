@@ -107,7 +107,8 @@ class _ExhibitState extends State<Exhibit> {
 
   @override
   Widget build(BuildContext context) {
-    final pillTags = (widget.tags..sort((a, b) => a.label.compareTo(b.label)))
+    final pillTags = (List<ExhibitTag>.from(widget.tags)
+          ..sort((a, b) => a.label.compareTo(b.label)))
         .map(
           (e) => ExhibitTagPill(
             tag: e,
