@@ -36,6 +36,7 @@ class ExhibitGalleryState extends State<ExhibitGallery> with ChangeNotifier {
 
   void addTagToHolster(List<ExhibitTag> tags) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (!mounted) return;
       availableTags.addAll(tags);
       setState(() {});
     });
