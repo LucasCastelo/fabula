@@ -290,16 +290,19 @@ class KnobManager extends ChangeNotifier {
     required String id,
     required Knob knob,
   }) {
-    if (knobs.keys.contains(id)) {
-      return _fetchKnobValueById(id);
-    } else {
-      _registerNewKnobById(
-        id: id,
-        newKnob: knob,
+    final existing = knobs[id];
+    if (existing != null) {
+      assert(
+        existing.runtimeType == knob.runtimeType,
+        'Knob "$id" was registered as ${existing.runtimeType} but is now '
+        'being registered as ${knob.runtimeType}. Pick a different id, or '
+        'remove the first registration.',
       );
-
-      return knob.value;
+      knob.dispose();
+      return _fetchKnobValueById(id);
     }
+    _registerNewKnobById(id: id, newKnob: knob);
+    return knob.value;
   }
 
   void _registerNewKnobById({
