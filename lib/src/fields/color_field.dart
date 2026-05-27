@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fabula/src/entities/color_holster.dart';
 import 'package:fabula/src/entities/knob.dart';
 import 'package:fabula/src/entities/knob_text_field_decoration.dart';
 import 'package:fabula/src/helpers/hex_color.dart';
+import 'package:fabula/src/widgets/color_holster_picker.dart';
 import 'package:fabula/src/widgets/general/custom_text_field.dart';
-import 'package:fabula/src/widgets/predefined_colors_entry_point.dart';
 
 class ColorField extends StatelessWidget {
   const ColorField({
@@ -11,18 +12,20 @@ class ColorField extends StatelessWidget {
     required this.knob,
     required this.label,
     this.keyboardType,
-    this.predefinedColors,
+    this.holsters,
     this.description,
   });
+
   final String label;
   final Knob<Color> knob;
   final TextInputType? keyboardType;
-  final List<Color>? predefinedColors;
+  final List<ColorHolster>? holsters;
   final String? description;
 
   @override
   Widget build(BuildContext context) {
     final currentHex = hexStringFor(knob.getValue());
+    final holsters = this.holsters;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -48,13 +51,14 @@ class ColorField extends StatelessWidget {
           initialValue: currentHex,
           decoration: KnobTextFieldDecoration(label: label),
         ),
-        if (predefinedColors != null) ...[
+        if (holsters != null && holsters.isNotEmpty) ...[
           const SizedBox(height: 4),
-          PredefinedColorsEntryPoint(
-            colors: predefinedColors!,
-            onColorSelected: (color) {
-              knob.setValue(color);
-            },
+          Align(
+            alignment: Alignment.centerLeft,
+            child: ColorHolsterPicker(
+              holsters: holsters,
+              onColorSelected: knob.setValue,
+            ),
           ),
         ],
       ],

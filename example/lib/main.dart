@@ -143,35 +143,40 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               ExhibitTag(label: 'Color', color: Colors.pink),
               ExhibitTag(label: 'Predefined Colors', color: Colors.yellow),
             ],
-            builder: (context, k) => ColorExamples(
-              aColor: k.color(
-                'Starting color of the gradient',
-                description: 'This is a description of the color field.',
-                initialValue: const Color(0xffff9800),
-                predefinedColors: [
-                  Colors.red,
-                  Colors.green,
-                  Colors.blue,
-                  Colors.yellow,
-                  Colors.purple,
-                  Colors.orange,
-                  Colors.brown
-                ],
-              ),
-              bColor: k.nColor(
-                'Middle color of the gradient (nullable)',
-                predefinedColors: [
-                  Colors.red,
-                  Colors.green,
-                  Colors.blue,
-                  Colors.yellow,
-                  Colors.purple,
-                  Colors.orange,
-                  Colors.brown
-                ],
-              ),
-              cColor: k.color('Ending color of the gradient'),
-            ),
+            builder: (context, k) {
+              const palette = [
+                ColorHolster(
+                  label: 'Brand',
+                  properties: [
+                    PaletteColor(label: 'Brand Red', color: Colors.red),
+                    PaletteColor(label: 'Brand Blue', color: Colors.blue),
+                    PaletteColor(label: 'Brand Yellow', color: Colors.yellow),
+                  ],
+                ),
+                ColorHolster(
+                  label: 'Status',
+                  properties: [
+                    PaletteColor(label: 'Success', color: Colors.green),
+                    PaletteColor(label: 'Warning', color: Colors.orange),
+                    PaletteColor(label: 'Info', color: Colors.purple),
+                    PaletteColor(label: 'Neutral', color: Colors.brown),
+                  ],
+                ),
+              ];
+              return ColorExamples(
+                aColor: k.color(
+                  'Starting color of the gradient',
+                  description: 'This is a description of the color field.',
+                  initialValue: const Color(0xffff9800),
+                  holsters: palette,
+                ),
+                bColor: k.nColor(
+                  'Middle color of the gradient (nullable)',
+                  holsters: palette,
+                ),
+                cColor: k.color('Ending color of the gradient'),
+              );
+            },
           ),
           Exhibit.raw(
             label: 'Full Page Example',

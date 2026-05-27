@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fabula/src/entities/color_holster.dart';
 import 'package:fabula/src/entities/knob.dart';
 import 'package:fabula/src/entities/knob_text_field_decoration.dart';
 import 'package:fabula/src/helpers/hex_color.dart';
+import 'package:fabula/src/widgets/color_holster_picker.dart';
 import 'package:fabula/src/widgets/general/custom_text_field.dart';
 import 'package:fabula/src/widgets/nullable_toggler.dart';
-import 'package:fabula/src/widgets/predefined_colors_entry_point.dart';
 
 class NullableColorField extends StatelessWidget {
   const NullableColorField({
@@ -13,7 +14,7 @@ class NullableColorField extends StatelessWidget {
     required this.label,
     required this.toggleNull,
     this.keyboardType,
-    this.predefinedColors,
+    this.holsters,
     this.description,
   });
 
@@ -21,7 +22,7 @@ class NullableColorField extends StatelessWidget {
   final NullableKnob<Color?> knob;
   final TextInputType? keyboardType;
   final VoidCallback toggleNull;
-  final List<Color>? predefinedColors;
+  final List<ColorHolster>? holsters;
   final String? description;
 
   @override
@@ -65,11 +66,13 @@ class NullableColorField extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if (predefinedColors != null)
-                        PredefinedColorsEntryPoint(
-                          colors: predefinedColors!,
-                          onColorSelected: (color) => knob.setValue(color),
-                        ),
+                      if (holsters != null && holsters!.isNotEmpty)
+                        ColorHolsterPicker(
+                          holsters: holsters!,
+                          onColorSelected: knob.setValue,
+                        )
+                      else
+                        const SizedBox.shrink(),
                       NullableToggler(
                         onClick: toggleNull,
                         isEnabled: knob.isFieldEnabled,

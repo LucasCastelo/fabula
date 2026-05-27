@@ -219,7 +219,7 @@ class KnobManager extends ChangeNotifier {
     Color? initialValue,
     String? label,
     String? description,
-    List<Color>? predefinedColors,
+    List<ColorHolster>? holsters,
     KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
@@ -232,7 +232,7 @@ class KnobManager extends ChangeNotifier {
             label: label ?? id,
             knob: knob,
             description: description,
-            predefinedColors: predefinedColors,
+            holsters: holsters,
           ),
         ),
       );
@@ -242,7 +242,7 @@ class KnobManager extends ChangeNotifier {
     Color? value,
     String? label,
     String? description,
-    List<Color>? predefinedColors,
+    List<ColorHolster>? holsters,
     KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
@@ -256,7 +256,7 @@ class KnobManager extends ChangeNotifier {
             knob: knob,
             description: description,
             toggleNull: toggleNull,
-            predefinedColors: predefinedColors,
+            holsters: holsters,
           ),
         ),
       );
