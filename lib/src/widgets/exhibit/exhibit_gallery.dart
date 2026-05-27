@@ -5,6 +5,7 @@ import 'package:fabula/fabula.dart';
 class GalleryController extends ChangeNotifier {
   final Set<ExhibitTag> availableTags = {};
   final Set<ExhibitTag> filterByTags = {};
+  bool _registerNotifyScheduled = false;
 
   void toggleTag(ExhibitTag tag) {
     if (filterByTags.contains(tag)) {
@@ -20,7 +21,15 @@ class GalleryController extends ChangeNotifier {
     for (final tag in tags) {
       if (availableTags.add(tag)) added = true;
     }
-    if (added) notifyListeners();
+    if (!added || _registerNotifyScheduled) return;
+    // registerTags is typically called from `didChangeDependencies` during
+    // the first build; defer the notify to post-frame so InheritedNotifier
+    // dependents pick it up cleanly.
+    _registerNotifyScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _registerNotifyScheduled = false;
+      if (hasListeners) notifyListeners();
+    });
   }
 
   bool shouldShow(List<ExhibitTag> tags) {
