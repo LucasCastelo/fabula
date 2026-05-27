@@ -22,19 +22,13 @@ class KnobManager extends ChangeNotifier {
 
   Map<String, List<Knob>> get knobsBySection {
     final sorted = knobs.values.toList()
-      ..sort((a, b) => (a.sectionOrderingPriority ?? double.maxFinite)
-          .compareTo(b.sectionOrderingPriority ?? double.maxFinite));
+      ..sort((a, b) => a.location.order.compareTo(b.location.order));
 
     final knobsBySection = <String, List<Knob>>{};
     for (final knob in sorted) {
-      final key = knob.section ?? '';
+      final key = knob.location.section ?? '';
       knobsBySection.putIfAbsent(key, () => []).add(knob);
     }
-
-    knobsBySection.forEach((_, value) {
-      value.sort((a, b) => (a.orderingPriority ?? double.maxFinite)
-          .compareTo(b.orderingPriority ?? double.maxFinite));
-    });
 
     return knobsBySection;
   }
@@ -55,9 +49,7 @@ class KnobManager extends ChangeNotifier {
     String id, {
     required TickerProvider vsync,
     Duration? duration,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
+    KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
         id: id,
@@ -66,9 +58,7 @@ class KnobManager extends ChangeNotifier {
             vsync: vsync,
             duration: duration ?? const Duration(seconds: 5),
           ),
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
+          location: location,
           inputBuilder: (knob) => AnimationPlayer(knob: knob),
           onDispose: (controller) => controller.dispose(),
         ),
@@ -79,17 +69,13 @@ class KnobManager extends ChangeNotifier {
     required String label,
     String? description,
     bool? initialValue,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
+    KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<bool>(
           initialValue: initialValue ?? true,
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
+          location: location,
           inputBuilder: (knob) => BoolField(
             label: label,
             description: description,
@@ -105,17 +91,13 @@ class KnobManager extends ChangeNotifier {
     required String label,
     required T onValue,
     required T offValue,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
+    KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<T>(
           initialValue: onValue,
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
+          location: location,
           inputBuilder: (knob) => TogglerField(
             label: label,
             getValue: knob.getValue,
@@ -129,9 +111,7 @@ class KnobManager extends ChangeNotifier {
   String string(
     String id, {
     String? initialValue,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
+    KnobLocation location = const KnobLocation(),
     KnobTextFieldDecoration? decoration,
     String? description,
   }) =>
@@ -139,9 +119,7 @@ class KnobManager extends ChangeNotifier {
         id: id,
         knob: DefaultKnob<String>(
           initialValue: initialValue ?? '',
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
+          location: location,
           inputBuilder: (knob) => CustomTextField(
             description: description,
             onChanged: knob.setValue,
@@ -162,17 +140,13 @@ class KnobManager extends ChangeNotifier {
     KnobTextFieldDecoration? decoration,
     String? initialValue,
     String? description,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
+    KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
         id: id,
         knob: NullableKnob<String?>(
           value: initialValue,
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
+          location: location,
           inputBuilder: (knob, toggleNull) => NullableTextField(
             decoration: decoration ??
                 KnobTextFieldDecoration(
@@ -192,17 +166,13 @@ class KnobManager extends ChangeNotifier {
     String id, {
     int? initialValue,
     KnobTextFieldDecoration? decoration,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
+    KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
         id: id,
         knob: NullableKnob<int>(
           value: initialValue ?? 0,
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
+          location: location,
           inputBuilder: (knob, toggleNull) => NullableTextField<int?>(
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
             initialValue: initialValue?.toString() ?? '0',
@@ -217,17 +187,13 @@ class KnobManager extends ChangeNotifier {
     String id, {
     int? value,
     KnobTextFieldDecoration? decoration,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
+    KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<int>(
           initialValue: value ?? 0,
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
+          location: location,
           inputBuilder: (knob) => CustomTextField(
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
             isEnabled: true,
@@ -244,17 +210,13 @@ class KnobManager extends ChangeNotifier {
     String? label,
     String? description,
     List<Color>? predefinedColors,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
+    KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
         id: id,
         knob: DefaultKnob<Color>(
           initialValue: initialValue ?? Colors.black,
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
+          location: location,
           inputBuilder: (knob) => ColorField(
             label: label ?? id,
             knob: knob,
@@ -270,17 +232,13 @@ class KnobManager extends ChangeNotifier {
     String? label,
     String? description,
     List<Color>? predefinedColors,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
+    KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
         id: id,
         knob: NullableKnob<Color>(
           value: value ?? Colors.black,
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
+          location: location,
           inputBuilder: (knob, toggleNull) => NullableColorField(
             label: label ?? id,
             knob: knob,
@@ -295,17 +253,13 @@ class KnobManager extends ChangeNotifier {
     String id, {
     required List<T> values,
     SelectorNameMarshal? nameMarshal,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
+    KnobLocation location = const KnobLocation(),
   }) =>
       _evaluateKnob(
         id: id,
         knob: NullableKnob<T>(
           value: values.isNotEmpty ? values[0] : null,
-          section: section,
-          orderingPriority: orderingPriority,
-          sectionOrderingPriority: sectionOrderingPriority,
+          location: location,
           inputBuilder: (knob, toggleNull) => NullableSelectorField<T?>(
             knob: knob,
             values: values,
@@ -318,9 +272,7 @@ class KnobManager extends ChangeNotifier {
     String id, {
     required List<T> values,
     SelectorNameMarshal<T>? nameMarshal,
-    String? section,
-    int? orderingPriority = 0,
-    int? sectionOrderingPriority = 0,
+    KnobLocation location = const KnobLocation(),
   }) {
     if (values.isEmpty) {
       throw ArgumentError(
@@ -332,9 +284,7 @@ class KnobManager extends ChangeNotifier {
       id: id,
       knob: DefaultKnob<T>(
         initialValue: values[0],
-        section: section,
-        orderingPriority: orderingPriority,
-        sectionOrderingPriority: sectionOrderingPriority,
+          location: location,
         inputBuilder: (knob) => SelectorField<T>(
           knob: knob,
           options: values,

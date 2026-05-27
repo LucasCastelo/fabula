@@ -230,57 +230,47 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             ],
             builder: (context, k) => SectionOrderingExample(
               // Knobs are registered in scrambled order on purpose.
+              // Single global `order` decides position; a section's slot is
+              // derived from its first (lowest-order) knob.
               // Expected render order:
-              //   Content    (sectionOrderingPriority 0)
-              //     title           (orderingPriority 0)
-              //     subtitle        (orderingPriority 1)
-              //   Layout     (sectionOrderingPriority 1)
-              //     padding         (orderingPriority 0)
-              //     borderRadius    (orderingPriority 1)
-              //   Style      (sectionOrderingPriority 2)
-              //     backgroundColor (orderingPriority 0)
-              //     textColor       (orderingPriority 1)
+              //   Content    (first knob has order 0)
+              //     title           (order 0)
+              //     subtitle        (order 1)
+              //   Layout     (first knob has order 10)
+              //     padding         (order 10)
+              //     borderRadius    (order 11)
+              //   Style      (first knob has order 20)
+              //     backgroundColor (order 20)
+              //     textColor       (order 21)
               textColor: k.color(
                 'textColor',
                 initialValue: Colors.white,
-                section: 'Style',
-                orderingPriority: 1,
-                sectionOrderingPriority: 2,
+                location: const KnobLocation(section: 'Style', order: 21),
               ),
               subtitle: k.string(
                 'subtitle',
                 initialValue: 'Knobs are registered scrambled on purpose',
-                section: 'Content',
-                orderingPriority: 1,
-                sectionOrderingPriority: 0,
+                location: const KnobLocation(section: 'Content', order: 1),
               ),
               padding: k.integer(
                 'padding',
                 value: 24,
-                section: 'Layout',
-                orderingPriority: 0,
-                sectionOrderingPriority: 1,
+                location: const KnobLocation(section: 'Layout', order: 10),
               ),
               backgroundColor: k.color(
                 'backgroundColor',
                 initialValue: Colors.indigo,
-                section: 'Style',
-                orderingPriority: 0,
-                sectionOrderingPriority: 2,
+                location: const KnobLocation(section: 'Style', order: 20),
               ),
               title: k.string(
                 'title',
                 initialValue: 'Section Ordering',
-                section: 'Content',
-                orderingPriority: 0,
-                sectionOrderingPriority: 0,
+                location: const KnobLocation(section: 'Content', order: 0),
               ),
               borderRadius: k.integer(
                 'borderRadius',
                 value: 12,
-                section: 'Layout',
-                orderingPriority: 1,
-                sectionOrderingPriority: 1,
+                location: const KnobLocation(section: 'Layout', order: 11),
               ),
             ),
           ),

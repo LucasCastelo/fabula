@@ -7,18 +7,21 @@ typedef NullableInputBuilder<T> = Widget Function(
 
 typedef InputBuilder<T> = Widget Function(Knob<T> knob);
 
+class KnobLocation {
+  const KnobLocation({this.section, this.order = 0});
+
+  final String? section;
+  final double order;
+}
+
 abstract class Knob<T> extends ValueNotifier<T> {
   Knob(
     super.value, {
-    this.section,
-    this.orderingPriority,
-    this.sectionOrderingPriority,
+    this.location = const KnobLocation(),
     this.onDispose,
   });
 
-  final String? section;
-  final int? orderingPriority;
-  final int? sectionOrderingPriority;
+  final KnobLocation location;
   final void Function(T value)? onDispose;
 
   void setValue(T newValue);
@@ -38,9 +41,7 @@ class NullableKnob<T> extends Knob<T?> {
   NullableKnob({
     T? value,
     required NullableInputBuilder<T?> inputBuilder,
-    super.section,
-    super.orderingPriority,
-    super.sectionOrderingPriority,
+    super.location,
     super.onDispose,
   })  : lastKnowValue = value,
         _inputBuilder = inputBuilder,
@@ -82,9 +83,7 @@ class DefaultKnob<T> extends Knob<T> {
   DefaultKnob({
     required T initialValue,
     required InputBuilder<T> inputBuilder,
-    super.section,
-    super.orderingPriority,
-    super.sectionOrderingPriority,
+    super.location,
     super.onDispose,
   })  : _inputBuilder = inputBuilder,
         super(initialValue);
