@@ -83,24 +83,6 @@ ExhibitGallery(
 
 `ExhibitGallery.of(context)` returns the live `GalleryController` and subscribes the caller to filter changes via `InheritedNotifier`. Useful if you need to read filter state from a custom child widget.
 
-#### Wide layout
-
-At `wideLayoutBreakpoint` (default `840`) and above, the gallery switches from push navigation to three panes: the exhibit list in a sidebar, the selected exhibit's preview, and its knobs in a fixed panel on the right. Tapping an exhibit selects it in place instead of pushing a route. `Exhibit.page` previews scroll with padding; `Exhibit.raw` previews fill the pane. The knobs panel is hidden for exhibits without knobs.
-
-Below the breakpoint the gallery behaves as on mobile: each exhibit pushes its own page. `ExhibitGallery.isWide(context)` tells descendants which layout is active.
-
-The preview header has a device picker. **Responsive** fills the pane; picking a device renders the exhibit at that device's logical size inside a frame (scaled down if the pane is smaller), with a matching `MediaQuery.size`. The rotate button switches to landscape. The choice sticks while switching exhibits. Pass `devices:` to `ExhibitGallery` to replace the default `ExhibitDevice.presets`:
-
-```dart
-ExhibitGallery(
-  devices: [
-    ...ExhibitDevice.presets,
-    const ExhibitDevice(name: 'Foldable', size: Size(673, 841)),
-  ],
-  children: [...],
-)
-```
-
 ### `Exhibit`
 
 Represents one component on the gallery list. Three factories:

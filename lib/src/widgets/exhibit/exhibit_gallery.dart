@@ -3,54 +3,12 @@ import 'package:fabula/fabula.dart';
 import 'package:fabula/src/widgets/general/exhibit_tag_pill.dart';
 
 class GalleryController extends ChangeNotifier {
-  GalleryController({this.devices = ExhibitDevice.presets});
-
-  /// Devices offered by the wide layout's device picker.
-  final List<ExhibitDevice> devices;
-
   final Set<ExhibitTag> availableTags = {};
   final Set<ExhibitTag> filterByTags = {};
   String _searchQuery = '';
   bool _registerNotifyScheduled = false;
-  String? _selectedLabel;
-  WidgetBuilder? _selectedWorkbench;
-  ExhibitDevice? _device;
-  bool _landscape = false;
 
   String get searchQuery => _searchQuery;
-
-  /// Label of the exhibit shown in the wide layout's detail pane.
-  String? get selectedLabel => _selectedLabel;
-
-  /// Device the wide layout simulates, or null to fill the preview pane.
-  ExhibitDevice? get device => _device;
-
-  bool get landscape => _landscape;
-
-  /// Logical size of the simulated device in its current orientation.
-  Size? get deviceSize {
-    final size = _device?.size;
-    if (size == null) return null;
-    return _landscape ? size.flipped : size;
-  }
-
-  void setDevice(ExhibitDevice? device) {
-    if (_device == device) return;
-    _device = device;
-    notifyListeners();
-  }
-
-  void toggleLandscape() {
-    _landscape = !_landscape;
-    notifyListeners();
-  }
-
-  void select({required String label, required WidgetBuilder workbench}) {
-    if (_selectedLabel == label) return;
-    _selectedLabel = label;
-    _selectedWorkbench = workbench;
-    notifyListeners();
-  }
 
   bool get hasActiveFilter =>
       _searchQuery.isNotEmpty || filterByTags.isNotEmpty;
@@ -117,26 +75,10 @@ class ExhibitGallery extends StatefulWidget {
     super.key,
     required this.children,
     this.appBar,
-    this.wideLayoutBreakpoint = 840,
-    this.devices = ExhibitDevice.presets,
   });
-
-  static const double sidebarWidth = 320;
 
   final PreferredSizeWidget? appBar;
   final List<Widget> children;
-
-  /// Minimum width at which the gallery shows the exhibit list, preview and
-  /// knobs side by side instead of pushing a page per exhibit.
-  final double wideLayoutBreakpoint;
-
-  /// Devices offered by the wide layout's device picker.
-  final List<ExhibitDevice> devices;
-
-  /// Whether the enclosing gallery currently uses its wide layout.
-  static bool isWide(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<_GalleryLayoutScope>()?.wide ??
-      false;
 
   static GalleryController of(BuildContext context) {
     final scope = context.dependOnInheritedWidgetOfExactType<_GalleryScope>();
@@ -150,7 +92,7 @@ class ExhibitGallery extends StatefulWidget {
 }
 
 class _ExhibitGalleryState extends State<ExhibitGallery> {
-  late final controller = GalleryController(devices: widget.devices);
+  late final controller = GalleryController();
 
   @override
   void dispose() {
@@ -162,90 +104,19 @@ class _ExhibitGalleryState extends State<ExhibitGallery> {
   Widget build(BuildContext context) {
     return _GalleryScope(
       notifier: controller,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final wide = constraints.maxWidth >= widget.wideLayoutBreakpoint;
-          final list = ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            children: widget.children,
-          );
-
-          return _GalleryLayoutScope(
-            wide: wide,
-            child: Material(
-              child: Scaffold(
-                appBar: widget.appBar,
-                resizeToAvoidBottomInset: true,
-                body: SafeArea(
-                  child: wide
-                      ? Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            SizedBox(
-                              width: ExhibitGallery.sidebarWidth,
-                              child: list,
-                            ),
-                            const VerticalDivider(width: 1),
-                            Expanded(
-                              child: _SelectedExhibitPane(
-                                controller: controller,
-                              ),
-                            ),
-                          ],
-                        )
-                      : list,
-                ),
-                floatingActionButton: const _FilterFab(),
-                floatingActionButtonLocation:
-                    wide ? FloatingActionButtonLocation.startFloat : null,
-              ),
+      child: Material(
+        child: Scaffold(
+          appBar: widget.appBar,
+          resizeToAvoidBottomInset: true,
+          body: SafeArea(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              children: widget.children,
             ),
-          );
-        },
+          ),
+          floatingActionButton: const _FilterFab(),
+        ),
       ),
-    );
-  }
-}
-
-class _GalleryLayoutScope extends InheritedWidget {
-  const _GalleryLayoutScope({
-    required this.wide,
-    required super.child,
-  });
-
-  final bool wide;
-
-  @override
-  bool updateShouldNotify(_GalleryLayoutScope oldWidget) =>
-      wide != oldWidget.wide;
-}
-
-class _SelectedExhibitPane extends StatelessWidget {
-  const _SelectedExhibitPane({required this.controller});
-
-  final GalleryController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: controller,
-      builder: (context, _) {
-        final label = controller._selectedLabel;
-        final workbench = controller._selectedWorkbench;
-        if (label == null || workbench == null) {
-          return const Center(
-            child: Text(
-              'Select an exhibit',
-              style: TextStyle(fontSize: 14, color: Colors.black54),
-            ),
-          );
-        }
-
-        return KeyedSubtree(
-          key: ValueKey(label),
-          child: workbench(context),
-        );
-      },
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fabula/src/widgets/exhibit/exhibit_list.dart';
 import 'package:fabula/src/widgets/exhibit/exhibit_overlay.dart';
-import 'package:fabula/src/widgets/exhibit/exhibit_workbench.dart';
 import 'package:fabula/src/widgets/general/exhibit_tag_pill.dart';
 import 'package:fabula/fabula.dart';
 
@@ -21,7 +20,6 @@ class Exhibit extends StatefulWidget {
     this.tags = const [],
     this.displayBuilder,
     this.onTap,
-    this.workbench,
   });
 
   factory Exhibit.raw({
@@ -34,11 +32,6 @@ class Exhibit extends StatefulWidget {
         label: label,
         tags: tags,
         displayBuilder: customEntryDesign,
-        workbench: (context) => ExhibitWorkbench(
-          label: label,
-          builder: builder,
-          fill: true,
-        ),
         onTap: (context) => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => ExhibitRaw(
@@ -60,11 +53,6 @@ class Exhibit extends StatefulWidget {
         label: label,
         tags: tags,
         displayBuilder: customEntryDesign,
-        workbench: (context) => ExhibitWorkbench(
-          label: label,
-          builder: builder,
-          fill: false,
-        ),
         onTap: (context) => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => Scaffold(
@@ -88,9 +76,6 @@ class Exhibit extends StatefulWidget {
   final List<ExhibitTag> tags;
   final CustomEntryDesign? displayBuilder;
   final ContextCallback? onTap;
-
-  /// Detail pane shown in place when the gallery uses its wide layout.
-  final WidgetBuilder? workbench;
 
   @override
   State<Exhibit> createState() => _ExhibitState();
@@ -126,24 +111,11 @@ class _ExhibitState extends State<Exhibit> {
       secondChild: const SizedBox.shrink(),
       firstChild: Touch(
         semanticsLabel: widget.label,
-        onTap: () {
-          final workbench = widget.workbench;
-          if (workbench != null && ExhibitGallery.isWide(context)) {
-            controller.select(label: widget.label, workbench: workbench);
-          } else {
-            widget.onTap?.call(context);
-          }
-        },
+        onTap: () => widget.onTap?.call(context),
         child: widget.displayBuilder?.call(widget.label, pillTags) ??
             Container(
-              decoration: BoxDecoration(
-                color: controller.selectedLabel == widget.label &&
-                        ExhibitGallery.isWide(context)
-                    ? Colors.black12
-                    : null,
-                border: const Border(
-                  bottom: BorderSide(color: Colors.black12),
-                ),
+              decoration: const BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black12)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
