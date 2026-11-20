@@ -68,7 +68,7 @@ class KnobManager extends ChangeNotifier {
           description: description,
           inputBuilder: (knob) => AnimationPlayer(
             knob: knob,
-            label: label ?? id,
+            label: label ?? labelFromId(id),
           ),
           onDispose: (controller) => controller.dispose(),
         ),
@@ -142,8 +142,8 @@ class KnobManager extends ChangeNotifier {
             description: description,
             decoration: decoration ??
                 KnobTextFieldDecoration(
-                  label: id,
-                  placeholder: id,
+                  label: labelFromId(id),
+                  placeholder: labelFromId(id),
                 ),
             keyboardType: TextInputType.text,
           ),
@@ -166,8 +166,8 @@ class KnobManager extends ChangeNotifier {
           inputBuilder: (knob, toggleNull) => NullableTextField(
             decoration: decoration ??
                 KnobTextFieldDecoration(
-                  label: id,
-                  placeholder: id,
+                  label: labelFromId(id),
+                  placeholder: labelFromId(id),
                 ),
             initialValue: knob.value ?? knob.lastKnowValue,
             description: description,
@@ -192,7 +192,8 @@ class KnobManager extends ChangeNotifier {
           location: location,
           description: description,
           inputBuilder: (knob, toggleNull) => NullableTextField<int?>(
-            decoration: decoration ?? KnobTextFieldDecoration(label: id),
+            decoration:
+                decoration ?? KnobTextFieldDecoration(label: labelFromId(id)),
             initialValue: (knob.value ?? knob.lastKnowValue)?.toString() ?? '0',
             description: description,
             toggleNull: toggleNull,
@@ -216,7 +217,8 @@ class KnobManager extends ChangeNotifier {
           location: location,
           description: description,
           inputBuilder: (knob) => CustomTextField(
-            decoration: decoration ?? KnobTextFieldDecoration(label: id),
+            decoration:
+                decoration ?? KnobTextFieldDecoration(label: labelFromId(id)),
             isEnabled: true,
             description: description,
             onChanged: (v) => knob.setValue(int.tryParse(v) ?? knob.value),
@@ -241,7 +243,7 @@ class KnobManager extends ChangeNotifier {
           location: location,
           description: description,
           inputBuilder: (knob) => ColorField(
-            label: label ?? id,
+            label: label ?? labelFromId(id),
             knob: knob,
             description: description,
             holsters: holsters,
@@ -264,7 +266,7 @@ class KnobManager extends ChangeNotifier {
           location: location,
           description: description,
           inputBuilder: (knob, toggleNull) => NullableColorField(
-            label: label ?? id,
+            label: label ?? labelFromId(id),
             knob: knob,
             description: description,
             toggleNull: toggleNull,
@@ -276,6 +278,7 @@ class KnobManager extends ChangeNotifier {
   T? nSelectable<T>(
     String id, {
     required List<T> values,
+    String? label,
     SelectorNameMarshal? nameMarshal,
     String? description,
     KnobLocation location = const KnobLocation(),
@@ -290,6 +293,8 @@ class KnobManager extends ChangeNotifier {
             knob: knob,
             values: values,
             nameMarshal: nameMarshal ?? (v) => v.toString(),
+            label: label ?? labelFromId(id),
+            description: description,
           ),
         ),
       );
@@ -297,6 +302,7 @@ class KnobManager extends ChangeNotifier {
   T selectable<T>(
     String id, {
     required List<T> values,
+    String? label,
     SelectorNameMarshal<T>? nameMarshal,
     String? description,
     KnobLocation location = const KnobLocation(),
@@ -317,6 +323,8 @@ class KnobManager extends ChangeNotifier {
           knob: knob,
           options: values,
           nameMarshal: nameMarshal ?? (v) => v.toString(),
+          label: label ?? labelFromId(id),
+          description: description,
         ),
       ),
     );
@@ -368,3 +376,15 @@ class KnobManager extends ChangeNotifier {
     return selectedKnobValue as T;
   }
 }
+
+/// Turns a knob id into a label, e.g. `previousSavings` into
+/// `Previous Savings` and `ticket_border` into `Ticket Border`.
+String labelFromId(String id) => id
+    .replaceAllMapped(
+      RegExp(r'([a-z0-9])([A-Z])'),
+      (match) => '${match[1]} ${match[2]}',
+    )
+    .split(RegExp(r'[\s_-]+'))
+    .where((word) => word.isNotEmpty)
+    .map((word) => word[0].toUpperCase() + word.substring(1))
+    .join(' ');

@@ -12,11 +12,15 @@ class NullableSelectorField<T> extends StatelessWidget {
     required this.knob,
     required this.values,
     required this.nameMarshal,
+    required this.label,
+    this.description,
   });
 
   final NullableKnob<T> knob;
   final List<T> values;
   final SelectorNameMarshal<T> nameMarshal;
+  final String label;
+  final String? description;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +33,8 @@ class NullableSelectorField<T> extends StatelessWidget {
             knob: knob,
             options: values,
             nameMarshal: nameMarshal,
+            label: label,
+            description: description,
             isEnabled: knob.isFieldEnabled,
           ),
         ),

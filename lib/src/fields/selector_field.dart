@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fabula/src/entities/knob.dart';
 import 'package:fabula/src/fields/nullable_selector_field.dart';
+import 'package:fabula/src/widgets/general/knob_label.dart';
 
 class SelectorField<T> extends StatelessWidget {
   const SelectorField({
@@ -8,18 +9,22 @@ class SelectorField<T> extends StatelessWidget {
     required this.knob,
     required this.options,
     required this.nameMarshal,
+    required this.label,
+    this.description,
     this.isEnabled = true,
   });
 
   final Knob<T?> knob;
   final List<T> options;
   final SelectorNameMarshal<T> nameMarshal;
+  final String label;
+  final String? description;
   final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
     final isNull = knob.getValue() == null;
-    return Container(
+    final field = Container(
       width: double.infinity,
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
       decoration: BoxDecoration(
@@ -56,6 +61,20 @@ class SelectorField<T> extends StatelessWidget {
                 ),
               ),
             ),
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        KnobLabel(
+          label: label,
+          description: description,
+          style: TextStyle(color: isEnabled ? Colors.black : Colors.grey),
+        ),
+        const SizedBox(height: 4),
+        field,
+      ],
     );
   }
 }
