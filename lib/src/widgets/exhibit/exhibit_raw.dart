@@ -40,7 +40,7 @@ class ExhibitRaw extends StatelessWidget {
                 child: ListenableBuilder(
                   listenable: k,
                   builder: (context, _) =>
-                      overlay(context, k.knobs.values.toList()),
+                      overlay(context, k.visibleKnobs.toList()),
                 ),
               ),
           ],

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fabula/src/fields/animation_player.dart';
 import 'package:fabula/src/widgets/general/toggler_field.dart';
@@ -14,10 +15,21 @@ class KnobManager extends ChangeNotifier {
   KnobManager();
 
   final Map<String, Knob> knobs = {};
-  bool _notifyScheduled = false;
+
+  /// Ids of the knobs the latest build asked for.
+  Set<String> _visibleIds = {};
+
+  /// Ids of the knobs asked for in the current frame.
+  final Set<String> _requestedIds = {};
+  bool _syncScheduled = false;
+
+  /// Knobs the latest build asked for. A knob the build skips is hidden and
+  /// keeps its value until the build asks for it again.
+  Iterable<Knob> get visibleKnobs =>
+      _visibleIds.map((id) => knobs[id]).whereType<Knob>();
 
   Map<String, List<Knob>> get knobsBySection {
-    final sorted = knobs.values.toList()
+    final sorted = visibleKnobs.toList()
       ..sort((a, b) => a.location.order.compareTo(b.location.order));
 
     final knobsBySection = <String, List<Knob>>{};
@@ -126,7 +138,7 @@ class KnobManager extends ChangeNotifier {
           inputBuilder: (knob) => CustomTextField(
             onChanged: knob.setValue,
             isEnabled: true,
-            initialValue: initialValue,
+            initialValue: knob.value,
             description: description,
             decoration: decoration ??
                 KnobTextFieldDecoration(
@@ -157,7 +169,7 @@ class KnobManager extends ChangeNotifier {
                   label: id,
                   placeholder: id,
                 ),
-            initialValue: initialValue,
+            initialValue: knob.value ?? knob.lastKnowValue,
             description: description,
             toggleNull: toggleNull,
             onChanged: knob.setValue,
@@ -181,7 +193,7 @@ class KnobManager extends ChangeNotifier {
           description: description,
           inputBuilder: (knob, toggleNull) => NullableTextField<int?>(
             decoration: decoration ?? KnobTextFieldDecoration(label: id),
-            initialValue: initialValue?.toString() ?? '0',
+            initialValue: (knob.value ?? knob.lastKnowValue)?.toString() ?? '0',
             description: description,
             toggleNull: toggleNull,
             onChanged: (v) => knob.setValue(int.tryParse(v) ?? 0),
@@ -208,7 +220,7 @@ class KnobManager extends ChangeNotifier {
             isEnabled: true,
             description: description,
             onChanged: (v) => knob.setValue(int.tryParse(v) ?? knob.value),
-            initialValue: value?.toString() ?? '0',
+            initialValue: knob.value.toString(),
             keyboardType: TextInputType.number,
           ),
         ),
@@ -314,6 +326,8 @@ class KnobManager extends ChangeNotifier {
     required String id,
     required Knob knob,
   }) {
+    _requestedIds.add(id);
+    _scheduleVisibilitySync();
     final existing = knobs[id];
     if (existing != null) {
       assert(
@@ -334,12 +348,17 @@ class KnobManager extends ChangeNotifier {
     required Knob newKnob,
   }) {
     knobs[id] = newKnob;
+  }
 
-    if (_notifyScheduled) return;
-    _notifyScheduled = true;
+  void _scheduleVisibilitySync() {
+    if (_syncScheduled) return;
+    _syncScheduled = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _notifyScheduled = false;
-      if (hasListeners) notifyListeners();
+      _syncScheduled = false;
+      final changed = !setEquals(_visibleIds, _requestedIds);
+      _visibleIds = {..._requestedIds};
+      _requestedIds.clear();
+      if (changed && hasListeners) notifyListeners();
     });
   }
 
